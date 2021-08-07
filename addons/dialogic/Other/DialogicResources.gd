@@ -268,6 +268,13 @@ static func load_timelines() -> Dictionary:
 				
 				dic[timeline_name] = load_json(get_path('TIMELINE_DIR', file_name))
 				
+				#event_type is int but parse make it float
+				var events = dic[timeline_name]["events"]
+				
+				if !events.empty():
+					for event in events:
+						event["type"] = int(event["type"])
+				
 			file_name = dir.get_next()
 
 	return dic

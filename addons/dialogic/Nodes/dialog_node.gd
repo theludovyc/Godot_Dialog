@@ -584,7 +584,7 @@ func event_handler(event: Dictionary):
 	
 	current_event = event
 	
-	match int(event["type"]):
+	match event["type"]:
 		# MAIN EVENTS
 		# Text Event
 		DialogicSingleton.Event_Type.Text:
