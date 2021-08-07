@@ -15,9 +15,15 @@ onready var random_lower_limit = $HBox/RandomValue/LowerLimit
 onready var random_upper_limit = $HBox/RandomValue/UpperLimit
 
 # used to connect the signals
-func _ready():
+func on_ready():
 	input_field.connect("text_changed", self, "_on_InputField_text_changed")
+	
+	definition_picker.editor_reference = editor_reference
+	definition_picker.on_ready()
 	definition_picker.connect("data_changed", self, "_on_DefintionPicker_data_changed")
+	
+	operation_picker.editor_reference = editor_reference
+	operation_picker.on_ready()
 	operation_picker.connect("data_changed", self, "_on_OperationPicker_data_changed")
 	
 	random_enabled_button.icon = get_icon("MaterialPreviewCube", "EditorIcons")
@@ -27,9 +33,11 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	input_field.text = event_data['set_value']
+	# Now update the ui nodes to display the data.
+	input_field.text = data.get("set_value", "")
+	
 	definition_picker.load_data(data)
+	
 	operation_picker.load_data(data)
 	
 	switch_random_features(data.get('set_random', false))
@@ -53,6 +61,7 @@ func _on_InputField_text_changed(text):
 	event_data['set_value'] = text
 	
 	operation_picker.load_data(event_data)
+	
 	definition_picker.load_data(event_data)
 	
 	check_data()
