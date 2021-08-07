@@ -8,7 +8,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var node = Dialogic.start("Timeline123")
+	var node = Dialogic.start("Timeline")
 	add_child(node)
 	pass # Replace with function body.
 

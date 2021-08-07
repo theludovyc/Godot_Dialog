@@ -372,10 +372,10 @@ func _insert_value(text: String):
 			search_open = true
 
 	for value_name in dic:
-		value_name = value_name.substr(1, value_name.length() - 2)
+		var real_value_name = value_name.substr(1, value_name.length() - 2)
 		
-		if values.has(value_name):
-			var value = values[value_name]["current"]
+		if values.has(real_value_name):
+			var value = values[real_value_name]["current"]
 
 			for i in dic[value_name]:
 				split_text[i] = value
@@ -582,11 +582,9 @@ func event_handler(event: Dictionary):
 	
 	reset_options()
 	
-	dprint('[D] Current Event: ', event)
-	
 	current_event = event
 	
-	match event["type"]:
+	match int(event["type"]):
 		# MAIN EVENTS
 		# Text Event
 		DialogicSingleton.Event_Type.Text:
@@ -674,8 +672,6 @@ func event_handler(event: Dictionary):
 			var current_question = questions[event['question_idx']]
 			
 			var def_value = DialogicSingleton.values[event['definition']]["current"]
-			
-			printt("event_handler", current_question, event, def_value)
 			
 			var condition_met = def_value != null and _compare_definitions(def_value, event['value'], event['condition']);
 			
