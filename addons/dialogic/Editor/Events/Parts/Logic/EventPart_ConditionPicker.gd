@@ -42,14 +42,15 @@ func load_data(data:Dictionary):
 	if data["type"] == DialogicSingleton.Event_Type.Choice:
 		optional_view.show()
 		
-		if data.has("definition") and data["definition"] == '': # Checking if definition is selected
-			use_condition_check.pressed = false
-			
-			enabled_view.hide()
-		else:
+		# Checking if definition is selected
+		if data.has("definition") and !data["definition"].empty():
 			use_condition_check.pressed = true
 			
 			enabled_view.show()
+		else:
+			use_condition_check.pressed = false
+			
+			enabled_view.hide()
 	else:
 		optional_view.hide()
 	

@@ -20,8 +20,9 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	input_field.text = event_data['choice']
+	# Now update the ui nodes to display the data.
+	if data.has("choice"):
+		input_field.text = event_data["choice"]
 	
 	# Loading the data on the selectors
 	condition_picker.load_data(event_data)
