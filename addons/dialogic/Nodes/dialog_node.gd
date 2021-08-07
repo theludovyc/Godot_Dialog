@@ -358,7 +358,7 @@ func _insert_value(text: String):
 		else:
 			index_end = text.find("]", index_start)
 
-			var t = text.substr(index_start + 1, index_end-index_start - 1)
+			var t = text.substr(index_start, index_end-index_start + 1)
 
 			split_text.append(t)
 
@@ -372,6 +372,8 @@ func _insert_value(text: String):
 			search_open = true
 
 	for value_name in dic:
+		value_name = value_name.substr(1, value_name.length() - 2)
+		
 		if values.has(value_name):
 			var value = values[value_name]["current"]
 

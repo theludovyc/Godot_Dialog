@@ -86,6 +86,7 @@ size_flags_vertical = 4
 custom_styles/normal = SubResource( 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
 bbcode_text = "This is the title"
 text = "This is the title"
 fit_content_height = true
@@ -99,7 +100,7 @@ size_flags_horizontal = 3
 custom_styles/normal = SubResource( 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 custom_colors/default_color = Color( 0.756863, 0.756863, 0.756863, 1 )
-text = "This is the main copy. Here you write the relevant"
+bbcode_enabled = true
 fit_content_height = true
 scroll_active = false
 __meta__ = {
@@ -114,7 +115,7 @@ size_flags_horizontal = 3
 custom_styles/normal = SubResource( 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 custom_colors/default_color = Color( 0.756863, 0.756863, 0.756863, 1 )
-text = "Una linea extra"
+bbcode_enabled = true
 fit_content_height = true
 scroll_active = false
 __meta__ = {
@@ -124,5 +125,4 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="DefinitionInfo"]
 
 [node name="OptionsDelayedInput" type="Timer" parent="."]
-
 [connection signal="timeout" from="DefinitionInfo/Timer" to="." method="_on_Definition_Timer_timeout"]
