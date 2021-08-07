@@ -7,10 +7,14 @@ extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
 onready var input_field = $HBox/ChoiceText
 onready var condition_picker = $ConditionPicker
 
+func init_part():
+	condition_picker.editor_reference = editor_reference
+
 # used to connect the signals
 func _ready():
 	# e.g. 
 	input_field.connect("text_changed", self, "_on_ChoiceText_text_changed")
+	
 	condition_picker.connect("data_changed", self, "_on_ConditionPicker_data_changed")
 	condition_picker.connect("remove_warning", self, "emit_signal", ["remove_warning"])
 	condition_picker.connect("set_warning", self, "set_warning")
