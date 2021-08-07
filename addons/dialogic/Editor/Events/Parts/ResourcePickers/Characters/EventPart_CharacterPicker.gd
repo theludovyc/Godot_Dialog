@@ -38,7 +38,7 @@ func get_preview():
 
 # helper to not have the same code everywhere
 func update_to_character():
-	if event_data['character'] != '':
+	if event_data.has("character") and event_data['character'] != '':
 		if event_data['character'] == '[All]':
 			picker_menu.text = "All characters"
 			icon.modulate = Color.white

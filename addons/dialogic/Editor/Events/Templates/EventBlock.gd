@@ -5,7 +5,7 @@ extends HBoxContainer
 
 # This is the default data that is going to be saved to json
 export (DialogicSingleton.Event_Type) var type
-export (Dictionary) var event_data: Dictionary = {'event_id':'dialogic_000'}
+var event_data: Dictionary
 export(StyleBoxFlat) var event_style : StyleBoxFlat
 var selected_style = preload("../styles/selected_styleboxflat_template.tres")
 

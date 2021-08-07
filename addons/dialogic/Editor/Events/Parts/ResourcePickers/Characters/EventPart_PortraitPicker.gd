@@ -20,7 +20,8 @@ func load_data(data:Dictionary):
 	.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
-	picker_menu.text = event_data['portrait']
+	if event_data.has("portrait"):
+		picker_menu.text = event_data["portrait"]
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():

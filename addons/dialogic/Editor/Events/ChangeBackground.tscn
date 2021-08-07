@@ -8,11 +8,6 @@
 
 [node name="ChangeBackground" instance=ExtResource( 4 )]
 type = 9
-event_data = {
-"background": "",
-"event_id": "dialogic_021",
-"type": 0
-}
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 6 )
 event_name = "Change Background"

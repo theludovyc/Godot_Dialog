@@ -28,7 +28,11 @@ func load_data(data:Dictionary):
 	character_picker.load_data(data)
 	portrait_picker.visible = get_character_data() and len(get_character_data()['portraits']) > 1
 	
-	var has_port_defn = data['portrait'] == '[Definition]'
+	var has_port_defn = false
+	
+	if data.has("portrait"):
+		has_port_defn = data['portrait'] == '[Definition]'
+		
 	if has_port_defn and data.has('port_defn'):
 		definition_picker.load_data({ 'definition': data['port_defn'] })
 	definition_picker.visible = has_port_defn

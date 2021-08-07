@@ -7,15 +7,6 @@
 
 [node name="AudioEvent" instance=ExtResource( 1 )]
 type = 14
-event_data = {
-"audio": "stop",
-"audio_bus": "Master",
-"event_id": "dialogic_030",
-"event_name": "AudioEvent",
-"file": "",
-"type": 0,
-"volume": 0.0
-}
 event_style = ExtResource( 4 )
 event_icon = ExtResource( 5 )
 event_name = "Audio Event"

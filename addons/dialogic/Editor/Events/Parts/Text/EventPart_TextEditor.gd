@@ -32,14 +32,10 @@ func load_data(data:Dictionary):
 	
 	# Now update the ui nodes to display the data. 
 	# in case this is a text event
-	if data['event_id'] == 'dialogic_001':
+	if data.has("text"):
 		text_editor.text = event_data['text']
-	# in case this is a question event
-	elif data['event_id'] == 'dialogic_010':
+	elif data["type"] == DialogicSingleton.Event_Type.Question and data.has("question"):
 		text_editor.text = event_data['question']
-	# otherwise
-	else:
-		text_editor.text = event_data['text']
 	
 	# resize the text_editor to the correct size 
 	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))

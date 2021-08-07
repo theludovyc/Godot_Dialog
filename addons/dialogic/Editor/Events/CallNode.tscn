@@ -7,15 +7,6 @@
 
 [node name="CallNode" instance=ExtResource( 2 )]
 type = 18
-event_data = {
-"call_node": {
-"arguments": [  ],
-"method_name": "",
-"target_node_path": ""
-},
-"event_id": "dialogic_042",
-"type": 0
-}
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 1 )
 event_name = "Call Node"

@@ -8,16 +8,6 @@
 [node name="BackgroundMusic" instance=ExtResource( 2 )]
 margin_bottom = 74.0
 type = 15
-event_data = {
-"audio_bus": "Master",
-"background-music": "stop",
-"event_id": "dialogic_031",
-"event_name": "BackgroundMusic",
-"fade_length": 1.0,
-"file": "",
-"type": 0,
-"volume": 0
-}
 event_style = ExtResource( 4 )
 event_icon = ExtResource( 3 )
 event_name = "Background Music"

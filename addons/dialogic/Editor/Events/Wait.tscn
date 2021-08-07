@@ -7,11 +7,6 @@
 
 [node name="WaitSeconds" instance=ExtResource( 4 )]
 type = 11
-event_data = {
-"event_id": "dialogic_023",
-"type": 0,
-"wait_seconds": 1.0
-}
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 1 )
 event_name = "Wait Seconds"
