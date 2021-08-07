@@ -33,16 +33,22 @@ func load_data(data:Dictionary):
 	
 	# Loading the data on the selectors
 	definition_picker.load_data(data)
-	condition_type_picker.load_data(data)
-	value_input.text = data['value']
 	
-	if data['event_id'] == 'dialogic_011':
+	condition_type_picker.load_data(data)
+	
+	if data.has("value"):
+		value_input.text = data["value"]
+	
+	if data["type"] == DialogicSingleton.Event_Type.Choice:
 		optional_view.show()
-		if data['definition'] == '': # Checking if definition is selected
+		
+		if data.has("definition") and data["definition"] == '': # Checking if definition is selected
 			use_condition_check.pressed = false
+			
 			enabled_view.hide()
 		else:
 			use_condition_check.pressed = true
+			
 			enabled_view.show()
 	else:
 		optional_view.hide()

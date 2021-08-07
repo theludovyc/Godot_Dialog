@@ -42,8 +42,9 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	select_condition_type(data['condition'])
+	# Now update the ui nodes to display the data.
+	if data.has("condition"):
+		select_condition_type(data["condition"])
 	
 
 # has to return the wanted preview, only useful for body parts

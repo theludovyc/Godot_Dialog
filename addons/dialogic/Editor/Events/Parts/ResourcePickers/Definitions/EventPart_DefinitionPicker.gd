@@ -18,15 +18,15 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	select_definition_by_id(data['definition'])
+	# Now update the ui nodes to display the data.
+	if data.has("definition"):
+		var value_name = data["definition"]
+		
+		picker_menu.text = value_name if editor_reference.res_values.has(value_name) else default_text
 	
 # has to return the wanted preview, only useful for body parts
 func get_preview():
 	return ''
-
-func select_definition_by_id(value_name:String):
-	picker_menu.text = value_name if editor_reference.res_values.has(value_name) else default_text
 
 # when an index is selected on one of the menus.
 func _on_PickerMenu_selected(index):
