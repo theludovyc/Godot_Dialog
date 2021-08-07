@@ -168,7 +168,7 @@ func _input(event):
 			and event.scancode == KEY_T
 			and event.echo == false
 		):
-			var new_text = create_event("TextEvent")
+			var new_text = create_event0("TextEvent")
 			select_item(new_text, false)
 			indent_events()
 			get_tree().set_input_as_handled()
@@ -280,7 +280,6 @@ func _unhandled_key_input(event):
 ## *****************************************************************************
 
 func delete_selected_events():
-	
 	if len(selected_items) == 0:
 		return
 	
@@ -446,7 +445,7 @@ func delete_event(event):
 
 # Event Creation signal for buttons
 func _create_event_button_pressed(button_name):
-	select_item(create_event(button_name))
+	select_item(create_event0(button_name))
 	
 	indent_events()
 	
@@ -457,15 +456,15 @@ func _on_ButtonQuestion_pressed() -> void:
 	if len(selected_items) != 0:
 		# Events are added bellow the selected node
 		# So we must reverse the adding order
-		create_event("EndBranch")
-		create_event("Choice")
-		create_event("Choice")
-		create_event("Question")
+		create_event1(DialogicSingleton.Event_Type.EndBranch)
+		create_event1(DialogicSingleton.Event_Type.Choice)
+		create_event1(DialogicSingleton.Event_Type.Choice)
+		create_event1(DialogicSingleton.Event_Type.Question)
 	else:
-		create_event("Question")
-		create_event("Choice")
-		create_event("Choice")
-		create_event("EndBranch")
+		create_event1(DialogicSingleton.Event_Type.Question)
+		create_event1(DialogicSingleton.Event_Type.Choice)
+		create_event1(DialogicSingleton.Event_Type.Choice)
+		create_event1(DialogicSingleton.Event_Type.EndBranch)
 	
 	indent_events()
 	
@@ -476,11 +475,11 @@ func _on_ButtonCondition_pressed() -> void:
 	if len(selected_items) != 0:
 		# Events are added bellow the selected node
 		# So we must reverse the adding order
-		create_event("EndBranch")
-		create_event("Condition")
+		create_event1(DialogicSingleton.Event_Type.EndBranch)
+		create_event1(DialogicSingleton.Event_Type.Condition)
 	else:
-		create_event("Condition")
-		create_event("EndBranch")
+		create_event1(DialogicSingleton.Event_Type.Condition)
+		create_event1(DialogicSingleton.Event_Type.EndBranch)
 	
 	indent_events()
 	
@@ -493,7 +492,7 @@ func _on_ButtonCondition_pressed() -> void:
 # Creates a ghost event for drag and drop
 func create_drag_and_drop_event(scene: String):
 	var index = get_index_under_cursor()
-	var piece = create_event(scene)
+	var piece = create_event0(scene)
 	timeline_node.move_child(piece, index)
 	moving_piece = piece
 	piece_was_dragged = true
@@ -521,7 +520,7 @@ func cancel_drop_event():
 ## *****************************************************************************
 
 # Adding an event to the timeline_node
-func create_event(scene: String, data: Dictionary = {}):
+func create_event0(scene: String, data: Dictionary = {}):
 	var piece = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instance()
 	
 	piece.editor_reference = editor_reference
@@ -541,8 +540,11 @@ func create_event(scene: String, data: Dictionary = {}):
 
 	return piece
 
+func create_event1(type:int, data: Dictionary = {}):
+	return create_event0(DialogicSingleton.Event_Type.keys()[type], data)
+
 func load_event(event):
-	return create_event(DialogicSingleton.Event_Type.keys()[event["type"]], event)
+	return create_event1(event["type"], event)
 
 func load_timeline(name:String):
 	#clear timeline
@@ -656,35 +658,36 @@ func save_timeline() -> void:
 func indent_events() -> void:
 	var indent: int = 0
 	var starter: bool = false
-	var event_list: Array = timeline_node.get_children()
+	var event_node_list: Array = timeline_node.get_children()
 	var question_index: int = 0
 	var question_indent = {}
-	if event_list.size() < 2:
+	if event_node_list.size() < 2:
 		return
 	# Resetting all the indents
-	for event in event_list:
+	for event_node in event_node_list:
 		var indent_node
 		
-		event.set_indent(0)
+		event_node.set_indent(0)
 		
 	# Adding new indents
-	for event in event_list:
+	for event_node in event_node_list:
 		# since there are indicators now, not all elements
 		# in this list have an event_data property
-		if (not "event_data" in event):
+		if (not "event_data" in event_node):
 			continue
 		
 		
-		if event.event_data['event_id'] == 'dialogic_011':
+		if event_node.event_data["type"] == DialogicSingleton.Event_Type.Choice:
 			if question_index > 0:
 				indent = question_indent[question_index] + 1
 				starter = true
-		elif event.event_data['event_id'] == 'dialogic_010' or event.event_data['event_id'] == 'dialogic_012':
+		elif (event_node.event_data["type"] == DialogicSingleton.Event_Type.Question or
+			event_node.event_data["type"] == DialogicSingleton.Event_Type.Condition):
 			indent += 1
 			starter = true
 			question_index += 1
 			question_indent[question_index] = indent
-		elif event.event_data['event_id'] == 'dialogic_013':
+		elif event_node.event_data["type"] == DialogicSingleton.Event_Type.EndBranch:
 			if question_indent.has(question_index):
 				indent = question_indent[question_index]
 				indent -= 1
@@ -695,17 +698,17 @@ func indent_events() -> void:
 		if indent > 0:
 			# Keep old behavior for items without template
 			if starter:
-				event.set_indent(indent - 1)
+				event_node.set_indent(indent - 1)
 			else:
-				event.set_indent(indent)
+				event_node.set_indent(indent)
 		starter = false
 
 # called from the toolbar
 func fold_all_nodes():
-	for event in timeline_node.get_children():
-		event.set_expanded(false)
+	for event_node in timeline_node.get_children():
+		event_node.set_expanded(false)
 
 # called from the toolbar
 func unfold_all_nodes():
-	for event in timeline_node.get_children():
-		event.set_expanded(true)
+	for event_node in timeline_node.get_children():
+		event_node.set_expanded(true)
