@@ -52,7 +52,7 @@ func clear_all_positions():
 func check_active_position(active_color = Color("#ffffff")):
 	var index = 0
 	for p in positions_container.get_children():
-		if event_data['position'][str(index)]:
+		if event_data.has("position") and event_data['position'][str(index)]:
 			p.pressed = true
 			p.set('self_modulate', get_character_color())
 		index += 1

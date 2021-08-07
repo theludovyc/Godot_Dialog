@@ -25,8 +25,11 @@ func load_data(data:Dictionary):
 	
 	# Now update the ui nodes to display the data. 
 	character_portrait_picker.load_data(data)
+	
 	position_picker.load_data(data)
-	mirror_button.pressed = data['mirror']
+	
+	if data.has("mirror"):
+		mirror_button.pressed = data['mirror']
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
