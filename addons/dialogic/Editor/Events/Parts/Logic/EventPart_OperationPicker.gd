@@ -26,8 +26,13 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	picker_menu.text = operations[data.get("operation", "=")]
+	# Now update the ui nodes to display the data.
+	if !data.has("operation"):
+		data["operation"] = "="
+		
+		data_changed()
+	
+	picker_menu.text = operations[data["operation"]]
 	
 # has to return the wanted preview, only useful for body parts
 func get_preview():

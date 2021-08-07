@@ -16,7 +16,8 @@ onready var random_upper_limit = $HBox/RandomValue/UpperLimit
 
 # used to connect the signals
 func on_ready():
-	input_field.connect("text_changed", self, "_on_InputField_text_changed")
+	input_field.connect("text_entered", self, "_on_InputField_text_entered")
+	input_field.connect("focus_exited", self, "_on_InputField_focus_exited")
 	
 	definition_picker.editor_reference = editor_reference
 	definition_picker.on_ready()
@@ -57,7 +58,12 @@ func check_data():
 	
 	emit_signal("remove_warning")
 
-func _on_InputField_text_changed(text):
+func _on_InputField_text_entered(text):
+	input_field.release_focus()
+
+func _on_InputField_focus_exited():
+	var text = input_field.text
+	
 	event_data['set_value'] = text
 	
 #	check_data()
