@@ -219,6 +219,8 @@ func _request_selection():
 func _ready():
 	event_data["type"] = type
 	
+	print(event_data)
+	
 	_setup_event()
 	
 	set_focus_mode(1) # Allowing this node to grab focus

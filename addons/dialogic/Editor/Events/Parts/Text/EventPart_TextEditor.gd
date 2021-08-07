@@ -33,9 +33,7 @@ func load_data(data:Dictionary):
 	# Now update the ui nodes to display the data. 
 	# in case this is a text event
 	if data.has("text"):
-		text_editor.text = event_data['text']
-	elif data["type"] == DialogicSingleton.Event_Type.Question and data.has("question"):
-		text_editor.text = event_data['question']
+		text_editor.text = event_data["text"]
 	
 	# resize the text_editor to the correct size 
 	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
@@ -43,17 +41,13 @@ func load_data(data:Dictionary):
 # has to return the wanted preview, only useful for body parts
 func get_preview():
 	var max_preview_characters = 35
-	var text = ''
-	if event_data['event_id'] == 'dialogic_001':
-		text = event_data['text']
-	# in case this is a question event
-	elif event_data['event_id'] == 'dialogic_010':
-		text = event_data['question']
-	# otherwise
-	else:
-		text = event_data['text']
+	
+	var text = event_data['text']
+	
 	text = text.replace('\n', '[br]')
+	
 	var preview = text.substr(0, min(max_preview_characters, len(text)))
+	
 	if (len(text) > max_preview_characters):
 		preview += "..."
 	
@@ -61,14 +55,8 @@ func get_preview():
 
 func _on_TextEditor_text_changed():
 	# in case this is a text event
-	if event_data['event_id'] == 'dialogic_001':
-		event_data['text'] = text_editor.text
-	# in case this is a question event
-	elif event_data['event_id'] == 'dialogic_010':
-		event_data['question'] = text_editor.text
-	# otherwise
-	else:
-		event_data['text'] = text_editor.text
+	event_data['text'] = text_editor.text
+		
 	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
 	
 	# informs the parent about the changes!

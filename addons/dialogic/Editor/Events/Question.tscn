@@ -8,14 +8,6 @@
 
 [node name="Question" instance=ExtResource( 3 )]
 type = 3
-event_data = {
-"character": "",
-"event_id": "dialogic_010",
-"options": [  ],
-"portrait": "",
-"question": "",
-"type": 0
-}
 event_style = ExtResource( 5 )
 event_icon = ExtResource( 1 )
 event_name = "Question"

@@ -32,9 +32,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-event_data = {
-"event_id": "dialogic_000"
-}
 expand_on_default = true
 
 [node name="Indent" type="Control" parent="."]

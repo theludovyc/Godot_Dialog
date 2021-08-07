@@ -6,10 +6,6 @@
 
 [node name="EndBranch" instance=ExtResource( 1 )]
 type = 6
-event_data = {
-"event_id": "dialogic_013",
-"type": 0
-}
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 5 )
 event_name = "End Branch"

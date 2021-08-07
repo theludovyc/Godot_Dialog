@@ -8,14 +8,6 @@
 
 [node name="SetGlossary" instance=ExtResource( 3 )]
 type = 13
-event_data = {
-"event_id": "dialogic_025",
-"extra": "",
-"glossary_id": "",
-"text": "",
-"title": "",
-"type": 0
-}
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 6 )
 event_name = "Set Glossary"

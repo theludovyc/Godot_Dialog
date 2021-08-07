@@ -7,12 +7,6 @@
 
 [node name="CharacterLeave" instance=ExtResource( 3 )]
 type = 2
-event_data = {
-"action": "leaveall",
-"character": "[All]",
-"event_id": "dialogic_003",
-"type": 0
-}
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 1 )
 event_name = "Character Leave"

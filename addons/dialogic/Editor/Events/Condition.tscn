@@ -7,13 +7,6 @@
 
 [node name="Condition" instance=ExtResource( 2 )]
 type = 5
-event_data = {
-"condition": "",
-"definition": "",
-"event_id": "dialogic_012",
-"type": 5,
-"value": ""
-}
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 1 )
 header_scene = ExtResource( 4 )

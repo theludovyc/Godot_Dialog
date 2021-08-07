@@ -7,11 +7,6 @@
 
 [node name="EmitSignal" instance=ExtResource( 3 )]
 type = 16
-event_data = {
-"emit_signal": "",
-"event_id": "dialogic_040",
-"type": 0
-}
 event_style = ExtResource( 4 )
 event_icon = ExtResource( 1 )
 event_name = "Emit Signal"

@@ -7,11 +7,6 @@
 
 [node name="SetTheme" instance=ExtResource( 2 )]
 type = 12
-event_data = {
-"event_id": "dialogic_024",
-"set_theme": "",
-"type": 0
-}
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 1 )
 event_name = "Set theme"

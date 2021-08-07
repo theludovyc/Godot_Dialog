@@ -22,21 +22,6 @@ size = Vector2( 16, 16 )
 
 [node name="CharacterJoin" instance=ExtResource( 1 )]
 type = 1
-event_data = {
-"action": "join",
-"character": "",
-"event_id": "dialogic_002",
-"mirror": false,
-"portrait": "",
-"position": {
-"0": false,
-"1": false,
-"2": false,
-"3": false,
-"4": false
-},
-"type": 0
-}
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 4 )
 event_name = "Character Join"

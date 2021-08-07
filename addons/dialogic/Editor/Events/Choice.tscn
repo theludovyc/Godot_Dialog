@@ -22,14 +22,6 @@ size = Vector2( 16, 16 )
 
 [node name="Choice" instance=ExtResource( 2 )]
 type = 4
-event_data = {
-"choice": "",
-"condition": "",
-"definition": "",
-"event_id": "dialogic_011",
-"type": 0,
-"value": ""
-}
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 1 )
 event_name = "Choice"
