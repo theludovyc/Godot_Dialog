@@ -11,14 +11,13 @@ onready var value_input = $HBox/Values/Value
 onready var optional_view = $HBox/HasCondition
 onready var use_condition_check = $HBox/HasCondition/UseCondition
 
-func init_part():
+# used to connect the signals
+func on_ready():
 	definition_picker.editor_reference = editor_reference
 	
-	condition_type_picker.editor_reference = editor_reference
-
-# used to connect the signals
-func _ready():
 	definition_picker.connect("data_changed", self, '_on_DefinitionPicker_data_changed')
+	
+	condition_type_picker.editor_reference = editor_reference
 	
 	condition_type_picker.connect("data_changed", self, '_on_ConditionTypePicker_data_changed')
 	

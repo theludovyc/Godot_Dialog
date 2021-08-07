@@ -137,9 +137,9 @@ func _set_content(container: Control, scene: PackedScene):
 		
 		node.editor_reference = editor_reference
 		
-		node.init_part()
-		
 		container.add_child(node)
+		
+		node.on_ready()
 
 #		node.set_owner(get_tree().get_edited_scene_root())
 		return node

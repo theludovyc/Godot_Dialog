@@ -28,7 +28,7 @@ signal remove_warning()
 func _ready():
 	pass
 
-func init_part():
+func on_ready():
 	pass
 
 # to be overwritten by the subclasses
