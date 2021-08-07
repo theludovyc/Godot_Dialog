@@ -57,7 +57,7 @@ static func start(timeline_name: String, reset_saves: bool=true, dialog_scene_pa
 	
 	dialog_node.dialog_script = {
 		"events":[
-			{"event_id":'dialogic_001',
+			{"type": DialogicSingleton.Event_Type.Text,
 			"character":"",
 			"portrait":"",
 			"text":"[Dialogic Error] Loading dialog [color=red]" + timeline_name + "[/color]. It seems like the timeline doesn't exists. Maybe the name is wrong?"
