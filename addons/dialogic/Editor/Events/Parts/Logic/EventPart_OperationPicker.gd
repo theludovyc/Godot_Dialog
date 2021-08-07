@@ -6,13 +6,18 @@ onready var picker_menu = $MenuButton
 
 onready var picker_popup = picker_menu.get_popup()
 
+const operations = {
+	"=":"=",
+	"+=":"= itself +",
+	"-=":"= itself -",
+	"*=":"= itself *",
+	"/=":"= itself /",
+}
+
 # used to connect the signals
 func on_ready():
-	picker_popup.add_item("=")
-	picker_popup.add_item("+")
-	picker_popup.add_item("-")
-	picker_popup.add_item("*")
-	picker_popup.add_item("/")
+	for value in operations.values():
+		picker_popup.add_item(value)
 	
 	picker_popup.connect("index_pressed", self, '_on_PickerMenu_selected')
 
@@ -22,7 +27,7 @@ func load_data(data:Dictionary):
 	.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
-	picker_menu.text = data.get("operation", "=")
+	picker_menu.text = operations[data.get("operation", "=")]
 	
 # has to return the wanted preview, only useful for body parts
 func get_preview():
@@ -31,7 +36,7 @@ func get_preview():
 func _on_PickerMenu_selected(index):
 	var text = picker_popup.get_item_text(index)
 	
-	event_data['operation'] = text
+	event_data["operation"] = operations.keys()[index]
 	
 	picker_menu.text = text
 	

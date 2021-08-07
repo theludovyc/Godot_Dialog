@@ -36,8 +36,6 @@ func _on_PickerMenu_selected(index):
 	
 	event_data['definition'] = text
 	
-	printt("_on_PickerMenu_selected", index, event_data)
-	
 	# informs the parent about the changes!
 	data_changed()
 

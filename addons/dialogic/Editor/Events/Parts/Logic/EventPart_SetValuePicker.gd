@@ -60,11 +60,7 @@ func check_data():
 func _on_InputField_text_changed(text):
 	event_data['set_value'] = text
 	
-	operation_picker.load_data(event_data)
-	
-	definition_picker.load_data(event_data)
-	
-	check_data()
+#	check_data()
 	
 	# informs the parent about the changes!
 	data_changed()
@@ -72,17 +68,13 @@ func _on_InputField_text_changed(text):
 func _on_DefintionPicker_data_changed(data):
 	event_data = data
 	
-	operation_picker.load_data(data)
-	
 	# informs the parent about the changes!
 	data_changed()
 
 func _on_OperationPicker_data_changed(data):
 	event_data = data
 	
-	definition_picker.load_data(data)
-	
-	check_data()
+#	check_data()
 	
 	# informs the parent about the changes!
 	data_changed()
@@ -106,3 +98,5 @@ func _on_UpperLimit_value_changed(value):
 
 func _on_RandomEnabled_toggled(button_pressed):
 	switch_random_features(button_pressed)
+	
+	data_changed()
