@@ -577,14 +577,17 @@ func get_character(character_id):
 func event_handler(event: Dictionary):
 	# Handling an event and updating the available nodes accordingly.
 	$TextBubble.reset()
+	
 	reset_options()
 	
 	dprint('[D] Current Event: ', event)
+	
 	current_event = event
-	match event['event_id']:
+	
+	match event["type"]:
 		# MAIN EVENTS
 		# Text Event
-		'dialogic_001':
+		DialogicSingleton.Event_Type.Text:
 			emit_signal("event_start", "text", event)
 			show_dialog()
 			finished = false
@@ -594,7 +597,7 @@ func event_handler(event: Dictionary):
 				grab_portrait_focus(character_data, event)
 			update_text(event['text'])
 		# Join event
-		'dialogic_002':
+		DialogicSingleton.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			if event['character'] == '':# No character found on the event. Skip.
@@ -630,7 +633,7 @@ func event_handler(event: Dictionary):
 					p.move_to_position(get_character_position(event['position']))
 			_load_next_event()
 		# Character Leave event 
-		'dialogic_003':
+		DialogicSingleton.Event_Type.CharacterLeave:
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			if event['character'] == '[All]':
@@ -643,7 +646,7 @@ func event_handler(event: Dictionary):
 		
 		# LOGIC EVENTS
 		# Question event
-		'dialogic_010':
+		DialogicSingleton.Event_Type.Question:
 			emit_signal("event_start", "question", event)
 			show_dialog()
 			finished = false
@@ -656,7 +659,7 @@ func event_handler(event: Dictionary):
 				grab_portrait_focus(character_data, event)
 			update_text(event['question'])
 		# Choice event
-		'dialogic_011':
+		DialogicSingleton.Event_Type.Choice:
 			emit_signal("event_start", "choice", event)
 			for q in questions:
 				if q['question_idx'] == event['question_idx']:
@@ -664,7 +667,7 @@ func event_handler(event: Dictionary):
 						# If the option is for an answered question, skip to the end of it.
 						_load_event_at_index(q['end_idx'])
 		# Condition event
-		'dialogic_012':
+		DialogicSingleton.Event_Type.Condition:
 			# Treating this conditional as an option on a regular question event
 			var current_question = questions[event['question_idx']]
 			
@@ -682,11 +685,11 @@ func event_handler(event: Dictionary):
 				# condition met, entering branch
 				_load_next_event()
 		# End Branch event
-		'dialogic_013':
+		DialogicSingleton.Event_Type.EndBranch:
 			emit_signal("event_start", "endbranch", event)
 			_load_next_event()
 		# Set Value event
-		'dialogic_014':
+		DialogicSingleton.Event_Type.SetValue:
 			emit_signal("event_start", "set_value", event)
 			var operation = '='
 			if 'operation' in event and not event['operation'].empty():
@@ -699,11 +702,11 @@ func event_handler(event: Dictionary):
 		
 		# TIMELINE EVENTS
 		# Change Timeline event
-		'dialogic_020':
+		DialogicSingleton.Event_Type.ChangeTimeline:
 			dialog_script = set_current_dialog(event['change_timeline'])
 			_init_dialog()
 		# Change Backround event
-		'dialogic_021':
+		DialogicSingleton.Event_Type.ChangeBackground:
 			emit_signal("event_start", "background", event)
 			var fade_time = event.get('fade_duration', 1)
 			var value = event.get('background', '')
@@ -733,7 +736,7 @@ func event_handler(event: Dictionary):
 
 			_load_next_event()
 		# Close Dialog event
-		'dialogic_022':
+		DialogicSingleton.Event_Type.CloseDialog:
 			emit_signal("event_start", "close_dialog", event)
 			var transition_duration = event.get('transition_duration', 1.0)
 			transition_duration = transition_duration
@@ -744,7 +747,7 @@ func event_handler(event: Dictionary):
 				background.name = 'BackgroundFadingOut'
 				background.fade_out(transition_duration)
 		# Wait seconds event
-		'dialogic_023':
+		DialogicSingleton.Event_Type.Wait:
 			emit_signal("event_start", "wait", event)
 			$TextBubble.visible = false
 			waiting = true
@@ -754,21 +757,21 @@ func event_handler(event: Dictionary):
 			emit_signal("event_end", "wait")
 			_load_next_event()
 		# Set Theme event
-		'dialogic_024':
+		DialogicSingleton.Event_Type.SetTheme:
 			emit_signal("event_start", "set_theme", event)
 			if event['set_theme'] != '':
 				current_theme = load_theme(event['set_theme'])
 			_load_next_event()
 		
 		# Set Glossary event
-		'dialogic_025':
+		DialogicSingleton.Event_Type.SetGlossary:
 			emit_signal("event_start", "set_glossary", event)
 			if event['glossary_id']:
 				DialogicUtil.get_singleton('DialogicSingleton', self).set_glossary_from_id(event['glossary_id'], event['title'], event['text'],event['extra'])
 			_load_next_event()
 		# AUDIO EVENTS
 		# Audio event
-		'dialogic_030':
+		DialogicSingleton.Event_Type.Audio:
 			emit_signal("event_start", "audio", event)
 			if event['audio'] == 'play' and 'file' in event.keys() and not event['file'].empty():
 				var audio = get_node_or_null('AudioEvent')
@@ -790,7 +793,7 @@ func event_handler(event: Dictionary):
 					audio.queue_free()
 			_load_next_event()
 		# Background Music event
-		'dialogic_031':
+		DialogicSingleton.Event_Type.BackgroundMusic:
 			emit_signal("event_start", "background-music", event)
 			if event['background-music'] == 'play' and 'file' in event.keys() and not event['file'].empty():
 				$FX/BackgroundMusic.crossfade_to(event['file'], event.get('audio_bus', 'Master'), event.get('volume', 0), event.get('fade_length', 1))
@@ -800,18 +803,18 @@ func event_handler(event: Dictionary):
 		
 		# GODOT EVENTS
 		# Emit signal event
-		'dialogic_040':
+		DialogicSingleton.Event_Type.EmitSignal:
 			dprint('[!] Emitting signal: dialogic_signal(', event['emit_signal'], ')')
 			emit_signal("dialogic_signal", event['emit_signal'])
 			_load_next_event()
 		# Change Scene event
-		'dialogic_041':
+		DialogicSingleton.Event_Type.ChangeScene:
 			if event.has('scene'):
 				get_tree().change_scene(event['scene'])
 			elif event.has('change_scene'):
 				get_tree().change_scene(event['change_scene'])
 		# Call Node event
-		'dialogic_042':
+		DialogicSingleton.Event_Type.CallNode:
 			dprint('[!] Call Node signal: dialogic_signal(call_node) ', var2str(event['call_node']))
 			emit_signal("event_start", "call_node", event)
 			$TextBubble.visible = false
