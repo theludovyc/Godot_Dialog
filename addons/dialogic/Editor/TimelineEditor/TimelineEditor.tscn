@@ -300,11 +300,11 @@ EventName = "CloseDialog"
 margin_top = 504.0
 margin_right = 168.0
 margin_bottom = 532.0
-text = "  Wait Seconds"
+text = "  Wait"
 icon = ExtResource( 14 )
 align = 0
 script = ExtResource( 21 )
-EventName = "WaitSeconds"
+EventName = "Wait"
 
 [node name="SetTheme" type="Button" parent="ScrollContainer/EventContainer"]
 margin_top = 536.0
