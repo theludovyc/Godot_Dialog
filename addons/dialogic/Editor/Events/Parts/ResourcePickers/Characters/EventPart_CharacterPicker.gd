@@ -92,7 +92,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 			index += 1
 
 		# in case this is a leave event
-		if event_data['event_id'] == 'dialogic_003':
+		if event_data["type"] == DialogicSingleton.Event_Type.CharacterLeave:
 			menu.add_item('All characters')
 			menu.set_item_metadata(index, {'file': '[All]'})
 			menu.set_item_icon(index, get_icon("GuiEllipsis", "EditorIcons"))
