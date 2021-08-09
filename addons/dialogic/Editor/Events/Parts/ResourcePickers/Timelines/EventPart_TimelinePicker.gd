@@ -17,7 +17,7 @@ func load_data(data:Dictionary):
 	.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
-	if event_data['change_timeline'] != '':
+	if event_data.has("change_timeline") and DialogicSingleton.timelines.has(event_data["change_timeline"]):
 		for c in DialogicUtil.get_timeline_list():
 			if c['file'] == event_data['change_timeline']:
 				picker_menu.text = c['name']
