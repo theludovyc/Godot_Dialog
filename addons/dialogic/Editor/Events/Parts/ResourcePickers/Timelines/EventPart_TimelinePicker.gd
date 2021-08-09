@@ -17,12 +17,14 @@ func load_data(data:Dictionary):
 	.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
-	if event_data.has("change_timeline") and DialogicSingleton.timelines.has(event_data["change_timeline"]):
-		for c in DialogicUtil.get_timeline_list():
-			if c['file'] == event_data['change_timeline']:
-				picker_menu.text = c['name']
-	else:
-		picker_menu.text = 'Select Timeline'
+	if event_data.has("change_timeline"):
+		var timeline_name = event_data["change_timeline"]
+		
+		if editor_reference.timelines.has(timeline_name):
+			picker_menu.text = timeline_name
+			return
+			
+	picker_menu.text = "Select Timeline"
 
 
 # has to return the wanted preview, only useful for body parts
@@ -33,46 +35,28 @@ func get_preview():
 # when an index is selected on one of the menus.
 func _on_PickerMenu_selected(index, menu):
 	var text = menu.get_item_text(index)
-	var metadata = menu.get_item_metadata(index)
+	
 	picker_menu.text = text
-	event_data['change_timeline'] = metadata['file']
+	
+	event_data['change_timeline'] = text
 	
 	# informs the parent about the changes!
 	data_changed()
 
 
 func _on_PickerMenu_about_to_show():
-	build_PickerMenu()
-
-
-func build_PickerMenu():
-	picker_menu.get_popup().clear()
-	var folder_structure = DialogicUtil.get_timelines_folder_structure()
-
-	## building the root level
-	build_PickerMenuFolder(picker_menu.get_popup(), folder_structure, "MenuButton")
-
-
-# is called recursively to build all levels of the folder structure
-func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current_folder_name:String):
+	var menu_popup = picker_menu.get_popup()
+	
+	menu_popup.clear()
+	
 	var index = 0
-	for folder_name in folder_structure['folders'].keys():
-		var submenu = PopupMenu.new()
-		var submenu_name = build_PickerMenuFolder(submenu, folder_structure['folders'][folder_name], folder_name)
-		submenu.name = submenu_name
-		menu.add_submenu_item(folder_name, submenu_name)
-		menu.set_item_icon(index, get_icon("Folder", "EditorIcons"))
-		menu.add_child(submenu)
+	
+	var timelines = editor_reference.timelines
+	
+	for timeline in timelines:
+		menu_popup.add_item(timeline)
+		menu_popup.set_item_icon(index, editor_reference.get_node("MainPanel/MasterTreeContainer/MasterTree").timeline_icon)
 		index += 1
 	
-	var files_info = DialogicUtil.get_timeline_dict()
-	for file in folder_structure['files']:
-		menu.add_item(files_info[file]['name'])
-		menu.set_item_icon(index, editor_reference.get_node("MainPanel/MasterTreeContainer/MasterTree").timeline_icon)
-		menu.set_item_metadata(index, {'file':file})
-		index += 1
-	
-	if not menu.is_connected("index_pressed", self, "_on_PickerMenu_selected"):
-		menu.connect("index_pressed", self, '_on_PickerMenu_selected', [menu])
-	
-	return current_folder_name
+	if not menu_popup.is_connected("index_pressed", self, "_on_PickerMenu_selected"):
+		menu_popup.connect("index_pressed", self, '_on_PickerMenu_selected', [menu_popup])
