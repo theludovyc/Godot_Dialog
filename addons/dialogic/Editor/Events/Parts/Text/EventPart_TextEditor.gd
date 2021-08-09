@@ -40,18 +40,21 @@ func load_data(data:Dictionary):
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
-	var max_preview_characters = 35
+	if event_data.has("text"):
+		var max_preview_characters = 35
 	
-	var text = event_data['text']
+		var text = event_data['text']
 	
-	text = text.replace('\n', '[br]')
+		text = text.replace('\n', '[br]')
 	
-	var preview = text.substr(0, min(max_preview_characters, len(text)))
+		var preview = text.substr(0, min(max_preview_characters, len(text)))
 	
-	if (len(text) > max_preview_characters):
-		preview += "..."
+		if (len(text) > max_preview_characters):
+			preview += "..."
+			
+		return preview
 	
-	return preview
+	return ""
 
 func _on_TextEditor_text_changed():
 	# in case this is a text event
