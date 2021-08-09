@@ -17,7 +17,10 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
+	# Now update the ui nodes to display the data.
+	if !data.has("position"):
+		data["position"] = [true, false, false, false, false]
+	
 	check_active_position()
 
 # has to return the wanted preview, only useful for body parts
@@ -28,7 +31,7 @@ func get_character_color():
 	for ch in DialogicUtil.get_character_list():
 		if ch['file'] == event_data['character']:
 			return ch['color']
-	return default_icon_color
+	return Color.white
 
 func position_button_pressed(name):
 	clear_all_positions()
@@ -37,13 +40,13 @@ func position_button_pressed(name):
 	button.set('self_modulate', get_character_color())
 	button.pressed = true
 	
-	event_data['position'][selected_index] = true
+	event_data['position'][int(selected_index)] = true
 	
 	data_changed()
 
 func clear_all_positions():
 	for i in range(5):
-		event_data['position'][str(i)] = false
+		event_data['position'][i] = false
 	for p in positions_container.get_children():
 		p.set('self_modulate', default_icon_color)
 		p.pressed = false
@@ -52,7 +55,7 @@ func clear_all_positions():
 func check_active_position(active_color = Color("#ffffff")):
 	var index = 0
 	for p in positions_container.get_children():
-		if event_data.has("position") and event_data['position'][str(index)]:
+		if event_data.has("position") and event_data['position'][index]:
 			p.pressed = true
 			p.set('self_modulate', get_character_color())
 		index += 1

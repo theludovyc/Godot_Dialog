@@ -37,17 +37,12 @@ func get_preview():
 
 func _on_MirrorButton_toggled(toggle):
 	event_data['mirror'] = toggle
-	
-	character_portrait_picker.load_data(event_data)
-	position_picker.load_data(event_data)
 
 	# informs the parent about the changes!
 	data_changed()
 
 func _on_PositionPicker_data_changed(data):
 	event_data = data
-	
-	character_portrait_picker.load_data(event_data)
 
 	# informs the parent about the changes!
 	data_changed()
