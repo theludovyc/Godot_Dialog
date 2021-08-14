@@ -340,9 +340,8 @@ func paste_events():
 				event_list.invert()
 			
 			var new_items = []
-			for item in event_list:
-				if typeof(item) == TYPE_DICTIONARY and item.has('event_id'):
-					new_items.append(load_event(item))
+			for event in event_list:
+				new_items.append(create_event(event))
 			selected_items = new_items
 			sort_selection()
 			visual_update_selection()
@@ -520,31 +519,50 @@ func cancel_drop_event():
 ## *****************************************************************************
 
 # Adding an event to the timeline_node
-func create_event0(scene: String, data: Dictionary = {}):
-	var piece = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instance()
+func create_event_node(scene: String):
+	#todo preload
+	var node = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instance()
 	
-	piece.editor_reference = editor_reference
-	
-	if !data.empty():
-		piece.event_data = data
+	node.editor_reference = editor_reference
 	
 	if len(selected_items) != 0:
-		timeline_node.add_child_below_node(selected_items[0], piece)
+		timeline_node.add_child_below_node(selected_items[0], node)
 	else:
-		timeline_node.add_child(piece)
+		timeline_node.add_child(node)
 
-	piece.connect("option_action", self, '_on_event_options_action', [piece])
-	piece.connect("gui_input", self, '_on_event_block_gui_input', [piece])
+	node.connect("option_action", self, '_on_event_options_action', [node])
+	node.connect("gui_input", self, '_on_event_block_gui_input', [node])
+	node.connect("event_data_changed", self, "on_event_data_changed")
 	
 	events_warning.visible = false
 
-	return piece
+	return node
 
-func create_event1(type:int, data: Dictionary = {}):
-	return create_event0(DialogicSingleton.Event_Type.keys()[type], data)
+func create_event0(type:String):
+	var node = create_event_node(type)
+	
+	node.id = current_events.size()
+		
+	current_events.append({"type":DialogicSingleton.Event_Type[type]})
+	
+	return node
 
-func load_event(event):
-	return create_event1(event["type"], event)
+func create_event1(type:int):
+	return create_event0(DialogicSingleton.Event_Type.keys()[type])
+
+func create_event(data:Dictionary, id:int = -1):
+	var node = create_event_node(DialogicSingleton.Event_Type.keys()[data["type"]])
+	
+	node.event_data = data
+	
+	if id == -1:
+		id = current_events.size()
+		
+		current_events.append(data)
+		
+	node.id = id
+	
+	return node
 
 func load_timeline(name:String):
 	#clear timeline
@@ -558,8 +576,8 @@ func load_timeline(name:String):
 	
 	current_events = current_timeline["events"]
 	
-	for event in current_events:
-		load_event(event)
+	for i in current_events.size():
+		create_event(current_events[i], i)
 	
 	indent_events()
 
@@ -641,14 +659,23 @@ func get_event_ignore_save(event: Node) -> bool:
 
 
 func save_timeline() -> void:
-	current_events.clear()
+	pass
+#	current_events.clear()
+#
+#	for event_node in timeline_node.get_children():
+#		# Checking that the event is not waiting to be removed
+#		# or that it is not a drag and drop placeholder
+#		if not get_event_ignore_save(event_node) and event_node.is_queued_for_deletion() == false:
+#			current_events.append(event_node.event_data)
+			
+## *****************************************************************************
+##					 EVENT_DATA
+## *****************************************************************************
+func on_event_data_changed(id, metadata):
+	var event = current_events[id]
 	
-	for event_node in timeline_node.get_children():
-		# Checking that the event is not waiting to be removed
-		# or that it is not a drag and drop placeholder
-		if not get_event_ignore_save(event_node) and event_node.is_queued_for_deletion() == false:
-			current_events.append(event_node.event_data)
-
+	for key in metadata.keys():
+		event[key] = metadata[key]
 
 ## *****************************************************************************
 ##					 UTILITIES/HELPERS

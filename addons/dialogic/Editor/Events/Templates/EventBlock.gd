@@ -2,6 +2,9 @@ tool
 extends HBoxContainer
 
 # customization options for the event 
+signal event_data_changed(id, metadata)
+
+var id:int
 
 # This is the default data that is going to be saved to json
 export (DialogicSingleton.Event_Type) var type
@@ -181,24 +184,25 @@ func _on_gui_input(event):
 
 # called when the data of the header is changed
 func _on_Header_data_changed(metadata:Dictionary):
-	for key in metadata.keys():
-		event_data[key] = metadata[key]
+	emit_signal("event_data_changed", id, metadata)
 	
 	# update the body in case it has to
 	if body_node:
-		body_node.load_data(event_data)
+		body_node.load_data(metadata)
 		
 	editor_reference.need_save()
 
 
 # called when the data of the body is changed
 func _on_Body_data_changed(metadata:Dictionary):
+	emit_signal("event_data_changed", id, metadata)
+	
 	for key in metadata.keys():
 		event_data[key] = metadata[key]
 	
 	# update the header in case it has to
 	if header_node:
-		header_node.load_data(event_data)
+		header_node.load_data(metadata)
 		
 	editor_reference.need_save()
 
