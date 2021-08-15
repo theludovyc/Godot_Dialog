@@ -12,10 +12,10 @@ test-scenes
 export_presets.cfg
 /builds
 
-# Only add dialogic plugin 
+# Only add GDialog plugin 
 /addons/*
-!/addons/dialogic
-# Ignore dialogic resources
-/dialogic
+!/addons/GDialog
+# Ignore GDialog resources
+/GDialog
 # Place test project files here
 /test-project
