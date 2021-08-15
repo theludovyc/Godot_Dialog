@@ -524,11 +524,6 @@ func create_event_node(scene: String):
 	var node = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instance()
 	
 	node.editor_reference = editor_reference
-	
-	if len(selected_items) != 0:
-		timeline_node.add_child_below_node(selected_items[0], node)
-	else:
-		timeline_node.add_child(node)
 
 	node.connect("option_action", self, '_on_event_options_action', [node])
 	node.connect("gui_input", self, '_on_event_block_gui_input', [node])
@@ -538,12 +533,20 @@ func create_event_node(scene: String):
 
 	return node
 
+func add_child_event_node(node):
+	if len(selected_items) != 0:
+		timeline_node.add_child_below_node(selected_items[0], node)
+	else:
+		timeline_node.add_child(node)
+
 func create_event0(type:String):
 	var node = create_event_node(type)
 	
 	node.id = current_events.size()
 		
 	current_events.append({"type":DialogicSingleton.Event_Type[type]})
+	
+	add_child_event_node(node)
 	
 	return node
 
@@ -561,6 +564,8 @@ func create_event(data:Dictionary, id:int = -1):
 		current_events.append(data)
 		
 	node.id = id
+	
+	add_child_event_node(node)
 	
 	return node
 
