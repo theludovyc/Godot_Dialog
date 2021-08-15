@@ -137,35 +137,46 @@ func set_variable(name: String, value) -> void:
 			d['value'] = str(value)
 
 
-func set_variable_from_id(id: String, value: String, operation: String) -> void:
-	var target_def: Dictionary;
-	for d in current_definitions['variables']:
-		if d['id'] == id:
-			target_def = d;
-	if target_def != null:
-		var converted_set_value = value
-		var converted_target_value = target_def['value']
-		var is_number = converted_set_value.is_valid_float() and converted_target_value.is_valid_float()
-		if is_number:
-			converted_set_value = float(value)
-			converted_target_value = float(target_def['value'])
-		var result = target_def['value']
-		# Do nothing for -, * and / operations on string
-		match operation:
-			'=':
-				result = converted_set_value
-			'+':
-				result = converted_target_value + converted_set_value
-			'-':
-				if is_number:
-					result = converted_target_value - converted_set_value
-			'*':
-				if is_number:
-					result = converted_target_value * converted_set_value
-			'/':
-				if is_number:
-					result = converted_target_value / converted_set_value
-		target_def['value'] = str(result)
+func set_variable_from_id(value_name: String, operation: String, value: String) -> void:
+	var current_value = values[value_name]["current"]
+	
+	var is_number = false
+	var converted_current_value:float
+	var converted_value:float
+	
+	if current_value.is_valid_float() and value.is_valid_float():
+		converted_current_value = float(current_value)
+		converted_value = float(value)
+		is_number = true
+		
+	# Do nothing for -, * and / operations on string
+	match operation:
+		"=":
+			current_value = value
+			
+		"+=":
+			if is_number:
+				current_value = str(converted_current_value + converted_value)
+			else:
+				current_value += value
+				
+		"-=":
+			if is_number:
+				current_value = str(converted_current_value - converted_value)
+			else:
+				current_value = current_value.replace(value, "")
+				
+		"*=":
+			if is_number:
+				current_value = str(converted_current_value * converted_value)
+				
+		"/=":
+			if is_number:
+				current_value = str(converted_current_value / converted_value)
+	
+	values[value_name]["current"] = current_value
+	
+	printt("DialogicSingleton.set_variable_from_id", values[value_name]["current"])
 
 
 func get_glossary(name: String) -> Dictionary:

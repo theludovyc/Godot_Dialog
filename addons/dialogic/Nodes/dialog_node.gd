@@ -695,14 +695,28 @@ func event_handler(event: Dictionary):
 		# Set Value event
 		DialogicSingleton.Event_Type.SetValue:
 			emit_signal("event_start", "set_value", event)
-			var operation = '='
-			if 'operation' in event and not event['operation'].empty():
-				operation = event["operation"]
-			var value = event['set_value']
-			if event.get('set_random', false):
-				value = str(randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0))
-			DialogicUtil.get_singleton('DialogicSingleton', self).set_variable_from_id(event['definition'], value, operation)
-			_load_next_event()
+			
+			if event.has("definition"):
+				var value_name = event["definition"]
+				
+				if DialogicSingleton.values.has(value_name):
+					var value
+				
+					var update = false
+				
+					if event.get("set_random", false):
+						value = str(randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0))
+				
+						update = true
+					elif event.has("set_value"):
+						value = event["set_value"]
+			
+						update = true
+				
+					if update:
+						DialogicSingleton.set_variable_from_id(value_name, event["operation"], value)
+				
+				_load_next_event()
 		
 		# TIMELINE EVENTS
 		# Change Timeline event
