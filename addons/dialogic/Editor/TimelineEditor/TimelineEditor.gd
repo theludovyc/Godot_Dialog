@@ -493,36 +493,6 @@ func _on_ButtonCondition_pressed() -> void:
 	editor_reference.need_save()
 
 ## *****************************************************************************
-##					 	DRAG AND DROP
-## *****************************************************************************
-
-# Creates a ghost event for drag and drop
-func create_drag_and_drop_event(scene: String):
-	var index = get_index_under_cursor()
-	var piece = create_event0(scene)
-	timeline_node.move_child(piece, index)
-	moving_piece = piece
-	piece_was_dragged = true
-	set_event_ignore_save(piece, true)
-	select_item(piece)
-	return piece
-
-func drop_event():
-	if moving_piece != null:
-		set_event_ignore_save(moving_piece, false)
-		moving_piece = null
-		piece_was_dragged = false
-		indent_events()
-
-func cancel_drop_event():
-	if moving_piece != null:
-		moving_piece = null
-		piece_was_dragged = false
-		delete_selected_events()
-		deselect_all_items()
-
-
-## *****************************************************************************
 ##					 	CREATING THE TIMELINE
 ## *****************************************************************************
 
@@ -631,36 +601,6 @@ func move_event_node(event_node, direction):
 		timeline_node.move_child(event_node, event_node_index + 1)
 		return true
 	return false
-
-
-## *****************************************************************************
-##					 TIMELINE CREATION AND SAVING
-## *****************************************************************************
-
-# Saving
-func generate_save_data():
-	var info_to_save = {
-		'metadata': {
-			'dialogic-version': editor_reference.version_string,
-			'name': timeline_name,
-			'file': timeline_file
-		},
-		'events': []
-	}
-	for event in timeline_node.get_children():
-		# Checking that the event is not waiting to be removed
-		# or that it is not a drag and drop placeholder
-		if not get_event_ignore_save(event) and event.is_queued_for_deletion() == false:
-			info_to_save['events'].append(event.event_data)
-	return info_to_save
-
-
-func set_event_ignore_save(event: Node, ignore: bool):
-	event.ignore_save = ignore
-	
-
-func get_event_ignore_save(event: Node) -> bool:
-	return event.ignore_save
 
 ## *****************************************************************************
 ##					 EVENT_DATA
