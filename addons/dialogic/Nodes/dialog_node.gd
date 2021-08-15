@@ -705,17 +705,49 @@ func event_handler(event: Dictionary):
 					var update = false
 				
 					if event.get("set_random", false):
-						value = str(randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0))
+						value = randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0)
 				
 						update = true
 					elif event.has("set_value"):
 						value = event["set_value"]
+						
+						if value.is_valid_float():
+							value = float(value)
 			
 						update = true
 				
 					if update:
-						DialogicSingleton.set_variable_from_id(value_name, event["operation"], value)
+						var current_value = DialogicSingleton.get_value(value_name)
+	
+						var is_number = false
+						
+						if typeof(current_value) == TYPE_REAL and typeof(value) == TYPE_REAL:
+							is_number = true
+						
+						# Do nothing for -, * and / operations on string
+						match event["operation"]:
+							"=":
+								current_value = value
+								
+							"+=":
+								current_value += value
+									
+							"-=":
+								if is_number:
+									current_value -= value
+								else:
+									current_value = current_value.replace(value, "")
+									
+							"*=":
+								if is_number:
+									current_value *= value
+									
+							"/=":
+								if is_number:
+									current_value /= value
 				
+						DialogicSingleton.set_value(value_name, current_value)
+						
 				_load_next_event()
 		
 		# TIMELINE EVENTS

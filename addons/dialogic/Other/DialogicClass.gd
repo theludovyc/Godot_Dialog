@@ -119,29 +119,6 @@ static func get_autosave() -> bool:
 static func reset_saves():
 	DialogicSingleton.init(true)
 
-
-## Gets the value for the variable with the given name.
-## The returned value is a String but can be easily converted into a number 
-## using Godot built-in methods: 
-## [`is_valid_float`](https://docs.godotengine.org/en/stable/classes/class_string.html#class-string-method-is-valid-float)
-## [`float()`](https://docs.godotengine.org/en/stable/classes/class_float.html#class-float-method-float).
-##
-## @param name					The name of the variable to find.
-## @returns						The variable's value as string, or an empty string if not found.
-static func get_variable(name: String) -> String:
-	return DialogicSingleton.get_variable(name)
-
-
-## Sets the value for the variable with the given name.
-## The given value will be converted to string using the 
-## [`str()`](https://docs.godotengine.org/en/stable/classes/class_string.html) function.
-##
-## @param name					The name of the variable to edit.
-## @param value					The value to set the variable to.
-static func set_variable(name: String, value) -> void:
-	DialogicSingleton.set_variable(name, value)
-
-
 ## Gets the glossary data for the definition with the given name.
 ## Returned format:
 ## { title': '', 'text' : '', 'extra': '' }

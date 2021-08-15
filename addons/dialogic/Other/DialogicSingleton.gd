@@ -123,61 +123,33 @@ func save_definitions():
 	else:
 		return OK
 
-
-func get_variable(name: String) -> String:
-	for d in current_definitions['variables']:
-		if d['name'] == name:
-			return d['value']
-	return ''
-
-
-func set_variable(name: String, value) -> void:
-	for d in current_definitions['variables']:
-		if d['name'] == name:
-			d['value'] = str(value)
-
-
-func set_variable_from_id(value_name: String, operation: String, value: String) -> void:
-	var current_value = values[value_name]["current"]
+## Return the default or current value with the given name.
+## The returned value is a String or a float
+## using Godot built-in methods: 
+## [`is_valid_float`](https://docs.godotengine.org/en/stable/classes/class_string.html#class-string-method-is-valid-float)
+## [`float()`](https://docs.godotengine.org/en/stable/classes/class_float.html#class-float-method-float).
+##
+## @param value_name	The name of the value to return.
+## @param default	if true return default value, else current
+## @returns		The value as string or float.
+func get_value(value_name:String, default:bool = false):
+	var value0 = values[value_name]
 	
-	var is_number = false
-	var converted_current_value:float
-	var converted_value:float
+	var value:String = value0["default"] if default else value0["current"]
 	
-	if current_value.is_valid_float() and value.is_valid_float():
-		converted_current_value = float(current_value)
-		converted_value = float(value)
-		is_number = true
+	if value.is_valid_float():
+		return float(value)
 		
-	# Do nothing for -, * and / operations on string
-	match operation:
-		"=":
-			current_value = value
-			
-		"+=":
-			if is_number:
-				current_value = str(converted_current_value + converted_value)
-			else:
-				current_value += value
-				
-		"-=":
-			if is_number:
-				current_value = str(converted_current_value - converted_value)
-			else:
-				current_value = current_value.replace(value, "")
-				
-		"*=":
-			if is_number:
-				current_value = str(converted_current_value * converted_value)
-				
-		"/=":
-			if is_number:
-				current_value = str(converted_current_value / converted_value)
-	
-	values[value_name]["current"] = current_value
-	
-	printt("DialogicSingleton.set_variable_from_id", values[value_name]["current"])
+	return value
 
+## Sets the value with the given name.
+## The given value will be converted to string using the 
+## [`str()`](https://docs.godotengine.org/en/stable/classes/class_string.html) function.
+##
+## @param name					The name of the value to edit.
+## @param value					The value to set.
+func set_value(value_name:String, value):
+	values[value_name]["current"] = str(value)
 
 func get_glossary(name: String) -> Dictionary:
 	for d in current_definitions['glossary']:
@@ -188,7 +160,6 @@ func get_glossary(name: String) -> Dictionary:
 		'text': '',
 		'extra': ''
 	}
-
 
 func set_glossary(name: String, title: String, text: String, extra: String) -> void:
 	for d in current_definitions['glossary']:
