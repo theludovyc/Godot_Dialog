@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 # has an event_data variable that stores the current data!!!
 
@@ -41,7 +41,7 @@ func _on_PickerMenu_selected(index):
 	data_changed()
 
 func get_character_data():
-	for ch in DialogicUtil.get_character_list():
+	for ch in GDialog_Util.get_character_list():
 		if ch['file'] == event_data['character']:
 			return ch
 

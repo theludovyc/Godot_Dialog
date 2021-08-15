@@ -62,7 +62,7 @@ func _on_toggle_visibility(checkbox_value):
 # Definition picker ------------------------------------------------------------
 func set_definition(definition):
 	if definition != '':
-		for d in DialogicResources.get_default_definitions()['variables']:
+		for d in GDialog_Resources.get_default_definitions()['variables']:
 			if d['id'] == definition:
 				Definition.text = d['name']
 	else:
@@ -79,7 +79,7 @@ func _on_definition_selected(index):
 func _on_definition_about_to_show():
 	Definition.get_popup().clear()
 	var index = 0
-	for d in DialogicUtil.get_default_definitions_list():
+	for d in GDialog_Util.get_default_definitions_list():
 		if d['type'] == 0:
 			Definition.get_popup().add_item(d['name'])
 			Definition.get_popup().set_item_metadata(index, d)

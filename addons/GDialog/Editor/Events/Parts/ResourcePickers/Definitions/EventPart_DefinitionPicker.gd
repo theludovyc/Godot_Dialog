@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 # has an event_data variable that stores the current data!!!
 export (String) var default_text = "Select Definition"
@@ -46,7 +46,7 @@ func _on_PickerMenu_about_to_show():
 	current_popup_menu.clear()
 	
 	## building the root level
-	#build_PickerMenuFolder(picker_menu.get_popup(), DialogicUtil.get_definitions_folder_structure(), "MenuButton")
+	#build_PickerMenuFolder(picker_menu.get_popup(), GDialog_Util.get_definitions_folder_structure(), "MenuButton")
 	for value in editor_reference.res_values:
 		current_popup_menu.add_icon_item(load("res://addons/dialogic/Images/Resources/definition.svg"), value)
 
@@ -65,7 +65,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu.add_child(submenu)
 		index += 1
 	
-	var files_info = DialogicUtil.get_default_definitions_dict()
+	var files_info = GDialog_Util.get_default_definitions_dict()
 	for file in folder_structure['files']:
 		if files_info[file]["type"] == 0:
 			menu.add_item(files_info[file]['name'])

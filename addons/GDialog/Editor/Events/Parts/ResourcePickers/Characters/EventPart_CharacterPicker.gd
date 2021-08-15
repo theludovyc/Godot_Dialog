@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 # has an event_data variable that stores the current data!!!
 
@@ -43,7 +43,7 @@ func update_to_character():
 			picker_menu.text = "All characters"
 			icon.modulate = Color.white
 		else:
-			for ch in DialogicUtil.get_character_list():
+			for ch in GDialog_Util.get_character_list():
 				if ch['file'] == event_data['character']:
 					picker_menu.text = ch['name']
 					icon.modulate = ch['color']
@@ -73,7 +73,7 @@ func _on_PickerMenu_about_to_show():
 
 func build_PickerMenu():
 	picker_menu.get_popup().clear()
-	var folder_structure = DialogicUtil.get_characters_folder_structure()
+	var folder_structure = GDialog_Util.get_characters_folder_structure()
 
 	## building the root level
 	build_PickerMenuFolder(picker_menu.get_popup(), folder_structure, "MenuButton")
@@ -108,7 +108,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu.add_child(submenu)
 		index += 1
 	
-	var files_info = DialogicUtil.get_characters_dict()
+	var files_info = GDialog_Util.get_characters_dict()
 	for file in folder_structure['files']:
 		menu.add_item(files_info[file]['name'])
 		# this doesn't work right now, because it doesn't have the editor_reference. Would be nice though

@@ -1,8 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/dialogic/Editor/Events/Parts/ResourcePickers/Characters/CharacterAndPortraitPicker.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/dialogic/Editor/Events/Parts/ResourcePickers/Characters/PositionPicker.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/dialogic/Editor/Events/Parts/ResourcePickers/Characters/EventPart_CharacterJoining.gd" type="Script" id=3]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/CharacterAndPortraitPicker.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/PositionPicker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/EventPart_CharacterJoining.gd" type="Script" id=3]
+
 
 [sub_resource type="Image" id=3]
 data = {

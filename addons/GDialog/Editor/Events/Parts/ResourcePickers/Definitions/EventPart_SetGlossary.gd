@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 # has an event_data variable that stores the current data!!!
 
@@ -35,7 +35,7 @@ func load_data(data:Dictionary):
 	
 	if event_data['glossary_id']:
 		var glossary_default 
-		for d in DialogicResources.get_default_definitions()['glossary']:
+		for d in GDialog_Resources.get_default_definitions()['glossary']:
 			if d['id'] == event_data['glossary_id']:
 				glossary_default = d
 		title_input.placeholder_text = glossary_default['title']

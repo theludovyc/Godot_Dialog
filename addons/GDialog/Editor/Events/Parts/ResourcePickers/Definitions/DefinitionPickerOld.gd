@@ -12,7 +12,7 @@ func _ready():
 func _on_MenuButton_about_to_show():
 	get_popup().clear()
 	var index = 0
-	for d in DialogicUtil.get_sorted_default_definitions_list():
+	for d in GDialog_Util.get_sorted_default_definitions_list():
 		if d['type'] == 0:
 			get_popup().add_item(d['name'])
 			get_popup().set_item_metadata(index, {
@@ -29,7 +29,7 @@ func _on_entry_selected(index):
 
 func load_definition(id):
 	if id != '':
-		for d in DialogicResources.get_default_definitions()['variables']:
+		for d in GDialog_Resources.get_default_definitions()['variables']:
 			if d['id'] == id:
 				text = d['name']
 	else:

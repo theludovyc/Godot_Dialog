@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 # has an event_data variable that stores the current data!!!
 export (String) var default_text = "Select Glossary Item"
@@ -25,7 +25,7 @@ func get_preview():
 
 func select_glossary_by_id(id):
 	if id != '':
-		for d in DialogicResources.get_default_definitions()['glossary']:
+		for d in GDialog_Resources.get_default_definitions()['glossary']:
 			if d['id'] == id:
 				picker_menu.text = d['name']
 	else:
@@ -45,7 +45,7 @@ func _on_PickerMenu_about_to_show():
 
 func build_PickerMenu():
 	picker_menu.get_popup().clear()
-	var folder_structure = DialogicUtil.get_definitions_folder_structure()
+	var folder_structure = GDialog_Util.get_definitions_folder_structure()
 
 	## building the root level
 	build_PickerMenuFolder(picker_menu.get_popup(), folder_structure, "MenuButton")
@@ -63,7 +63,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu.add_child(submenu)
 		index += 1
 	
-	var files_info = DialogicUtil.get_default_definitions_dict()
+	var files_info = GDialog_Util.get_default_definitions_dict()
 	for file in folder_structure['files']:
 		if files_info[file]["type"] == 1:
 			menu.add_item(files_info[file]['name'])
