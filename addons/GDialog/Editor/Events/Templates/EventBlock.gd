@@ -5,7 +5,7 @@ extends HBoxContainer
 signal event_data_changed(metadata)
 
 # This is the default data that is going to be saved to json
-export (DialogicSingleton.Event_Type) var type
+export (GDialog.Event_Type) var type
 var event_data: Dictionary
 export(StyleBoxFlat) var event_style : StyleBoxFlat
 var selected_style = preload("../styles/selected_styleboxflat_template.tres")
