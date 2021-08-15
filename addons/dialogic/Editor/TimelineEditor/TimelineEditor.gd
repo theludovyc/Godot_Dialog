@@ -95,19 +95,15 @@ func _on_event_block_gui_input(event, item: Node):
 				
 				indent_events()
 				
+				piece_was_dragged = false
+				
 			moving_piece = null
 		elif event.is_pressed():
 			moving_piece = item
 			
 			before_drag_index = moving_piece.get_index()
-			
-			if not _is_item_selected(item):
-				piece_was_dragged = true
-			else:
-				piece_was_dragged = false
 				
 			select_item(item)
-
 
 ## *****************************************************************************
 ##					 	SHORTCUTS
