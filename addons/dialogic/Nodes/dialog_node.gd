@@ -677,11 +677,13 @@ func event_handler(event: Dictionary):
 			# Treating this conditional as an option on a regular question event
 			var current_question = questions[event['question_idx']]
 			
-			var def_value = DialogicSingleton.values[event['definition']]["current"]
+			var condition_met = false
 			
-			var condition_met = def_value != null and _compare_definitions(def_value, event['value'], event['condition']);
+			if event.has("definition") and event.has("value"):
+				condition_met = _compare_definitions(DialogicSingleton.get_value(event["definition"]), event["value"], event.get("condition", "=="));
 			
 			current_question['answered'] = !condition_met
+			
 			if !condition_met:
 				# condition not met, skipping branch
 				_load_event_at_index(current_question['end_idx'])
@@ -710,9 +712,6 @@ func event_handler(event: Dictionary):
 						update = true
 					elif event.has("set_value"):
 						value = event["set_value"]
-						
-						if value.is_valid_float():
-							value = float(value)
 			
 						update = true
 				
@@ -721,7 +720,9 @@ func event_handler(event: Dictionary):
 	
 						var is_number = false
 						
-						if typeof(current_value) == TYPE_REAL and typeof(value) == TYPE_REAL:
+						if typeof(current_value) == TYPE_REAL and value.is_valid_float():
+							value = float(value)
+							
 							is_number = true
 						
 						# Do nothing for -, * and / operations on string
@@ -1163,7 +1164,7 @@ func dprint(string, arg1='', arg2='', arg3='', arg4='' ):
 		print(str(string) + str(arg1) + str(arg2) + str(arg3) + str(arg4))
 
 
-func _compare_definitions(def_value: String, event_value: String, condition: String):
+func _compare_definitions(def_value, event_value, condition: String):
 	var condition_met = false;
 	
 	#todo
@@ -1173,13 +1174,8 @@ func _compare_definitions(def_value: String, event_value: String, condition: Str
 #			event_value = d['value']
 #			break;
 	
-	#todo
-#	if def_value.is_valid_float() and event_value.is_valid_float():
-#		converted_def_value = float(def_value)
-#		converted_event_value = float(event_value)
-		
-	if condition.empty():
-		condition = "==" # The default condition is Equal to
+	if typeof(def_value) == TYPE_REAL and event_value.is_valid_float():
+		event_value = float(event_value)
 		
 	match condition:
 		"==":
