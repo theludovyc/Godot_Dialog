@@ -48,7 +48,7 @@ func _on_PickerMenu_about_to_show():
 	## building the root level
 	#build_PickerMenuFolder(picker_menu.get_popup(), GDialog_Util.get_definitions_folder_structure(), "MenuButton")
 	for value in editor_reference.res_values:
-		current_popup_menu.add_icon_item(load("res://addons/dialogic/Images/Resources/definition.svg"), value)
+		current_popup_menu.add_icon_item(load("res://addons/GDialog/Images/Resources/definition.svg"), value)
 
 	if not current_popup_menu.is_connected("index_pressed", self, "_on_PickerMenu_selected"):
 		current_popup_menu.connect("index_pressed", self, "_on_PickerMenu_selected")
@@ -69,7 +69,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 	for file in folder_structure['files']:
 		if files_info[file]["type"] == 0:
 			menu.add_item(files_info[file]['name'])
-			menu.set_item_icon(index, load("res://addons/dialogic/Images/Resources/definition.svg"))
+			menu.set_item_icon(index, load("res://addons/GDialog/Images/Resources/definition.svg"))
 			menu.set_item_metadata(index, {'file':file})
 			index += 1
 	

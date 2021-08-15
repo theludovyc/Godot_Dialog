@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends EventPart
 
 ## BEFORE EDITING THIS MAKE SURE YOU HAVE CREATED A UNIQUE SCRIPT!!!
 
