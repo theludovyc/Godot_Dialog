@@ -19,17 +19,16 @@ func _ready():
 
 	value_node.connect("text_entered", self, "_on_value_entered")
 
-
 func is_selected(id: String):
 	return current_definition != null and current_definition['id'] == id
 	
 func load_value(name):
 	name_node.editable = true
 	name_node.text = name
-	
-	value_node.text = editor_reference.res_values[name]
-	
 	tmp_name = name
+	
+	tmp_value = editor_reference.res_values[name]
+	value_node.text = tmp_value
 
 func reset_editor():
 	name_node.text = ''
@@ -51,7 +50,7 @@ func _on_name_entered(text):
 		name_node.text = tmp_name
 		
 func _on_value_entered(text):
-	if text == "":
+	if text.empty():
 		value_node.text = tmp_value
 		return
 		
@@ -59,5 +58,7 @@ func _on_value_entered(text):
 		return
 		
 	editor_reference.set_value(name_node.text, text)
+	
+	tmp_value = text
 	
 	value_node.release_focus()
