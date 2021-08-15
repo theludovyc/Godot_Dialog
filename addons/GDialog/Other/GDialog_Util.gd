@@ -356,6 +356,8 @@ static func path_fixer_load(path):
 		'res://addons/GDialog/Images/next-indicator.png':
 			return load('res://addons/GDialog/Example Assets/next-indicator/next-indicator.png')
 
+	printt("GDialog_Util", path)
+
 	return load(path)
 
 # This function contains necessary updates.

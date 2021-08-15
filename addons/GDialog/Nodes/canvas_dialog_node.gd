@@ -14,7 +14,7 @@ signal timeline_end(timeline_name)
 signal dialogic_signal(value)
 
 
-var _dialog_node_scene = load("res://addons/dialogic/Dialog.tscn")
+var _dialog_node_scene = load("res://addons/GDialog/Dialog.tscn")
 var dialog_node = null
 
 
@@ -39,7 +39,7 @@ func set_dialog_script(value):
 
 func _ready() -> void:
 	# change the canvas layer
-	var config = DialogicResources.get_settings_config()	
+	var config = GDialog_Resources.get_settings_config()	
 	layer = int(config.get_value("theme", "canvas_layer", 1))
 	
 	var _err:int

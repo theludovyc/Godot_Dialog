@@ -54,7 +54,7 @@ func _ready():
 	elif dialog_script.keys().size() == 0:
 		dialog_script = {
 			"events":[
-				{"Type": DialogicSingleton.Event_Type.Text,
+				{"Type": GDialog.Event_Type.Text,
 				"character":"","portrait":"",
 				"text":"[Dialogic Error] No timeline_name specified."}]
 		}
@@ -91,8 +91,8 @@ func _ready():
 func load_config_files():
 	if not Engine.is_editor_hint():
 		if reset_saves:
-			GDialog_Util.get_singleton('DialogicSingleton', self).init(reset_saves)
-		definitions = GDialog_Util.get_singleton('DialogicSingleton', self).get_definitions()
+			GDialog_Util.get_singleton('GDialog', self).init(reset_saves)
+		definitions = GDialog_Util.get_singleton('GDialog', self).get_definitions()
 	else:
 		definitions = GDialog_Resources.get_default_definitions()
 	settings = GDialog_Resources.get_settings_config()
@@ -145,7 +145,7 @@ func resize_main():
 func set_current_dialog(timeline_name:String):
 	current_timeline_name = timeline_name
 	
-	dialog_script = DialogicSingleton.timelines[timeline_name]
+	dialog_script = GDialog.timelines[timeline_name]
 	
 	return load_dialog()
 	
@@ -216,7 +216,7 @@ func parse_text_lines(unparsed_dialog_script: Dictionary) -> Dictionary:
 				for line in lines:
 					if not line.empty():
 						new_events.append({
-							"type": DialogicSingleton.Event_Type.Text,
+							"type": GDialog.Event_Type.Text,
 							'text': line,
 							'character': event['character'],
 							'portrait': event['portrait']
@@ -252,7 +252,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 	var event_idx: int = 0 # The current id for jumping later on
 	var question_idx: int = 0 # identifying the questions to assign options to it
 	for event in dialog_script['events']:
-		if event["type"] == DialogicSingleton.Event_Type.Choice:
+		if event["type"] == GDialog.Event_Type.Choice:
 			var opened_branch = parser_queue.back()
 			var option = {
 				'question_idx': opened_branch['question_idx'],
@@ -279,21 +279,21 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 					}
 			dialog_script['events'][opened_branch['event_idx']]['options'].append(option)
 			event['question_idx'] = opened_branch['question_idx']
-		elif event["type"] == DialogicSingleton.Event_Type.Question:
+		elif event["type"] == GDialog.Event_Type.Question:
 			event['event_idx'] = event_idx
 			event['question_idx'] = question_idx
 			event['answered'] = false
 			question_idx += 1
 			questions.append(event)
 			parser_queue.append(event)
-		elif event["type"] == DialogicSingleton.Event_Type.Condition:
+		elif event["type"] == GDialog.Event_Type.Condition:
 			event['event_idx'] = event_idx
 			event['question_idx'] = question_idx
 			event['answered'] = false
 			question_idx += 1
 			questions.append(event)
 			parser_queue.append(event)
-		elif event["type"] == DialogicSingleton.Event_Type.EndBranch:
+		elif event["type"] == GDialog.Event_Type.EndBranch:
 			event['event_idx'] = event_idx
 			var opened_branch = parser_queue.pop_back()
 			event['end_branch_of'] = opened_branch['question_idx']
@@ -312,7 +312,7 @@ func _should_show_glossary():
 func parse_definitions(text: String, variables: bool = true, glossary: bool = true):
 	var final_text: String = text
 	if not preview:
-		definitions = GDialog_Util.get_singleton('DialogicSingleton', self).get_definitions()
+		definitions = GDialog_Util.get_singleton('GDialog', self).get_definitions()
 	if variables:
 		final_text = _insert_value(text)
 	if glossary and _should_show_glossary():
@@ -329,7 +329,7 @@ func _insert_value(text: String):
 
 	var index_end = 0
 
-	var values = DialogicSingleton.values
+	var values = GDialog.values
 	
 	if values.empty():
 		return
@@ -499,9 +499,9 @@ func _on_text_completed():
 func on_timeline_start():
 	if not Engine.is_editor_hint():
 #		if settings.get_value('saving', 'save_definitions_on_start', true):
-#			GDialog_Util.get_singleton('DialogicSingleton', self).save_definitions()
+#			GDialog_Util.get_singleton('GDialog', self).save_definitions()
 		if settings.get_value('saving', 'save_current_timeline', true):
-			GDialog_Util.get_singleton('DialogicSingleton', self).set_current_timeline(current_timeline_name)
+			GDialog_Util.get_singleton('GDialog', self).set_current_timeline(current_timeline_name)
 	# TODO remove event_start in 2.0
 	emit_signal("event_start", "timeline_name", current_timeline_name)
 	emit_signal("timeline_start", current_timeline_name)
@@ -510,9 +510,9 @@ func on_timeline_start():
 func on_timeline_end():
 	if not Engine.is_editor_hint():
 #		if settings.get_value('saving', 'save_definitions_on_end', true):
-#			GDialog_Util.get_singleton('DialogicSingleton', self).save_definitions()
+#			GDialog_Util.get_singleton('GDialog', self).save_definitions()
 		if settings.get_value('saving', 'clear_current_timeline', true):
-			GDialog_Util.get_singleton('DialogicSingleton', self).set_current_timeline('')
+			GDialog_Util.get_singleton('GDialog', self).set_current_timeline('')
 	# TODO remove event_end in 2.0
 	emit_signal("event_end", "timeline_name")
 	emit_signal("timeline_end", current_timeline_name)
@@ -587,7 +587,7 @@ func event_handler(event: Dictionary):
 	match event["type"]:
 		# MAIN EVENTS
 		# Text Event
-		DialogicSingleton.Event_Type.Text:
+		GDialog.Event_Type.Text:
 			emit_signal("event_start", "text", event)
 			
 			show_dialog()
@@ -603,7 +603,7 @@ func event_handler(event: Dictionary):
 				
 			update_text(event['text'] if event.has("text") else "")
 		# Join event
-		DialogicSingleton.Event_Type.CharacterJoin:
+		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			if event['character'] == '':# No character found on the event. Skip.
@@ -639,7 +639,7 @@ func event_handler(event: Dictionary):
 					p.move_to_position(get_character_position(event['position']))
 			_load_next_event()
 		# Character Leave event 
-		DialogicSingleton.Event_Type.CharacterLeave:
+		GDialog.Event_Type.CharacterLeave:
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			if event['character'] == '[All]':
@@ -652,7 +652,7 @@ func event_handler(event: Dictionary):
 		
 		# LOGIC EVENTS
 		# Question event
-		DialogicSingleton.Event_Type.Question:
+		GDialog.Event_Type.Question:
 			emit_signal("event_start", "question", event)
 			show_dialog()
 			finished = false
@@ -665,7 +665,7 @@ func event_handler(event: Dictionary):
 				grab_portrait_focus(character_data, event)
 			update_text(event['question'])
 		# Choice event
-		DialogicSingleton.Event_Type.Choice:
+		GDialog.Event_Type.Choice:
 			emit_signal("event_start", "choice", event)
 			for q in questions:
 				if q['question_idx'] == event['question_idx']:
@@ -673,14 +673,14 @@ func event_handler(event: Dictionary):
 						# If the option is for an answered question, skip to the end of it.
 						_load_event_at_index(q['end_idx'])
 		# Condition event
-		DialogicSingleton.Event_Type.Condition:
+		GDialog.Event_Type.Condition:
 			# Treating this conditional as an option on a regular question event
 			var current_question = questions[event['question_idx']]
 			
 			var condition_met = false
 			
 			if event.has("definition") and event.has("value"):
-				condition_met = _compare_definitions(DialogicSingleton.get_value(event["definition"]), event["value"], event.get("condition", "=="));
+				condition_met = _compare_definitions(GDialog.get_value(event["definition"]), event["value"], event.get("condition", "=="));
 			
 			current_question['answered'] = !condition_met
 			
@@ -691,17 +691,17 @@ func event_handler(event: Dictionary):
 				# condition met, entering branch
 				_load_next_event()
 		# End Branch event
-		DialogicSingleton.Event_Type.EndBranch:
+		GDialog.Event_Type.EndBranch:
 			emit_signal("event_start", "endbranch", event)
 			_load_next_event()
 		# Set Value event
-		DialogicSingleton.Event_Type.SetValue:
+		GDialog.Event_Type.SetValue:
 			emit_signal("event_start", "set_value", event)
 			
 			if event.has("definition"):
 				var value_name = event["definition"]
 				
-				if DialogicSingleton.values.has(value_name):
+				if GDialog.values.has(value_name):
 					var value
 				
 					var update = false
@@ -716,7 +716,7 @@ func event_handler(event: Dictionary):
 						update = true
 				
 					if update:
-						var current_value = DialogicSingleton.get_value(value_name)
+						var current_value = GDialog.get_value(value_name)
 	
 						var is_number = false
 						
@@ -747,17 +747,17 @@ func event_handler(event: Dictionary):
 								if is_number:
 									current_value /= value
 				
-						DialogicSingleton.set_value(value_name, current_value)
+						GDialog.set_value(value_name, current_value)
 						
 				_load_next_event()
 		
 		# TIMELINE EVENTS
 		# Change Timeline event
-		DialogicSingleton.Event_Type.ChangeTimeline:
+		GDialog.Event_Type.ChangeTimeline:
 			dialog_script = set_current_dialog(event['change_timeline'])
 			_init_dialog()
 		# Change Backround event
-		DialogicSingleton.Event_Type.ChangeBackground:
+		GDialog.Event_Type.ChangeBackground:
 			emit_signal("event_start", "background", event)
 			var fade_time = event.get('fade_duration', 1)
 			var value = event.get('background', '')
@@ -787,7 +787,7 @@ func event_handler(event: Dictionary):
 
 			_load_next_event()
 		# Close Dialog event
-		DialogicSingleton.Event_Type.CloseDialog:
+		GDialog.Event_Type.CloseDialog:
 			emit_signal("event_start", "close_dialog", event)
 			var transition_duration = event.get('transition_duration', 1.0)
 			transition_duration = transition_duration
@@ -798,7 +798,7 @@ func event_handler(event: Dictionary):
 				background.name = 'BackgroundFadingOut'
 				background.fade_out(transition_duration)
 		# Wait seconds event
-		DialogicSingleton.Event_Type.Wait:
+		GDialog.Event_Type.Wait:
 			emit_signal("event_start", "wait", event)
 			$TextBubble.visible = false
 			waiting = true
@@ -808,21 +808,21 @@ func event_handler(event: Dictionary):
 			emit_signal("event_end", "wait")
 			_load_next_event()
 		# Set Theme event
-		DialogicSingleton.Event_Type.SetTheme:
+		GDialog.Event_Type.SetTheme:
 			emit_signal("event_start", "set_theme", event)
 			if event['set_theme'] != '':
 				current_theme = load_theme(event['set_theme'])
 			_load_next_event()
 		
 		# Set Glossary event
-		DialogicSingleton.Event_Type.SetGlossary:
+		GDialog.Event_Type.SetGlossary:
 			emit_signal("event_start", "set_glossary", event)
 			if event['glossary_id']:
-				GDialog_Util.get_singleton('DialogicSingleton', self).set_glossary_from_id(event['glossary_id'], event['title'], event['text'],event['extra'])
+				GDialog_Util.get_singleton('GDialog', self).set_glossary_from_id(event['glossary_id'], event['title'], event['text'],event['extra'])
 			_load_next_event()
 		# AUDIO EVENTS
 		# Audio event
-		DialogicSingleton.Event_Type.Audio:
+		GDialog.Event_Type.Audio:
 			emit_signal("event_start", "audio", event)
 			if event['audio'] == 'play' and 'file' in event.keys() and not event['file'].empty():
 				var audio = get_node_or_null('AudioEvent')
@@ -844,7 +844,7 @@ func event_handler(event: Dictionary):
 					audio.queue_free()
 			_load_next_event()
 		# Background Music event
-		DialogicSingleton.Event_Type.BackgroundMusic:
+		GDialog.Event_Type.BackgroundMusic:
 			emit_signal("event_start", "background-music", event)
 			if event['background-music'] == 'play' and 'file' in event.keys() and not event['file'].empty():
 				$FX/BackgroundMusic.crossfade_to(event['file'], event.get('audio_bus', 'Master'), event.get('volume', 0), event.get('fade_length', 1))
@@ -854,18 +854,18 @@ func event_handler(event: Dictionary):
 		
 		# GODOT EVENTS
 		# Emit signal event
-		DialogicSingleton.Event_Type.EmitSignal:
+		GDialog.Event_Type.EmitSignal:
 			dprint('[!] Emitting signal: dialogic_signal(', event['emit_signal'], ')')
 			emit_signal("dialogic_signal", event['emit_signal'])
 			_load_next_event()
 		# Change Scene event
-		DialogicSingleton.Event_Type.ChangeScene:
+		GDialog.Event_Type.ChangeScene:
 			if event.has('scene'):
 				get_tree().change_scene(event['scene'])
 			elif event.has('change_scene'):
 				get_tree().change_scene(event['change_scene'])
 		# Call Node event
-		DialogicSingleton.Event_Type.CallNode:
+		GDialog.Event_Type.CallNode:
 			dprint('[!] Call Node signal: dialogic_signal(call_node) ', var2str(event['call_node']))
 			emit_signal("event_start", "call_node", event)
 			$TextBubble.visible = false

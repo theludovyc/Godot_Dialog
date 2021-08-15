@@ -1,5 +1,4 @@
 extends Node
-class_name GDialog
 
 ## This script is added as an AutoLoad when the plugin is activated
 ## It is used during game execution to access the dialogic resources

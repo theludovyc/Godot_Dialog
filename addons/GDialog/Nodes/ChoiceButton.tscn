@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/dialogic/Nodes/ChoiceButton.gd" type="Script" id=1]
+[ext_resource path="res://addons/GDialog/Nodes/ChoiceButton.gd" type="Script" id=1]
+
 
 [node name="ChoiceButton" type="Button"]
 size_flags_horizontal = 4
