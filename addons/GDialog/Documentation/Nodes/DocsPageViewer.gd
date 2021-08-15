@@ -3,8 +3,8 @@ extends Control
 
 export (bool) var enable_editing = false
 # needs to be corrected, if you use this on a diffrent plugin!!!
-export (String) var documentation_path: String = "res://addons/dialogic/Documentation"
-var MarkdownParser = load("res://addons/dialogic/Documentation/Nodes/DocsMarkdownParser.gd").new()
+export (String) var documentation_path: String = "res://addons/GDialog/Documentation"
+var MarkdownParser = load("res://addons/GDialog/Documentation/Nodes/DocsMarkdownParser.gd").new()
 
 var current_path: String = ""
 var current_headings = []

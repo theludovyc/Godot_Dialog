@@ -113,7 +113,7 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu.add_item(files_info[file]['name'])
 		# this doesn't work right now, because it doesn't have the editor_reference. Would be nice though
 		#menu.set_item_icon(index, editor_reference.get_node("MainPanel/MasterTreeContainer/MasterTree").character_icon)
-		menu.set_item_icon(index, load("res://addons/dialogic/Images/Resources/character.svg"))
+		menu.set_item_icon(index, load("res://addons/GDialog/Images/Resources/character.svg"))
 		menu.set_item_metadata(index, {'file':file})
 		index += 1
 	

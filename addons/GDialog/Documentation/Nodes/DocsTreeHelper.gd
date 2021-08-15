@@ -2,7 +2,7 @@ tool
 extends Control
 
 # Don't change this if possible
-export (String) var documentation_path : String = "res://addons/dialogic/Documentation"
+export (String) var documentation_path : String = "res://addons/GDialog/Documentation"
 
 # This enables/disables the use of folder files
 # If enabled, the docs will expect a file named 

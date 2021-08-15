@@ -4,7 +4,7 @@ extends ScrollContainer
 var editor_reference
 onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
 var opened_character_data
-var portrait_entry = load("res://addons/dialogic/Editor/CharacterEditor/PortraitEntry.tscn")
+var portrait_entry = load("res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn")
 onready var nodes = {
 	'editor': $HBoxContainer/Container,
 	'name': $HBoxContainer/Container/Name/LineEdit,

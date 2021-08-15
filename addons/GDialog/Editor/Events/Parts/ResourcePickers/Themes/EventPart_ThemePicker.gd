@@ -1,5 +1,5 @@
 tool
-extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
+extends "res://addons/GDialog/Editor/Events/Parts/EventPart.gd"
 
 # has an event_data variable that stores the current data!!!
 export (String) var default_text = "Select Theme"

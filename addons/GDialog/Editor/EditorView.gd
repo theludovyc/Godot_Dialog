@@ -6,7 +6,7 @@ var editor_file_dialog # EditorFileDialog
 var file_picker_data: Dictionary = {'method': '', 'node': self}
 var version_string: String 
 
-# this is set when the plugins main-view is instanced in dialogic.gd
+# this is set when the plugins main-view is instanced in GDialog.gd
 var editor_interface = null
 
 var res_values:Dictionary
@@ -67,11 +67,11 @@ func _ready():
 	if _scale == 2:
 		$MainPanel.margin_top = 59
 		modifier = '-2'
-	$ToolBar/NewTimelineButton.icon = load("res://addons/dialogic/Images/Toolbar/add-timeline" + modifier + ".svg")
-	$ToolBar/NewCharactersButton.icon = load("res://addons/dialogic/Images/Toolbar/add-character" + modifier + ".svg")
-	$ToolBar/NewValueButton.icon = load("res://addons/dialogic/Images/Toolbar/add-definition" + modifier + ".svg")
-	$ToolBar/NewGlossaryEntryButton.icon = load("res://addons/dialogic/Images/Toolbar/add-glossary" + modifier + ".svg")
-	$ToolBar/NewThemeButton.icon = load("res://addons/dialogic/Images/Toolbar/add-theme" + modifier + ".svg")
+	$ToolBar/NewTimelineButton.icon = load("res://addons/GDialog/Images/Toolbar/add-timeline" + modifier + ".svg")
+	$ToolBar/NewCharactersButton.icon = load("res://addons/GDialog/Images/Toolbar/add-character" + modifier + ".svg")
+	$ToolBar/NewValueButton.icon = load("res://addons/GDialog/Images/Toolbar/add-definition" + modifier + ".svg")
+	$ToolBar/NewGlossaryEntryButton.icon = load("res://addons/GDialog/Images/Toolbar/add-glossary" + modifier + ".svg")
+	$ToolBar/NewThemeButton.icon = load("res://addons/GDialog/Images/Toolbar/add-theme" + modifier + ".svg")
 	
 	var modulate_color = Color.white
 	if not get_constant("dark_theme", "Editor"):
@@ -91,7 +91,7 @@ func _ready():
 	$ToolBar/NewValueButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_value_definition')
 	$ToolBar/NewGlossaryEntryButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_glossary_entry')
 	$ToolBar/Docs.icon = get_icon("Instance", "EditorIcons")
-	$ToolBar/Docs.connect('pressed', OS, "shell_open", ["https://dialogic.coppolaemilio.com"])
+	$ToolBar/Docs.connect('pressed', OS, "shell_open", ["https://GDialog.coppolaemilio.com"])
 	$ToolBar/FoldTools/ButtonFold.connect('pressed', $MainPanel/TimelineEditor, 'fold_all_nodes')
 	$ToolBar/FoldTools/ButtonUnfold.connect('pressed', $MainPanel/TimelineEditor, 'unfold_all_nodes')
 	
@@ -100,7 +100,7 @@ func _ready():
 
 	# Loading the version number
 	var config = ConfigFile.new()
-	var err = config.load("res://addons/dialogic/plugin.cfg")
+	var err = config.load("res://addons/GDialog/plugin.cfg")
 	if err == OK:
 		version_string = config.get_value("plugin", "version", "?")
 		$ToolBar/Version.text = 'Dialogic v' + version_string

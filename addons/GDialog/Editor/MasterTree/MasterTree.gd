@@ -34,7 +34,7 @@ var item_path_before_edit = ""
 
 # dragging items
 var dragging_item = null
-var drag_preview = load("res://addons/dialogic/Editor/MasterTree/DragPreview.tscn")
+var drag_preview = load("res://addons/GDialog/Editor/MasterTree/DragPreview.tscn")
 
 var rmb_popup_menus = {}
 
@@ -82,10 +82,10 @@ func _ready():
 	rect_size.x = 0
 	
 	# Icons
-	timeline_icon = load("res://addons/dialogic/Images/Resources/timeline" + modifier + ".svg")
-	character_icon = load("res://addons/dialogic/Images/Resources/character" + modifier + ".svg")
-	theme_icon = load("res://addons/dialogic/Images/Resources/theme" + modifier + ".svg")
-	definition_icon = load("res://addons/dialogic/Images/Resources/definition" + modifier + ".svg")
+	timeline_icon = load("res://addons/GDialog/Images/Resources/timeline" + modifier + ".svg")
+	character_icon = load("res://addons/GDialog/Images/Resources/character" + modifier + ".svg")
+	theme_icon = load("res://addons/GDialog/Images/Resources/theme" + modifier + ".svg")
+	definition_icon = load("res://addons/GDialog/Images/Resources/definition" + modifier + ".svg")
 	glossary_icon = get_icon("ListSelect", "EditorIcons")
 	
 	timelines_tree = create_subtree(root, "Timelines", "Timeline Root")

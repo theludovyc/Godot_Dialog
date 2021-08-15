@@ -2,7 +2,7 @@ extends Control
 
 var character_data = {
 	'name': 'Default',
-	'image': "res://addons/dialogic/Example Assets/portraits/df-3.png",
+	'image': "res://addons/GDialog/Example Assets/portraits/df-3.png",
 	'color': Color(0.973511, 1, 0.152344),
 	'file': '',
 	'mirror_portraits': false

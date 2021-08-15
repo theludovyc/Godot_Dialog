@@ -27,7 +27,7 @@ event_style = ExtResource( 2 )
 event_icon = ExtResource( 4 )
 event_name = "Character Join"
 header_scene = ExtResource( 3 )
-help_page_path = "res://addons/dialogic/Documentation/Content/Reference/Events/001.md"
+help_page_path = "res://addons/GDialog/Documentation/Content/Reference/Events/001.md"
 
 [node name="PanelContainer" parent="." index="1"]
 custom_styles/panel = ExtResource( 2 )

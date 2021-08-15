@@ -4,8 +4,8 @@ using System;
 
 public static class DialogicSharp
 {
-  private static Script _dialogic = GD.Load<Script>("res://addons/dialogic/Other/DialogicClass.gd");
-  private const String DEFAULT_DIALOG_RESOURCE = "res://addons/dialogic/Dialog.tscn";
+  private static Script _dialogic = GD.Load<Script>("res://addons/GDialog/Other/DialogicClass.gd");
+  private const String DEFAULT_DIALOG_RESOURCE = "res://addons/GDialog/Dialog.tscn";
 
   public static String CurrentTimeline
   {

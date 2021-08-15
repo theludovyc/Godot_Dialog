@@ -28,7 +28,7 @@ event_icon = ExtResource( 5 )
 event_name = "Text Event"
 header_scene = ExtResource( 1 )
 body_scene = ExtResource( 4 )
-help_page_path = "res://addons/dialogic/Documentation/Content/Reference/Events/000.md"
+help_page_path = "res://addons/GDialog/Documentation/Content/Reference/Events/000.md"
 
 [node name="PanelContainer" parent="." index="1"]
 margin_bottom = 50.0

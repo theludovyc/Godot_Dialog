@@ -1,10 +1,10 @@
 extends Node
 
-var heading1_font = "res://addons/dialogic/Documentation/Theme/DocumentationH1.tres"
-var heading2_font = "res://addons/dialogic/Documentation/Theme/DocumentationH2.tres"
-var heading3_font = "res://addons/dialogic/Documentation/Theme/DocumentationH3.tres"
-var heading4_font = "res://addons/dialogic/Documentation/Theme/DocumentationH4.tres"
-var heading5_font = "res://addons/dialogic/Documentation/Theme/DocumentationH5.tres"
+var heading1_font = "res://addons/GDialog/Documentation/Theme/DocumentationH1.tres"
+var heading2_font = "res://addons/GDialog/Documentation/Theme/DocumentationH2.tres"
+var heading3_font = "res://addons/GDialog/Documentation/Theme/DocumentationH3.tres"
+var heading4_font = "res://addons/GDialog/Documentation/Theme/DocumentationH4.tres"
+var heading5_font = "res://addons/GDialog/Documentation/Theme/DocumentationH5.tres"
 
 ## These will change with each parsing, but can be saved manually after parsing 
 var heading1s = []

@@ -24,7 +24,7 @@ func is_selected(id: String):
 
 
 func load_definition(id):
-	current_definition = DialogicResources.get_default_definition_item(id)
+	current_definition = GDialog_Resources.get_default_definition_item(id)
 	reset_editor()
 	nodes['name'].editable = true
 	nodes['name'].text = current_definition['name']
@@ -61,10 +61,10 @@ func _update_name_on_tree():
 
 
 func create_glossary_entry() -> String:
-	var id = DialogicUtil.generate_random_id()
-	DialogicResources.set_default_definition_glossary(id, 'New glossary entry', '', '', '')
+	var id = GDialog_Util.generate_random_id()
+	GDialog_Resources.set_default_definition_glossary(id, 'New glossary entry', '', '', '')
 	return id
 
 func save_definition():
 	if current_definition != null and current_definition['id'] != '':
-		DialogicResources.set_default_definition_glossary(current_definition['id'], nodes['name'].text, nodes['extra_title'].text, nodes['extra_text'].text, nodes['extra_extra'].text)
+		GDialog_Resources.set_default_definition_glossary(current_definition['id'], nodes['name'].text, nodes['extra_title'].text, nodes['extra_text'].text, nodes['extra_extra'].text)

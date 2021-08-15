@@ -469,15 +469,15 @@ func _on_ButtonQuestion_pressed() -> void:
 	if len(selected_items) != 0:
 		# Events are added bellow the selected node
 		# So we must reverse the adding order
-		create_event1(DialogicSingleton.Event_Type.EndBranch)
-		create_event1(DialogicSingleton.Event_Type.Choice)
-		create_event1(DialogicSingleton.Event_Type.Choice)
-		create_event1(DialogicSingleton.Event_Type.Question)
+		create_event1(GDialog.Event_Type.EndBranch)
+		create_event1(GDialog.Event_Type.Choice)
+		create_event1(GDialog.Event_Type.Choice)
+		create_event1(GDialog.Event_Type.Question)
 	else:
-		create_event1(DialogicSingleton.Event_Type.Question)
-		create_event1(DialogicSingleton.Event_Type.Choice)
-		create_event1(DialogicSingleton.Event_Type.Choice)
-		create_event1(DialogicSingleton.Event_Type.EndBranch)
+		create_event1(GDialog.Event_Type.Question)
+		create_event1(GDialog.Event_Type.Choice)
+		create_event1(GDialog.Event_Type.Choice)
+		create_event1(GDialog.Event_Type.EndBranch)
 	
 	indent_events()
 	
@@ -485,8 +485,8 @@ func _on_ButtonQuestion_pressed() -> void:
 
 # the Condition button adds multiple blocks 
 func _on_ButtonCondition_pressed() -> void:
-	create_event1(DialogicSingleton.Event_Type.Condition)
-	create_event1(DialogicSingleton.Event_Type.EndBranch)
+	create_event1(GDialog.Event_Type.Condition)
+	create_event1(GDialog.Event_Type.EndBranch)
 	
 	#indent_events()
 	
@@ -520,17 +520,17 @@ func add_child_event_node(node):
 func create_event0(type:String):
 	var node = create_event_node(type)
 		
-	current_events.append({"type":DialogicSingleton.Event_Type[type]})
+	current_events.append({"type":GDialog.Event_Type[type]})
 	
 	add_child_event_node(node)
 	
 	return node
 
 func create_event1(type:int):
-	return create_event0(DialogicSingleton.Event_Type.keys()[type])
+	return create_event0(GDialog.Event_Type.keys()[type])
 
 func create_event(data:Dictionary, id:int = -1):
-	var node = create_event_node(DialogicSingleton.Event_Type.keys()[data["type"]])
+	var node = create_event_node(GDialog.Event_Type.keys()[data["type"]])
 	
 	node.event_data = data
 	
@@ -638,17 +638,17 @@ func indent_events() -> void:
 			continue
 		
 		
-		if event_node.event_data["type"] == DialogicSingleton.Event_Type.Choice:
+		if event_node.event_data["type"] == GDialog.Event_Type.Choice:
 			if question_index > 0:
 				indent = question_indent[question_index] + 1
 				starter = true
-		elif (event_node.event_data["type"] == DialogicSingleton.Event_Type.Question or
-			event_node.event_data["type"] == DialogicSingleton.Event_Type.Condition):
+		elif (event_node.event_data["type"] == GDialog.Event_Type.Question or
+			event_node.event_data["type"] == GDialog.Event_Type.Condition):
 			indent += 1
 			starter = true
 			question_index += 1
 			question_indent[question_index] = indent
-		elif event_node.event_data["type"] == DialogicSingleton.Event_Type.EndBranch:
+		elif event_node.event_data["type"] == GDialog.Event_Type.EndBranch:
 			if question_indent.has(question_index):
 				indent = question_indent[question_index]
 				indent -= 1
