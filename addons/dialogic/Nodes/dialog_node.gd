@@ -589,13 +589,19 @@ func event_handler(event: Dictionary):
 		# Text Event
 		DialogicSingleton.Event_Type.Text:
 			emit_signal("event_start", "text", event)
+			
 			show_dialog()
+			
 			finished = false
+			
 			if event.has('character'):
 				var character_data = get_character(event['character'])
+				
 				update_name(character_data)
+				
 				grab_portrait_focus(character_data, event)
-			update_text(event['text'])
+				
+			update_text(event['text'] if event.has("text") else "")
 		# Join event
 		DialogicSingleton.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
