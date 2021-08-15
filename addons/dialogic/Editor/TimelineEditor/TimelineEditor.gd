@@ -1,7 +1,7 @@
 tool
 extends HSplitContainer
 
-var editor_reference
+var editor_reference:EditorView
 var timeline_name: String = ''
 var timeline_file: String = ''
 var current_timeline:Dictionary
@@ -20,6 +20,7 @@ var selected_items : Array = []
 
 var event_scenes : Dictionary = {}
 
+var before_drag_index:int
 var moving_piece = null
 var piece_was_dragged = false
 
@@ -71,30 +72,40 @@ func _process(delta):
 		if up_offset != null:
 			up_offset = (up_offset / 2) + 5
 			if current_position.y < node_position - up_offset:
-				move_block(moving_piece, 'up')
+				move_event_node(moving_piece, 'up')
 				piece_was_dragged = true
 		if down_offset != null:
 			down_offset = height + (down_offset / 2) + 5
 			if current_position.y > node_position + down_offset:
-				move_block(moving_piece, 'down')
+				move_event_node(moving_piece, 'down')
 				piece_was_dragged = true
 
 # SIGNAL handles input on the events mainly for selection and moving events
 func _on_event_block_gui_input(event, item: Node):
 	if event is InputEventMouseButton and event.button_index == 1:
 		if (not event.is_pressed()):
-			if (not piece_was_dragged and moving_piece != null):
-				pass
-			if (moving_piece != null):
+			if (piece_was_dragged and moving_piece != null):
+				var event_tmp = current_events[before_drag_index]
+				
+				current_events.remove(before_drag_index)
+				
+				current_events.insert(moving_piece.get_index(), event_tmp)
+				
+				editor_reference.need_save()
+				
 				indent_events()
+				
 			moving_piece = null
 		elif event.is_pressed():
 			moving_piece = item
+			
+			before_drag_index = moving_piece.get_index()
+			
 			if not _is_item_selected(item):
-				
 				piece_was_dragged = true
 			else:
 				piece_was_dragged = false
+				
 			select_item(item)
 
 
@@ -257,7 +268,7 @@ func _unhandled_key_input(event):
 		):
 			# move selected up
 			if (len(selected_items) == 1):
-				move_block(selected_items[0], "up")
+				move_event_node(selected_items[0], "up")
 				indent_events()
 				get_tree().set_input_as_handled()
 			
@@ -271,7 +282,7 @@ func _unhandled_key_input(event):
 		):
 			# move selected down
 			if (len(selected_items) == 1):
-				move_block(selected_items[0], "down")
+				move_event_node(selected_items[0], "down")
 				indent_events()
 				get_tree().set_input_as_handled()
 
@@ -441,7 +452,7 @@ func _on_event_options_action(action: String, event_node: Node):
 #			select_item(item, false)
 #		delete_selected_events()
 	else:
-		move_block(event_node, action)
+		move_event_node(event_node, action)
 
 
 
@@ -613,14 +624,15 @@ func get_index_under_cursor():
 
 
 # ordering blocks in timeline_node
-func move_block(block, direction):
-	var block_index = block.get_index()
+func move_event_node(event_node, direction):
+	var event_node_index = event_node.get_index()
+	
 	if direction == 'up':
-		if block_index > 0:
-			timeline_node.move_child(block, block_index - 1)
+		if event_node_index > 0:
+			timeline_node.move_child(event_node, event_node_index - 1)
 			return true
 	if direction == 'down':
-		timeline_node.move_child(block, block_index + 1)
+		timeline_node.move_child(event_node, event_node_index + 1)
 		return true
 	return false
 
