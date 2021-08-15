@@ -259,8 +259,6 @@ func on_save_button_pressed():
 		DialogicResources.save_res_values(res_values)
 	
 	if !timelines.empty():
-		timeline_editor.save_timeline()
-		
 		for timeline in timelines:
 			DialogicResources.save_timeline(timeline, timelines[timeline])
 	

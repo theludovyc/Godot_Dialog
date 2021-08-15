@@ -423,20 +423,27 @@ func deselect_all_items():
 ##				SPECIAL BLOCK OPERATIONS
 ## *****************************************************************************
 
-# SIGNAL handles the actions of the small menu on the right
-func _on_event_options_action(action: String, item: Node):
-	### WORK TODO
-	if action == "remove":
-		if len(selected_items) != 1 or (len(selected_items) == 1 and selected_items[0] != item):
-			select_item(item, false)
-		delete_selected_events()
-	else:
-		move_block(item, action)
+func delete_event(event_node):
+	current_events.remove(event_node.id)
+	
+	event_node.queue_free()
+	
+	editor_reference.need_save()
+	
 	indent_events()
 
-func delete_event(event):
-	event.get_parent().remove_child(event)
-	event.queue_free()
+# SIGNAL handles the actions of the small menu on the right
+func _on_event_options_action(action: String, event_node: Node):
+	### WORK TODO
+	if action == "remove":
+		delete_event(event_node)
+#		if len(selected_items) != 1 or (len(selected_items) == 1 and selected_items[0] != item):
+#			select_item(item, false)
+#		delete_selected_events()
+	else:
+		move_block(event_node, action)
+
+
 
 ## *****************************************************************************
 ##				CREATING NEW EVENTS USING THE BUTTONS
@@ -573,8 +580,8 @@ func load_timeline(name:String):
 	#clear timeline
 	deselect_all_items()
 	
-	for event in timeline_node.get_children():
-		event.queue_free()
+	for event_node in timeline_node.get_children():
+		event_node.queue_free()
 	
 	#load it
 	current_timeline = editor_reference.timelines[name]
@@ -662,17 +669,6 @@ func set_event_ignore_save(event: Node, ignore: bool):
 func get_event_ignore_save(event: Node) -> bool:
 	return event.ignore_save
 
-
-func save_timeline() -> void:
-	pass
-#	current_events.clear()
-#
-#	for event_node in timeline_node.get_children():
-#		# Checking that the event is not waiting to be removed
-#		# or that it is not a drag and drop placeholder
-#		if not get_event_ignore_save(event_node) and event_node.is_queued_for_deletion() == false:
-#			current_events.append(event_node.event_data)
-			
 ## *****************************************************************************
 ##					 EVENT_DATA
 ## *****************************************************************************
