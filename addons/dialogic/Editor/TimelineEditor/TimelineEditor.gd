@@ -424,7 +424,7 @@ func deselect_all_items():
 ## *****************************************************************************
 
 func delete_event(event_node):
-	current_events.remove(event_node.id)
+	current_events.remove(event_node.get_index())
 	
 	event_node.queue_free()
 	
@@ -478,16 +478,10 @@ func _on_ButtonQuestion_pressed() -> void:
 
 # the Condition button adds multiple blocks 
 func _on_ButtonCondition_pressed() -> void:
-	if len(selected_items) != 0:
-		# Events are added bellow the selected node
-		# So we must reverse the adding order
-		create_event1(DialogicSingleton.Event_Type.EndBranch)
-		create_event1(DialogicSingleton.Event_Type.Condition)
-	else:
-		create_event1(DialogicSingleton.Event_Type.Condition)
-		create_event1(DialogicSingleton.Event_Type.EndBranch)
+	create_event1(DialogicSingleton.Event_Type.Condition)
+	create_event1(DialogicSingleton.Event_Type.EndBranch)
 	
-	indent_events()
+	#indent_events()
 	
 	editor_reference.need_save()
 
@@ -534,22 +528,20 @@ func create_event_node(scene: String):
 
 	node.connect("option_action", self, '_on_event_options_action', [node])
 	node.connect("gui_input", self, '_on_event_block_gui_input', [node])
-	node.connect("event_data_changed", self, "on_event_data_changed")
+	node.connect("event_data_changed", self, "on_event_data_changed", [node])
 	
 	events_warning.visible = false
 
 	return node
 
 func add_child_event_node(node):
-	if len(selected_items) != 0:
-		timeline_node.add_child_below_node(selected_items[0], node)
-	else:
-		timeline_node.add_child(node)
+	timeline_node.add_child(node)
+#	#todo
+#	if len(selected_items) != 0:
+#		timeline_node.add_child_below_node(selected_items[0], node)
 
 func create_event0(type:String):
 	var node = create_event_node(type)
-	
-	node.id = current_events.size()
 		
 	current_events.append({"type":DialogicSingleton.Event_Type[type]})
 	
@@ -564,13 +556,6 @@ func create_event(data:Dictionary, id:int = -1):
 	var node = create_event_node(DialogicSingleton.Event_Type.keys()[data["type"]])
 	
 	node.event_data = data
-	
-	if id == -1:
-		id = current_events.size()
-		
-		current_events.append(data)
-		
-	node.id = id
 	
 	add_child_event_node(node)
 	
@@ -672,8 +657,8 @@ func get_event_ignore_save(event: Node) -> bool:
 ## *****************************************************************************
 ##					 EVENT_DATA
 ## *****************************************************************************
-func on_event_data_changed(id, metadata):
-	var event = current_events[id]
+func on_event_data_changed(metadata, node):
+	var event = current_events[node.get_index()]
 	
 	for key in metadata.keys():
 		event[key] = metadata[key]
