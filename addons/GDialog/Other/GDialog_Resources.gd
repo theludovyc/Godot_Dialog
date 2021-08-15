@@ -4,7 +4,7 @@ class_name GDialog_Resources
 ## This class is used by the DialogicEditor to access the resources files
 ## For example by the Editors (Timeline, Character, Theme), the MasterTree and the EventParts
 
-## It is also used by the DialogicUtil class and the DialogicSingleton
+## It is also used by the GDialog_Util class and the GDialog singleton
 
 const RESOURCES_DIR: String = "res://GDialog" # Readonly, used for static data
 const USER_DIR: String = "user://GDialog" # Readwrite, used for saves

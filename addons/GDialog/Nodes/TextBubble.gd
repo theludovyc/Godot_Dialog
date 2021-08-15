@@ -87,14 +87,7 @@ func load_theme(theme: ConfigFile):
 	# Text
 	var theme_font = GDialog_Util.path_fixer_load(theme.get_value('text', 'font', 'res://addons/GDialog/Example Assets/Fonts/DefaultFont.tres'))
 	text_label.set('custom_fonts/normal_font', theme_font)
-	
-	var a = theme.get_value('text', 'bold_font', 'res://addons/GDialog/Example Assets/Fonts/DefaultBoldFont.tres')
-	
-	var b = GDialog_Util.path_fixer_load(a)
-	
-	printt("TextBubble", a, b)
-	
-	text_label.set('custom_fonts/bold_font', b)
+	text_label.set('custom_fonts/bold_font', GDialog_Util.path_fixer_load(theme.get_value('text', 'bold_font', 'res://addons/GDialog/Example Assets/Fonts/DefaultBoldFont.tres')))
 	text_label.set('custom_fonts/italics_font', GDialog_Util.path_fixer_load(theme.get_value('text', 'italic_font', 'res://addons/GDialog/Example Assets/Fonts/DefaultItalicFont.tres')))
 	name_label.set('custom_fonts/font', GDialog_Util.path_fixer_load(theme.get_value('name', 'font', 'res://addons/GDialog/Example Assets/Fonts/NameFont.tres')))
 	

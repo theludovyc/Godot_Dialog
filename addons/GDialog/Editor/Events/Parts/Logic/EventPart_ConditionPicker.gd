@@ -39,7 +39,7 @@ func load_data(data:Dictionary):
 	if data.has("value"):
 		value_input.text = data["value"]
 	
-	if data["type"] == DialogicSingleton.Event_Type.Choice:
+	if data["type"] == GDialog.Event_Type.Choice:
 		optional_view.show()
 		
 		# Checking if definition is selected

@@ -2,7 +2,7 @@ extends Node
 class_name GDialog_DefinitionsUtil
 
 ## This class handles definitions
-# It is used by the DialogicSingleton, the DialogicResource class and the DialogicUtil class
+# It is used by the GDialog singleton, the DialogicResource class and the DialogicUtil class
 
 static func get_definition_by_key(data: Dictionary, key: String, value: String):
 	var variables : Array = data['variables']
