@@ -1,6 +1,7 @@
-Create dialogs, characters and scenes for your visual novels in Godot-Engine.
+# Godot_Dialog
+A plugin to create dialogs, characters and scenes for your visual novels in Godot-Engine.
 
-# Work in progress 🛠️  ![Godot v3.3](https://img.shields.io/badge/godot-v3.3-%23478cbf)
+![Godot v3.3](https://img.shields.io/badge/godot-v3.3-%23478cbf)
 
 [Installation](#installation) —
 [FAQ](#faq) — 
@@ -10,7 +11,7 @@ Create dialogs, characters and scenes for your visual novels in Godot-Engine.
 
 ## Installation
 
-To install GDialog, download it as a [ZIP archive](). Then extract the `addons/GDialog` folder into your project folder. Then, enable the plugin in project settings and restart Godot-Engine.
+To install Godot_Dialog plugin, download it as a [ZIP archive](). Then extract the `addons/GDialog` folder into your project folder. Then, enable the plugin in project settings and restart Godot-Engine.
 
 If you want to know more about installing plugins you can read the [official documentation page](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/installing_plugins.html).
 
