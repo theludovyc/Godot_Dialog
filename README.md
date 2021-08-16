@@ -21,7 +21,7 @@ The Godot editor needs a reboot after enabling GDialog for the first time. So ma
 
 ## 📦 Export
 
-When you export a project using GDialog, you need to add `*.json, *.cfg` on the Resources tab `Filters to export...` input field. This allows Godot to pack the files from the `/dialogic` folder.
+When you export a project using GDialog, you need to add `*.json, *.cfg` on the Resources tab `Filters to export...` input field. This allows Godot to pack the files from the `/GDialog` folder.
 
 ## Get Started
 There are two ways of doing this; using gdscript or the scene editor.
