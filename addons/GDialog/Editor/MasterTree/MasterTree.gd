@@ -358,7 +358,7 @@ func _on_item_selected():
 			timeline_editor.load_timeline(item_name)
 			show_timeline_editor()
 		'Character':
-			character_editor.load_character(metadata['file'])
+			character_editor.load_character(item_name)
 			show_character_editor()
 		'Value':
 			value_editor.load_value(item_name)

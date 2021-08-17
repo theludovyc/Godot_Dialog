@@ -1,99 +1,92 @@
 tool
 extends ScrollContainer
 
+onready var node_new_portrait_button = $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/Button
+onready var node_import_from_folder_button = $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/ImportFromFolder
+onready var node_display_name_checkbox = $HBoxContainer/Container/Name/CheckBox
+onready var node_nickname_checkbox = $HBoxContainer/Container/Name/CheckBox2
+onready var node_name = $HBoxContainer/Container/Name/LineEdit
+onready var node_color = $HBoxContainer/Container/Color/ColorPickerButton
+onready var node_file = $HBoxContainer/Container/FileName/LineEdit
+onready var node_description = $HBoxContainer/Container/Description/TextEdit
+onready var node_mirror_portraits_checkbox = $HBoxContainer/VBoxContainer/HBoxContainer/MirrorOption/MirrorPortraitsCheckBox
+onready var node_displayName = $HBoxContainer/Container/DisplayName
+onready var node_displayName_lineEdit = $HBoxContainer/Container/DisplayName/LineEdit
+onready var node_displayNickname = $HBoxContainer/Container/DisplayNickname
+onready var node_displayNickname_lineEdit = $HBoxContainer/Container/DisplayNickname/LineEdit
+onready var node_portrait_preview = $HBoxContainer/VBoxContainer/Control/TextureRect
+onready var node_image_label = $HBoxContainer/VBoxContainer/Control/Label
+onready var node_scale = $HBoxContainer/VBoxContainer/HBoxContainer/Scale
+onready var node_offset_x = $HBoxContainer/VBoxContainer/HBoxContainer/OffsetX
+onready var node_offset_y = $HBoxContainer/VBoxContainer/HBoxContainer/OffsetY
+onready var node_portraitList = $HBoxContainer/Container/ScrollContainer/VBoxContainer/PortraitList
+
 var editor_reference
 onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
 var opened_character_data
 var portrait_entry = load("res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn")
-onready var nodes = {
-	'editor': $HBoxContainer/Container,
-	'name': $HBoxContainer/Container/Name/LineEdit,
-	'description': $HBoxContainer/Container/Description/TextEdit,
-	'file': $HBoxContainer/Container/FileName/LineEdit,
-	'color': $HBoxContainer/Container/Color/ColorPickerButton,
-	'mirror_portraits_checkbox' : $HBoxContainer/VBoxContainer/HBoxContainer/MirrorOption/MirrorPortraitsCheckBox,
-	'display_name_checkbox': $HBoxContainer/Container/Name/CheckBox,
-	'display_name': $HBoxContainer/Container/DisplayName/LineEdit,
-	'nickname_checkbox': $HBoxContainer/Container/Name/CheckBox2,
-	'nickname': $HBoxContainer/Container/DisplayNickname/LineEdit,
-	'new_portrait_button': $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/Button,
-	'import_from_folder_button': $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/ImportFromFolder,
-	'portrait_preview': $HBoxContainer/VBoxContainer/Control/TextureRect,
-	'image_label': $"HBoxContainer/VBoxContainer/Control/Label",
-	'scale': $HBoxContainer/VBoxContainer/HBoxContainer/Scale,
-	'offset_x': $HBoxContainer/VBoxContainer/HBoxContainer/OffsetX,
-	'offset_y': $HBoxContainer/VBoxContainer/HBoxContainer/OffsetY,
-}
-
 
 func _ready():
-	nodes['new_portrait_button'].connect('pressed', self, '_on_New_Portrait_Button_pressed')
-	nodes['import_from_folder_button'].connect('pressed', self, '_on_Import_Portrait_Folder_Button_pressed')
-	nodes['display_name_checkbox'].connect('toggled', self, '_on_display_name_toggled')
-	nodes['nickname_checkbox'].connect('toggled', self, '_on_nickname_toggled')
-	nodes['name'].connect('text_changed', self, '_on_name_changed')
-	nodes['name'].connect('focus_exited', self, '_update_name_on_tree')
-	nodes['color'].connect('color_changed', self, '_on_color_changed')
+	node_new_portrait_button.connect('pressed', self, '_on_New_Portrait_Button_pressed')
+	node_import_from_folder_button.connect('pressed', self, '_on_Import_Portrait_Folder_Button_pressed')
+	node_display_name_checkbox.connect('toggled', self, '_on_display_name_toggled')
+	node_nickname_checkbox.connect('toggled', self, '_on_nickname_toggled')
+	node_name.connect('text_changed', self, '_on_name_changed')
+	node_name.connect('focus_exited', self, '_update_name_on_tree')
+	node_color.connect('color_changed', self, '_on_color_changed')
+	
 	var style = get('custom_styles/bg')
 	style.set('bg_color', get_color("base_color", "Editor"))
-	nodes['new_portrait_button'].icon = get_icon("Add", "EditorIcons")
-	nodes['import_from_folder_button'].icon = get_icon("Folder", "EditorIcons")
-
+	
+	node_new_portrait_button.icon = get_icon("Add", "EditorIcons")
+	node_import_from_folder_button.icon = get_icon("Folder", "EditorIcons")
 
 func _on_display_name_toggled(button_pressed):
-	$HBoxContainer/Container/DisplayName.visible = button_pressed
-
+	node_displayName.visible = button_pressed
 
 func _on_nickname_toggled(button_pressed):
-	$HBoxContainer/Container/DisplayNickname.visible = button_pressed
-
+	node_displayNickname.visible = button_pressed
 
 func is_selected(file: String):
-	return nodes['file'].text == file
-
+	return node_file.text == file
 
 func _on_name_changed(value):
 	save_character()
 
-
 func _update_name_on_tree():
 	var item = master_tree.get_selected()
-	item.set_text(0, nodes['name'].text)
-	master_tree.build_characters(nodes['file'].text)
+	item.set_text(0, node_name.text)
+	master_tree.build_characters(node_file.text)
 	
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if nodes['name'].has_focus():
+		if node_name.has_focus():
 			if event.scancode == KEY_ENTER:
-				nodes['name'].release_focus()
-
+				node_name.release_focus()
 
 func _on_color_changed(color):
 	var item = master_tree.get_selected()
 	item.set_icon_modulate(0, color)
 
-
 func clear_character_editor():
-	nodes['file'].text = ''
-	nodes['name'].text = ''
-	nodes['description'].text = ''
-	nodes['color'].color = Color('#ffffff')
-	nodes['mirror_portraits_checkbox'].pressed = false
-	nodes['display_name_checkbox'].pressed = false
-	nodes['nickname_checkbox'].pressed = false
-	nodes['display_name'].text = ''
-	nodes['nickname'].text = ''
-	nodes['portraits'] = []
-	nodes['scale'].value = 100
-	nodes['offset_x'].value = 0
-	nodes['offset_y'].value = 0
+	node_file.text = ""
+	node_name.text = ""
+	node_description.text = ""
+	node_color.color = Color('#ffffff')
+	node_mirror_portraits_checkbox.pressed = false
+	node_display_name_checkbox.pressed = false
+	node_nickname_checkbox.pressed = false
+	node_displayName_lineEdit.text = ""
+	node_displayNickname_lineEdit.text = ""
+	node_scale.value = 100
+	node_offset_x.value = 0
+	node_offset_y.value = 0
 
 	# Clearing portraits
-	for p in $HBoxContainer/Container/ScrollContainer/VBoxContainer/PortraitList.get_children():
+	for p in node_portraitList.get_children():
 		p.queue_free()
-	nodes['portrait_preview'].texture = null
-
+	node_portrait_preview.texture = null
 
 # Character Creation
 func create_character():
@@ -108,35 +101,33 @@ func create_character():
 	character['metadata'] = {'file': character_file}
 	return character
 
-
 # Saving and Loading
 func generate_character_data_to_save():
 	var portraits = []
-	for p in $HBoxContainer/Container/ScrollContainer/VBoxContainer/PortraitList.get_children():
+	for p in node_portraitList.get_children():
 		var entry = {}
 		entry['name'] = p.get_node("NameEdit").text
 		entry['path'] = p.get_node("PathEdit").text
 		portraits.append(entry)
 	var info_to_save = {
-		'id': nodes['file'].text,
-		'description': nodes['description'].text,
-		'color': '#' + nodes['color'].color.to_html(),
-		'mirror_portraits': nodes["mirror_portraits_checkbox"].pressed,
+		'id': node_file.text,
+		'description': node_description.text,
+		'color': '#' + node_color.color.to_html(),
+		'mirror_portraits': node_mirror_portraits_checkbox.pressed,
 		'portraits': portraits,
-		'display_name_bool': nodes['display_name_checkbox'].pressed,
-		'display_name': nodes['display_name'].text,
-		'nickname_bool': nodes['nickname_checkbox'].pressed,
-		'nickname': nodes['nickname'].text,
-		'scale': nodes['scale'].value,
-		'offset_x': nodes['offset_x'].value,
-		'offset_y': nodes['offset_y'].value,
+		'display_name_bool': node_display_name_checkbox.pressed,
+		'display_name': node_displayName_lineEdit.text,
+		'nickname_bool': node_nickname_checkbox.pressed,
+		'nickname': node_displayNickname_lineEdit.text,
+		'scale': node_scale.value,
+		'offset_x': node_offset_x.value,
+		'offset_y': node_offset_y.value,
 	}
 	# Adding name later for cases when no name is provided
-	if nodes['name'].text != '':
-		info_to_save['name'] = nodes['name'].text
+	if node_name.text != "":
+		info_to_save['name'] = node_name.text
 	
 	return info_to_save
-
 
 func save_character():
 	var info_to_save = generate_character_data_to_save()
@@ -144,24 +135,25 @@ func save_character():
 		GDialog_Resources.set_character(info_to_save)
 		opened_character_data = info_to_save
 
-
-func load_character(filename: String):
+func load_character(name:String):
 	clear_character_editor()
-	var data = GDialog_Resources.get_character_json(filename)
+	
+	var data = editor_reference.characters[name]
+	
 	opened_character_data = data
-	nodes['file'].text = data['id']
-	nodes['name'].text = data.get('name', '')
-	nodes['description'].text = data.get('description', '')
-	nodes['color'].color = Color(data.get('color','#ffffffff'))
-	nodes['display_name_checkbox'].pressed = data.get('display_name_bool', false)
-	nodes['display_name'].text = data.get('display_name', '')
-	nodes['scale'].value = float(data.get('scale', 100))
-	nodes['nickname_checkbox'].pressed = data.get('nickname_bool', false)
-	nodes['nickname'].text = data.get('nickname', '')
-	nodes['offset_x'].value = data.get('offset_x', 0)
-	nodes['offset_y'].value = data.get('offset_y', 0)
-	nodes['mirror_portraits_checkbox'].pressed = data.get('mirror_portraits', false)
-	nodes['portrait_preview'].flip_h = data.get('mirror_portraits', false)
+
+	node_name.text = name
+	node_description.text = data.get('description', "")
+	node_color.color = Color(data.get('color','#ffffffff'))
+	node_display_name_checkbox.pressed = data.get('display_name_bool', false)
+	node_displayName_lineEdit.text = data.get('display_name', "")
+	node_scale.value = float(data.get('scale', 100))
+	node_nickname_checkbox.pressed = data.get('nickname_bool', false)
+	node_displayNickname_lineEdit.text = data.get('nickname', "")
+	node_offset_x.value = data.get('offset_x', 0)
+	node_offset_y.value = data.get('offset_y', 0)
+	node_mirror_portraits_checkbox.pressed = data.get('mirror_portraits', false)
+	node_portrait_preview.flip_h = data.get('mirror_portraits', false)
 
 	# Portraits
 	var default_portrait = create_portrait_entry()
@@ -175,33 +167,29 @@ func load_character(filename: String):
 			else:
 				create_portrait_entry(p['name'], p['path'])
 
-
 # Portraits
 func _on_New_Portrait_Button_pressed():
-	create_portrait_entry('', '', true)
+	create_portrait_entry("", "", true)
 
-
-func create_portrait_entry(p_name = '', path = '', grab_focus = false):
+func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	var p = portrait_entry.instance()
 	p.editor_reference = editor_reference
-	p.image_node = nodes['portrait_preview']
-	p.image_label = nodes['image_label']
-	var p_list = $HBoxContainer/Container/ScrollContainer/VBoxContainer/PortraitList
+	p.image_node = node_portrait_preview
+	p.image_label = node_image_label
+	var p_list = node_portraitList
 	p_list.add_child(p)
-	if p_name != '':
+	if p_name != "":
 		p.get_node("NameEdit").text = p_name
-	if path != '':
+	if path != "":
 		p.get_node("PathEdit").text = path
 	if grab_focus:
 		p.get_node("NameEdit").grab_focus()
 		p._on_ButtonSelect_pressed()
 	return p
 
-
 func _on_Import_Portrait_Folder_Button_pressed():
 	editor_reference.godot_dialog("*", EditorFileDialog.MODE_OPEN_DIR)
 	editor_reference.godot_dialog_connect(self, "_on_dir_selected", "dir_selected")
-
 
 func _on_dir_selected(path, target):
 	var dir = Directory.new()
@@ -219,6 +207,5 @@ func _on_dir_selected(path, target):
 	else:
 		print("An error occurred when trying to access the path.")
 
-
 func _on_MirrorPortraitsCheckBox_toggled(button_pressed):
-	nodes['portrait_preview'].flip_h = button_pressed
+	node_portrait_preview.flip_h = button_pressed

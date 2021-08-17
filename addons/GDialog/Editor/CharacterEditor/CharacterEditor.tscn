@@ -3,13 +3,12 @@
 [ext_resource path="res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/GDialog/Editor/CharacterEditor/CharacterEditor.gd" type="Script" id=2]
 
-
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 5.0
 content_margin_bottom = 5.0
-bg_color = Color( 0.2, 0.23, 0.31, 1 )
+bg_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Image" id=4]
 data = {
@@ -247,9 +246,9 @@ icon = SubResource( 3 )
 
 [node name="FileName" type="HBoxContainer" parent="HBoxContainer/Container"]
 visible = false
-margin_top = 599.0
-margin_right = 523.0
-margin_bottom = 623.0
+margin_top = 615.0
+margin_right = 600.0
+margin_bottom = 639.0
 
 [node name="Label" type="Label" parent="HBoxContainer/Container/FileName"]
 margin_top = 5.0
@@ -260,7 +259,7 @@ text = "File:"
 
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer/Container/FileName"]
 margin_left = 134.0
-margin_right = 523.0
+margin_right = 600.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 140, 0 )
 size_flags_horizontal = 3
@@ -358,5 +357,4 @@ margin_bottom = 24.0
 margin_right = 125.0
 margin_bottom = 24.0
 text = "Mirror portraits"
-
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/MirrorOption/MirrorPortraitsCheckBox" to="." method="_on_MirrorPortraitsCheckBox_toggled"]
