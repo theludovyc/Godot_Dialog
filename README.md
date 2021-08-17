@@ -15,7 +15,7 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
 
 ## Installation
 
-To install Godot_Dialog plugin, download it as a [ZIP archive](). Then extract the `addons/GDialog` folder into your project folder. Then, enable the plugin in project settings and restart Godot-Engine.
+To install Godot_Dialog plugin, download it as a [ZIP archive](https://github.com/theludovyc/Godot_Dialogic/releases). Then extract the `addons/GDialog` folder into your project folder. Then, enable the plugin in project settings and restart Godot-Engine.
 
 If you want to know more about installing plugins you can read the [official documentation page](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/installing_plugins.html).
 
