@@ -141,8 +141,15 @@ func load_character(name:String):
 
 # Portraits
 func on_files_selected(paths:PoolStringArray):
-	for path in paths:
-		create_portrait_entry(path.get_file().get_basename(), path)
+	if !paths.empty():
+		for path in paths:
+			var name = path.get_file().get_basename()
+		
+			create_portrait_entry(name, path)
+		
+			current_character["portraits"].append({"name":name, "path":path})
+	
+		editor_reference.need_save()
 
 func _on_New_Portrait_Button_pressed():
 	editor_reference.popup_select_files(self, "on_files_selected", "*.png, *.svg")
