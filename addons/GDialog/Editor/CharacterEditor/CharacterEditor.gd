@@ -165,21 +165,34 @@ func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	node_portraitList.add_child(p)
 	
 	if !p_name.empty():
-		p.node_nameEdit = p_name
+		p.node_nameEdit.text = p_name
 		
 	if !path.empty():
-		p.node_pathEdit = path
+		p.node_pathEdit.text = path
 		
 	if grab_focus:
-		p.get_node("NameEdit").grab_focus()
+		p.node_nameEdit.grab_focus()
 	
 	p.node_buttonDelete.connect("pressed", self, "on_portrait_buttonDelete", [p])
+	p.connect("path_changed", self, "on_portrait_path_changed", [p])
+	p.node_nameEdit.connect("text_changed", self, "on_portrait_name_changed", [p])
+	
 	return p
 
 func on_portrait_buttonDelete(p):
 	current_character["portraits"].remove(p.get_index())
 	
 	p.queue_free()
+	
+	editor_reference.need_save()
+	
+func on_portrait_path_changed(path, p):
+	current_character["portraits"][p.get_index()]["path"] = path
+	
+	editor_reference.need_save()
+	
+func on_portrait_name_changed(text, p):
+	current_character["portraits"][p.get_index()]["name"] = text
 	
 	editor_reference.need_save()
 

@@ -1,8 +1,10 @@
 tool
 extends HBoxContainer
 
-onready var node_nameEdit = $NameEdit.text
-onready var node_pathEdit = $PathEdit.text
+signal path_changed(path)
+
+onready var node_nameEdit = $NameEdit
+onready var node_pathEdit = $PathEdit
 onready var node_buttonDelete = $ButtonDelete
 
 var editor_reference
@@ -13,21 +15,21 @@ func _ready():
 	node_buttonDelete.icon = get_icon("Remove", "EditorIcons")
 
 func _on_ButtonSelect_pressed():
-	editor_reference.godot_dialog("*.png, *.svg, *.tscn")
-	editor_reference.godot_dialog_connect(self, "_on_file_selected")
+	editor_reference.popup_select_file(self, "on_file_selected", "*.png, *.svg")
 
-func _on_file_selected(path, target):
+func on_file_selected(path):
+	node_pathEdit.text = path
+		
 	update_preview(path)
-	node_pathEdit = path
-	if node_nameEdit == '':
-		node_nameEdit = GDialog_Resources.get_filename_from_path(path)
+	
+	emit_signal("path_changed", path)
 
 func _on_focus_entered():
-	if node_pathEdit == '':
+	if node_pathEdit.text == '':
 		image_label.text = 'Preview - No image on this portrait entry.'
 		image_node.texture = null
 	else:
-		update_preview(node_pathEdit)
+		update_preview(node_pathEdit.text)
 
 func update_preview(path):
 	image_label.text = 'Preview'
