@@ -852,10 +852,8 @@ func _on_item_edited():
 		GDialog_Resources.set_theme_value(metadata['file'], 'settings', 'name', item.get_text(0))
 		build_themes(metadata['file'])
 		
-	if metadata['editor'] == 'Character':
-		character_editor.nodes['name'].text = item.get_text(0)
-		save_current_resource()
-		build_characters(metadata['file'])
+	if metadata["editor"] == "Character" and editor_reference.rename_character(metadata["name"], item_name):
+		change = true
 		
 	if metadata['editor'] == 'Value' and editor_reference.change_value_name(metadata["name"], item_name):
 		change = true

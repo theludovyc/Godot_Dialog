@@ -23,7 +23,8 @@ onready var node_portraitList = $HBoxContainer/Container/ScrollContainer/VBoxCon
 
 var editor_reference
 onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
-var opened_character_data
+
+var current_character:Dictionary
 var portrait_entry = load("res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn")
 
 func _ready():
@@ -133,34 +134,32 @@ func save_character():
 	var info_to_save = generate_character_data_to_save()
 	if info_to_save['id']:
 		GDialog_Resources.set_character(info_to_save)
-		opened_character_data = info_to_save
+		current_character = info_to_save
 
 func load_character(name:String):
 	clear_character_editor()
 	
-	var data = editor_reference.characters[name]
-	
-	opened_character_data = data
+	current_character = editor_reference.characters[name]
 
 	node_name.text = name
-	node_description.text = data.get('description', "")
-	node_color.color = Color(data.get('color','#ffffffff'))
-	node_display_name_checkbox.pressed = data.get('display_name_bool', false)
-	node_displayName_lineEdit.text = data.get('display_name', "")
-	node_scale.value = float(data.get('scale', 100))
-	node_nickname_checkbox.pressed = data.get('nickname_bool', false)
-	node_displayNickname_lineEdit.text = data.get('nickname', "")
-	node_offset_x.value = data.get('offset_x', 0)
-	node_offset_y.value = data.get('offset_y', 0)
-	node_mirror_portraits_checkbox.pressed = data.get('mirror_portraits', false)
-	node_portrait_preview.flip_h = data.get('mirror_portraits', false)
+	node_description.text = current_character.get('description', "")
+	node_color.color = Color(current_character.get('color','#ffffffff'))
+	node_display_name_checkbox.pressed = current_character.get('display_name_bool', false)
+	node_displayName_lineEdit.text = current_character.get('display_name', "")
+	node_scale.value = float(current_character.get('scale', 100))
+	node_nickname_checkbox.pressed = current_character.get('nickname_bool', false)
+	node_displayNickname_lineEdit.text = current_character.get('nickname', "")
+	node_offset_x.value = current_character.get('offset_x', 0)
+	node_offset_y.value = current_character.get('offset_y', 0)
+	node_mirror_portraits_checkbox.pressed = current_character.get('mirror_portraits', false)
+	node_portrait_preview.flip_h = current_character.get('mirror_portraits', false)
 
 	# Portraits
 	var default_portrait = create_portrait_entry()
 	default_portrait.get_node('NameEdit').text = 'Default'
 	default_portrait.get_node('NameEdit').editable = false
-	if data.has('portraits'):
-		for p in data['portraits']:
+	if current_character.has('portraits'):
+		for p in current_character['portraits']:
 			if p['name'] == 'Default':
 				default_portrait.get_node('PathEdit').text = p['path']
 				default_portrait.update_preview(p['path'])
