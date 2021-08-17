@@ -32,8 +32,6 @@ func _ready():
 	node_import_from_folder_button.connect('pressed', self, '_on_Import_Portrait_Folder_Button_pressed')
 	node_display_name_checkbox.connect('toggled', self, '_on_display_name_toggled')
 	node_nickname_checkbox.connect('toggled', self, '_on_nickname_toggled')
-	node_name.connect('text_changed', self, '_on_name_changed')
-	node_name.connect('focus_exited', self, '_update_name_on_tree')
 	node_color.connect('color_changed', self, '_on_color_changed')
 	
 	var style = get('custom_styles/bg')
@@ -51,15 +49,6 @@ func _on_nickname_toggled(button_pressed):
 func is_selected(file: String):
 	return node_file.text == file
 
-func _on_name_changed(value):
-	save_character()
-
-func _update_name_on_tree():
-	var item = master_tree.get_selected()
-	item.set_text(0, node_name.text)
-	master_tree.build_characters(node_file.text)
-	
-
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if node_name.has_focus():
@@ -69,6 +58,10 @@ func _input(event):
 func _on_color_changed(color):
 	var item = master_tree.get_selected()
 	item.set_icon_modulate(0, color)
+	
+	current_character["color"] = "#" + color.to_html()
+	
+	editor_reference.need_save()
 
 func clear_character_editor():
 	node_file.text = ""
