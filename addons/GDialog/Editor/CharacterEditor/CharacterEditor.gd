@@ -140,48 +140,31 @@ func load_character(name:String):
 			create_portrait_entry(p['name'], p['path'])
 
 # Portraits
-func on_file_selected(paths:PoolStringArray):
-	print(paths)
+func on_files_selected(paths:PoolStringArray):
+	for path in paths:
+		create_portrait_entry(path.get_file().get_basename(), path)
 
 func _on_New_Portrait_Button_pressed():
-#	create_portrait_entry("", "", true)
-	editor_reference.popup_select_files(self, "on_file_selected", "*.png, *.svg")
+	editor_reference.popup_select_files(self, "on_files_selected", "*.png, *.svg")
 
 func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	var p = portrait_entry.instance()
+	
 	p.editor_reference = editor_reference
 	p.image_node = node_portrait_preview
 	p.image_label = node_image_label
-	var p_list = node_portraitList
-	p_list.add_child(p)
-	if p_name != "":
+	
+	if !p_name.empty():
 		p.get_node("NameEdit").text = p_name
-	if path != "":
+		
+	if !path.empty():
 		p.get_node("PathEdit").text = path
+		
 	if grab_focus:
 		p.get_node("NameEdit").grab_focus()
-		p._on_ButtonSelect_pressed()
+		
+	node_portraitList.add_child(p)
 	return p
-
-func _on_Import_Portrait_Folder_Button_pressed():
-	editor_reference.godot_dialog("*", EditorFileDialog.MODE_OPEN_DIR)
-	editor_reference.godot_dialog_connect(self, "_on_dir_selected", "dir_selected")
-
-func _on_dir_selected(path, target):
-	var dir = Directory.new()
-	if dir.open(path) == OK:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if not dir.current_is_dir():
-				var file_lower = file_name.to_lower()
-				if '.svg' in file_lower or '.png' in file_lower:
-					if not '.import' in file_lower:
-						var final_name = path+ "/" + file_name
-						create_portrait_entry(GDialog_Resources.get_filename_from_path(file_name), final_name)
-			file_name = dir.get_next()
-	else:
-		print("An error occurred when trying to access the path.")
 
 func _on_MirrorPortraitsCheckBox_toggled(button_pressed):
 	node_portrait_preview.flip_h = button_pressed
