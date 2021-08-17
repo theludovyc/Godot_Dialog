@@ -8,12 +8,8 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var node = GDialog.start("NewTimeline1")
+	var node = GDialog.start("Timeline")
 	add_child(node)
-	
-	GDialog.set_value("NewValue0", 2)
-	
-	print(GDialog.get_value("NewValue0"))
 	pass # Replace with function body.
 
 

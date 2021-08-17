@@ -456,11 +456,16 @@ func create_rmb_context_menus():
 	rmb_popup_menus["Theme"] = theme_popup
 	theme_popup.connect('id_pressed', self, '_on_ThemePopupMenu_id_pressed')
 	
+	var value_popup = PopupMenu.new()
+	value_popup.add_icon_item(get_icon("Remove", "EditorIcons"), 'Remove')
+	add_child(value_popup)
+	rmb_popup_menus["Value"] = value_popup
+	value_popup.connect('id_pressed', self, '_on_ValuePopupMenu_id_pressed')
+	
 	var definition_popup = PopupMenu.new()
 	definition_popup.add_icon_item(get_icon("Edit", "EditorIcons"), 'Edit Definitions File')
 	definition_popup.add_icon_item(get_icon("Remove", "EditorIcons"), 'Remove Definition entry')
 	add_child(definition_popup)
-	rmb_popup_menus["Value"] = definition_popup
 	rmb_popup_menus["GlossaryEntry"] = definition_popup
 	definition_popup.connect('id_pressed', self, '_on_DefinitionPopupMenu_id_pressed')
 	
@@ -562,7 +567,7 @@ func _on_TimelinePopupMenu_id_pressed(id):
 	if id == 1: # Copy to clipboard
 		OS.set_clipboard(editor_reference.get_node("MainPanel/TimelineEditor").timeline_name)
 	if id == 2: # Remove
-		editor_reference.popup_remove_confirmation('Timeline')
+		editor_reference.popup_remove_confirmation("Timeline", get_selected().get_text(0))
 
 # Character context menu
 func _on_CharacterPopupMenu_id_pressed(id):
@@ -581,6 +586,10 @@ func _on_ThemePopupMenu_id_pressed(id):
 			editor_reference.theme_editor.duplicate_theme(filename)
 	if id == 2:
 		editor_reference.popup_remove_confirmation('Theme')
+
+func _on_ValuePopupMenu_id_pressed(id):
+	if id == 0:
+		editor_reference.popup_remove_confirmation("Value", get_selected().get_text(0))
 
 # Definition context menu
 func _on_DefinitionPopupMenu_id_pressed(id):

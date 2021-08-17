@@ -314,13 +314,18 @@ func parse_definitions(text: String, variables: bool = true, glossary: bool = tr
 	if not preview:
 		definitions = GDialog_Util.get_singleton('GDialog', self).get_definitions()
 	if variables:
-		final_text = _insert_value(text)
+		final_text = insert_value(text)
 	if glossary and _should_show_glossary():
 		final_text = _insert_glossary_definitions(final_text)
 	return final_text
 
 
-func _insert_value(text: String):
+func insert_value(text: String) -> String:
+	var values = GDialog.values
+	
+	if values.empty():
+		return text
+	
 	var split_text = []
 
 	var search_open = true
@@ -328,11 +333,6 @@ func _insert_value(text: String):
 	var index_start 
 
 	var index_end = 0
-
-	var values = GDialog.values
-	
-	if values.empty():
-		return
 
 	var dic:Dictionary
 
