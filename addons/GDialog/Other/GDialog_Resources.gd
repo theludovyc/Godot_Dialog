@@ -54,6 +54,26 @@ static func load_json(path: String, default: Dictionary={}) -> Dictionary:
 	# If everything else fails
 	return default
 
+static func load_jsons(dirPath:String) -> Dictionary:
+	var dic:Dictionary
+	
+	var dir := Directory.new()
+	
+	if dir.open(dirPath) == OK:
+		dir.list_dir_begin()
+		
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			if !dir.current_is_dir():
+				var name = file_name.rstrip(".json")
+				
+				dic[name] = load_json(dirPath + "/" + file_name)
+				
+			file_name = dir.get_next()
+
+	return dic
+
 static func save_json(path: String, data: Dictionary):
 	var file = File.new()
 	var err = file.open(path, File.WRITE)
@@ -293,7 +313,8 @@ static func rename_timeline(oldName:String, newName:String):
 ## *****************************************************************************
 ##							CHARACTERS
 ## *****************************************************************************
-# Can only be edited in the editor
+static func load_characters() -> Dictionary:
+	return load_jsons(working_dirs["CHAR_DIR"])
 
 static func rename_character(oldName:String, newName:String):
 	rename_json("CHAR_DIR", oldName, newName)

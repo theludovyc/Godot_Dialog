@@ -137,24 +137,22 @@ func _ready():
 ##						BUILDING THE TREE
 ## *****************************************************************************
 
+func _clear_tree_children(parent: TreeItem):
+	while parent.get_children() != null:
+		parent.get_children().free()
+
 func build_full_tree(selected_item: String = ''):
 	# Adding Values
 	build_values(selected_item)
 	# Adding timelines
 	build_timelines(selected_item)
 	# Adding characters
-	#build_characters(selected_item)
+	build_characters(selected_item)
 	
 	# Adding Definitions
 	#build_definitions(selected_item)
 	# Adding Themes
 	#build_themes(selected_item)
-
-
-func _clear_tree_children(parent: TreeItem):
-	while parent.get_children() != null:
-		parent.get_children().free()
-
 
 func build_resource_folder(parent_folder_item:TreeItem, folder_data:Dictionary, selected_item:String, folder_editor:String, resource_type: String):
 	## BUILD ALL THE FOLDER ITEMS (by calling this method for them)
@@ -231,10 +229,12 @@ func create_timeline_item(parent:TreeItem, name:String, select = false):
 	
 	item.set_icon(0, timeline_icon)
 	
-func create_character_item(parent:TreeItem, name:String, select = false):
+func create_character_item(parent:TreeItem, name:String, select = false, color:Color = Color.white):
 	var item = create_res_item(parent, {"editor":"Character", "name":name}, select)
 	
 	item.set_icon(0, character_icon)
+	
+	item.set_icon_modulate(0, color)
 
 func _add_resource_item(resource_type, parent_item, resource_data, select):
 	# create item
@@ -287,7 +287,6 @@ func build_values(selected_item: String = ""):
 	else:
 		pass
 
-
 ## TIMELINES
 func build_timelines(selected_item: String=''):
 	_clear_tree_children(timelines_tree)
@@ -298,14 +297,17 @@ func build_timelines(selected_item: String=''):
 	else:
 		pass
 
-
 ## CHARACTERS
 func build_characters(selected_item: String=''):
 	_clear_tree_children(characters_tree)
 	
-	GDialog_Util.update_resource_folder_structure()
-	var structure = GDialog_Util.get_characters_folder_structure()
-	build_resource_folder(characters_tree, structure, selected_item, "Character Root", "Character")
+	var dic = editor_reference.characters
+	
+	if selected_item.empty():
+		for character_name in dic:
+			create_character_item(characters_tree, character_name, false, dic[character_name]["color"])
+	else:
+		pass
 
 ## DEFINTIONS
 func build_definitions(selected_item: String=''):
@@ -315,7 +317,6 @@ func build_definitions(selected_item: String=''):
 	var structure = GDialog_Util.get_definitions_folder_structure()
 	build_resource_folder(definitions_tree, structure, selected_item, "Definition Root", "Definition")
 
-
 ## THEMES
 func build_themes(selected_item: String=''):
 	_clear_tree_children(themes_tree)
@@ -323,7 +324,6 @@ func build_themes(selected_item: String=''):
 	GDialog_Util.update_resource_folder_structure()
 	var structure = GDialog_Util.get_theme_folder_structure()
 	build_resource_folder(themes_tree, structure, selected_item, "Theme Root", "Theme")
-
 
 func _on_item_collapsed(item: TreeItem):
 	if filter_tree_term.empty() and item != null and 'Root' in item.get_metadata(0)['editor'] and not 'Documentation' in item.get_metadata(0)['editor']:

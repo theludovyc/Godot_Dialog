@@ -27,6 +27,8 @@ func _init():
 	res_values = GDialog_Resources.load_res_values()
 	
 	timelines = GDialog_Resources.load_timelines()
+	
+	characters = GDialog_Resources.load_characters()
 
 func _ready():
 	# Adding file dialog to get used by Events
