@@ -161,17 +161,17 @@ func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	p.editor_reference = editor_reference
 	p.image_node = node_portrait_preview
 	p.image_label = node_image_label
+		
+	node_portraitList.add_child(p)
 	
 	if !p_name.empty():
-		p.get_node("NameEdit").text = p_name
+		p.node_nameEdit = p_name
 		
 	if !path.empty():
-		p.get_node("PathEdit").text = path
+		p.node_pathEdit = path
 		
 	if grab_focus:
 		p.get_node("NameEdit").grab_focus()
-		
-	node_portraitList.add_child(p)
 	
 	p.node_buttonDelete.connect("pressed", self, "on_portrait_buttonDelete", [p])
 	return p
