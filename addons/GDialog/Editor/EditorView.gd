@@ -165,6 +165,19 @@ func _on_RemoveConfirmation_confirmed(what:String = "", what_name:String = ""):
 	
 	$MainPanel/MasterTreeContainer/MasterTree.hide_all_editors()
 
+func popup_select_files(who, method_name:String, filter:String = ""):
+	editor_file_dialog.mode = EditorFileDialog.MODE_OPEN_FILES
+	editor_file_dialog.clear_filters()
+	
+	if !filter.empty():
+		editor_file_dialog.add_filter(filter)
+	
+	editor_file_dialog.popup_centered_ratio(0.75)
+	
+	for _signal in editor_file_dialog.get_signal_connection_list("files_selected"):
+		editor_file_dialog.disconnect("files_selected", _signal["target"], _signal["method"])
+	
+	editor_file_dialog.connect("files_selected", who, method_name)
 
 # Godot dialog
 func godot_dialog(filter, mode = EditorFileDialog.MODE_OPEN_FILE):

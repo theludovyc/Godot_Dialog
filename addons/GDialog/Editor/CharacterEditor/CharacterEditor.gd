@@ -33,6 +33,7 @@ func _ready():
 	node_display_name_checkbox.connect('toggled', self, '_on_display_name_toggled')
 	node_nickname_checkbox.connect('toggled', self, '_on_nickname_toggled')
 	node_color.connect('color_changed', self, '_on_color_changed')
+	node_description.connect("text_changed", self, "on_description_changed")
 	
 	var style = get('custom_styles/bg')
 	style.set('bg_color', get_color("base_color", "Editor"))
@@ -49,17 +50,16 @@ func _on_nickname_toggled(button_pressed):
 func is_selected(file: String):
 	return node_file.text == file
 
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if node_name.has_focus():
-			if event.scancode == KEY_ENTER:
-				node_name.release_focus()
-
 func _on_color_changed(color):
 	var item = master_tree.get_selected()
 	item.set_icon_modulate(0, color)
 	
 	current_character["color"] = "#" + color.to_html()
+	
+	editor_reference.need_save()
+
+func on_description_changed():
+	current_character["description"] = node_description.text
 	
 	editor_reference.need_save()
 
@@ -81,19 +81,6 @@ func clear_character_editor():
 	for p in node_portraitList.get_children():
 		p.queue_free()
 	node_portrait_preview.texture = null
-
-# Character Creation
-func create_character():
-	var character_file = 'character-' + str(OS.get_unix_time()) + '.json'
-	var character = {
-		'color': '#ffffff',
-		'id': character_file,
-		'portraits': [],
-		'mirror_portraits' :false
-	}
-	GDialog_Resources.set_character(character)
-	character['metadata'] = {'file': character_file}
-	return character
 
 # Saving and Loading
 func generate_character_data_to_save():
@@ -148,20 +135,17 @@ func load_character(name:String):
 	node_portrait_preview.flip_h = current_character.get('mirror_portraits', false)
 
 	# Portraits
-	var default_portrait = create_portrait_entry()
-	default_portrait.get_node('NameEdit').text = 'Default'
-	default_portrait.get_node('NameEdit').editable = false
 	if current_character.has('portraits'):
 		for p in current_character['portraits']:
-			if p['name'] == 'Default':
-				default_portrait.get_node('PathEdit').text = p['path']
-				default_portrait.update_preview(p['path'])
-			else:
-				create_portrait_entry(p['name'], p['path'])
+			create_portrait_entry(p['name'], p['path'])
 
 # Portraits
+func on_file_selected(paths:PoolStringArray):
+	print(paths)
+
 func _on_New_Portrait_Button_pressed():
-	create_portrait_entry("", "", true)
+#	create_portrait_entry("", "", true)
+	editor_reference.popup_select_files(self, "on_file_selected", "*.png, *.svg")
 
 func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	var p = portrait_entry.instance()
