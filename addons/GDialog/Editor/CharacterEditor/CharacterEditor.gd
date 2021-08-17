@@ -1,6 +1,8 @@
 tool
 extends ScrollContainer
 
+var portrait_entry = preload("res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn")
+
 onready var node_new_portrait_button = $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/Button
 onready var node_import_from_folder_button = $HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer/ImportFromFolder
 onready var node_display_name_checkbox = $HBoxContainer/Container/Name/CheckBox
@@ -25,7 +27,6 @@ var editor_reference
 onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
 
 var current_character:Dictionary
-var portrait_entry = load("res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn")
 
 func _ready():
 	node_new_portrait_button.connect('pressed', self, '_on_New_Portrait_Button_pressed')
@@ -171,7 +172,16 @@ func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 		p.get_node("NameEdit").grab_focus()
 		
 	node_portraitList.add_child(p)
+	
+	p.node_buttonDelete.connect("pressed", self, "on_portrait_buttonDelete", [p])
 	return p
+
+func on_portrait_buttonDelete(p):
+	current_character["portraits"].remove(p.get_index())
+	
+	p.queue_free()
+	
+	editor_reference.need_save()
 
 func _on_MirrorPortraitsCheckBox_toggled(button_pressed):
 	node_portrait_preview.flip_h = button_pressed
