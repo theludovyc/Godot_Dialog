@@ -2,6 +2,8 @@ tool
 extends Control
 class_name EditorView
 
+onready var popup_removeConfirmation = $RemoveConfirmation
+
 var editor_file_dialog # EditorFileDialog
 var file_picker_data: Dictionary = {'method': '', 'node': self}
 var version_string: String 
@@ -113,15 +115,15 @@ func _ready():
 func on_master_tree_editor_selected(editor: String):
 	$ToolBar/FoldTools.visible = editor == 'timeline'
 
-func popup_remove_confirmation(what):
-	var remove_text = "Are you sure you want to remove this [resource]? \n (Can't be restored)"
-	$RemoveConfirmation.dialog_text = remove_text.replace('[resource]', what)
-	if $RemoveConfirmation.is_connected( 
-		'confirmed', self, '_on_RemoveConfirmation_confirmed'):
-				$RemoveConfirmation.disconnect(
-					'confirmed', self, '_on_RemoveConfirmation_confirmed')
-	$RemoveConfirmation.connect('confirmed', self, '_on_RemoveConfirmation_confirmed', [what])
-	$RemoveConfirmation.popup_centered()
+func popup_remove_confirmation(what, what_name:String = ""):
+	popup_removeConfirmation.dialog_text = "Are you sure you want to remove " + what_name + "? \n (Can't be restored)"
+	
+	if popup_removeConfirmation.is_connected('confirmed', self, '_on_RemoveConfirmation_confirmed'):
+		popup_removeConfirmation.disconnect('confirmed', self, '_on_RemoveConfirmation_confirmed')
+	
+	popup_removeConfirmation.connect('confirmed', self, '_on_RemoveConfirmation_confirmed', [what, what_name])
+	
+	popup_removeConfirmation.popup_centered()
 
 
 func _on_RemoveFolderConfirmation_confirmed():
@@ -130,30 +132,33 @@ func _on_RemoveFolderConfirmation_confirmed():
 	$MainPanel/MasterTreeContainer/MasterTree.build_full_tree()
 
 
-func _on_RemoveConfirmation_confirmed(what: String = ''):
+func _on_RemoveConfirmation_confirmed(what:String = "", what_name:String = ""):
 	match what:
-		'Timeline':
-			var target = $MainPanel/TimelineEditor.timeline_file
-			GDialog_Resources.delete_timeline(target)
+		"Timeline":
+			timelines.erase(what_name)
 			
-		'GlossaryEntry':
+			GDialog_Resources.delete_timeline(what_name)
+			
+		"GlossaryEntry":
 			var target = $MainPanel/GlossaryEntryEditor.current_definition['id']
 			GDialog_Resources.delete_default_definition(target)
 			
-		'Value':
-			var target = $MainPanel/ValueEditor.current_definition['id']
-			GDialog_Resources.delete_default_definition(target)
+		"Value":
+			res_values.erase(what_name)
 			
-		'Theme':
+			GDialog_Resources.save_res_values(res_values)
+			
+		"Theme":
 			var filename = $MainPanel/MasterTreeContainer/MasterTree.get_selected().get_metadata(0)['file']
 			GDialog_Resources.delete_theme(filename)
 			
-		'Character':
+		"Character":
 			var filename = $MainPanel/CharacterEditor.opened_character_data['id']
 			GDialog_Resources.delete_character(filename)
 
-	GDialog_Util.update_resource_folder_structure()
+#	GDialog_Util.update_resource_folder_structure()
 	$MainPanel/MasterTreeContainer/MasterTree.remove_selected()
+	
 	$MainPanel/MasterTreeContainer/MasterTree.hide_all_editors()
 
 
