@@ -33,8 +33,6 @@ const user_files = {
 ## *****************************************************************************
 ##							BASIC JSON FUNCTION
 ## *****************************************************************************
-
-
 static func load_json(path: String, default: Dictionary={}) -> Dictionary:
 	# An easy function to load json files and handle common errors.
 	var file := File.new()
@@ -56,14 +54,18 @@ static func load_json(path: String, default: Dictionary={}) -> Dictionary:
 	# If everything else fails
 	return default
 
-
-static func set_json(path: String, data: Dictionary):
+static func save_json(path: String, data: Dictionary):
 	var file = File.new()
 	var err = file.open(path, File.WRITE)
 	if err == OK:
 		file.store_line(JSON.print(data, "\t", true))
 		file.close()
 	return err
+
+static func rename_json(folderPath:String, oldName:String, newName:String):
+	var dir := Directory.new()
+	
+	dir.rename(get_path(folderPath, oldName + ".json"), get_path(folderPath, newName + ".json"))
 
 ## *****************************************************************************
 ##							INITIALIZATION
@@ -280,39 +282,30 @@ static func load_timelines() -> Dictionary:
 	return dic
 
 static func save_timeline(name:String, data:Dictionary):
-	set_json(working_dirs["TIMELINE_DIR"] + "/" + name + ".json", data)
+	save_json(get_path("TIMELINE_DIR", name + ".json"), data)
 
-static func set_timeline(timeline: Dictionary):
-	# WARNING: For use in the editor only
-	set_json(get_path('TIMELINE_DIR', timeline['metadata']['file']), timeline)
-
-
-static func delete_timeline(filename: String):
-	# WARNING: For use in the editor only
-	remove_file(get_path('TIMELINE_DIR', filename + ".json"))
+static func delete_timeline(name: String):
+	remove_file(get_path('TIMELINE_DIR', name + ".json"))
 
 static func rename_timeline(oldName:String, newName:String):
-	var dir := Directory.new()
-	
-	dir.rename(get_path("TIMELINE_DIR", oldName + ".json"), get_path("TIMELINE_DIR", newName + ".json"))
+	rename_json("TIMELINE_DIR", oldName, newName)
 
 ## *****************************************************************************
 ##							CHARACTERS
 ## *****************************************************************************
 # Can only be edited in the editor
 
+static func rename_character(oldName:String, newName:String):
+	rename_json("CHAR_DIR", oldName, newName)
+
 static func get_character_json(path: String):
 	return load_json(get_path('CHAR_DIR', path))
 
+static func save_character(name, data:Dictionary):
+	save_json(get_path('CHAR_DIR', name + ".json"), data)
 
-static func set_character(character: Dictionary):
-	# WARNING: For use in the editor only
-	set_json(get_path('CHAR_DIR', character['id']), character)
-
-
-static func delete_character(filename: String):
-	# WARNING: For use in the editor only
-	remove_file(get_path('CHAR_DIR', filename))
+static func delete_character(name:String):
+	remove_file(get_path('CHAR_DIR', name + ".json"))
 
 
 ## *****************************************************************************
@@ -373,7 +366,7 @@ static func get_saved_state() -> Dictionary:
 	return load_json(user_files["STATE"], {'general': {}})
 
 static func save_saved_state_config(data: Dictionary):
-	set_json(user_files["STATE"], data)
+	save_json(user_files["STATE"], data)
 
 ## *****************************************************************************
 ##						RES VALUES
@@ -384,7 +377,7 @@ static func load_res_values() -> Dictionary:
 	return load_json(cfg_files['RES_VALUES_FILE'])
 	
 static func save_res_values(data: Dictionary):
-	set_json(cfg_files['RES_VALUES_FILE'], data)
+	save_json(cfg_files['RES_VALUES_FILE'], data)
 
 ## *****************************************************************************
 ##						USER VALUES
@@ -393,7 +386,7 @@ static func load_user_values() -> Dictionary:
 	return load_json(user_files['USER_VALUES'])
 	
 static func save_user_values(data: Dictionary):
-	set_json(user_files['USER_VALUES'], data)
+	save_json(user_files['USER_VALUES'], data)
 
 ## *****************************************************************************
 ##						DEFAULT DEFINITIONS
@@ -406,7 +399,7 @@ static func get_default_definitions() -> Dictionary:
 
 
 static func save_default_definitions(data: Dictionary):
-	set_json(cfg_files['DEFAULT_DEFINITIONS_FILE'], data)
+	save_json(cfg_files['DEFAULT_DEFINITIONS_FILE'], data)
 
 
 static func get_default_definition_item(id: String):
@@ -446,7 +439,7 @@ static func get_saved_definitions(default: Dictionary = {'variables': [], 'gloss
 
 static func save_saved_definitions(data: Dictionary):
 	init_working_dir()
-	return set_json(cfg_files['SAVED_DEFINITIONS_FILE'], data)
+	return save_json(cfg_files['SAVED_DEFINITIONS_FILE'], data)
 
 ## *****************************************************************************
 ##						FOLDER STRUCTURE
@@ -492,5 +485,5 @@ static func get_resource_folder_structure() -> Dictionary:
 		})
 
 static func save_resource_folder_structure(data):
-	set_json(cfg_files['FOLDER_STRUCTURE_FILE'], data)
+	save_json(cfg_files['FOLDER_STRUCTURE_FILE'], data)
 	

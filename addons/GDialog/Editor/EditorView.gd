@@ -15,6 +15,8 @@ var res_values:Dictionary
 
 var timelines:Dictionary
 
+var characters:Dictionary
+
 onready var timeline_editor = $MainPanel/TimelineEditor
 
 onready var save_button = $ToolBar/SaveButton
@@ -211,7 +213,7 @@ func create_new_res(dic:Dictionary, name:String, data) -> String:
 	
 	return key
 
-func change_res_name(dic:Dictionary, oldName:String, newName:String) -> bool:
+func rename_res(dic:Dictionary, oldName:String, newName:String) -> bool:
 	if dic.has(newName):
 		return false
 		
@@ -230,7 +232,7 @@ func create_new_value() -> String:
 	return create_new_res(res_values, "NewValue", "0")
 
 func change_value_name(oldName:String, newName:String) -> bool:
-	return change_res_name(res_values, oldName, newName)
+	return rename_res(res_values, oldName, newName)
 
 func set_value(name:String, value:String):
 	res_values[name] = value
@@ -244,8 +246,25 @@ func create_new_timeline() -> String:
 	return create_new_res(timelines, "NewTimeline", {"events": []})
 	
 func change_timeline_name(oldName:String, newName:String) -> bool:
-	if change_res_name(timelines, oldName, newName):
+	if rename_res(timelines, oldName, newName):
 		GDialog_Resources.rename_timeline(oldName, newName)
+		return true
+	return false
+
+## *****************************************************************************
+##						 CHARACTER
+## *****************************************************************************
+
+func create_new_character() -> String:
+	return create_new_res(characters, "NewCharacter", {
+		"color": "#ffffff",
+		"mirror_portraits": false,
+		"portraits": []
+	})
+	
+func rename_character(oldName:String, newName:String) -> bool:
+	if rename_res(characters, oldName, newName):
+		GDialog_Resources.rename_character(oldName, newName)
 		return true
 	return false
 
@@ -266,6 +285,10 @@ func on_save_button_pressed():
 	if !timelines.empty():
 		for timeline in timelines:
 			GDialog_Resources.save_timeline(timeline, timelines[timeline])
+	
+	if !characters.empty():
+		for character in characters:
+			GDialog_Resources.save_character(character, characters[character])
 	
 	save_button.text = "Save"
 		

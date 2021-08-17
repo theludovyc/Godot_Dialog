@@ -230,6 +230,11 @@ func create_timeline_item(parent:TreeItem, name:String, select = false):
 	var item = create_res_item(parent, {"editor":"Timeline", "name":name}, select)
 	
 	item.set_icon(0, timeline_icon)
+	
+func create_character_item(parent:TreeItem, name:String, select = false):
+	var item = create_res_item(parent, {"editor":"Character", "name":name}, select)
+	
+	item.set_icon(0, character_icon)
 
 func _add_resource_item(resource_type, parent_item, resource_data, select):
 	# create item
@@ -674,10 +679,7 @@ func new_timeline():
 # creates a new character and opens it
 # it will be added to the selected folder (if it's a character folder) or the Character root folder
 func new_character():
-	var character = editor_reference.get_node("MainPanel/CharacterEditor").create_character()
-	var folder = get_item_folder(get_selected(), "Characters")
-	GDialog_Util.add_file_to_folder(folder, character['metadata']['file'])
-	build_characters(character['metadata']['file'])
+	create_character_item(characters_tree, editor_reference.create_new_character(), true)
 
 # creates a new theme and opens it
 # it will be added to the selected folder (if it's a theme folder) or the Theme root folder
