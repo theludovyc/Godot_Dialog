@@ -21,6 +21,7 @@ var current_timeline := ''
 enum Event_Type{
 	#Main Events
 	Text=0,
+	SetMood,
 	CharacterJoin,
 	CharacterLeave,
 	

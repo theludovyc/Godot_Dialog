@@ -23,9 +23,11 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	portrait_picker.load_data(data)
+	# Now update the ui nodes to display the data.
 	character_picker.load_data(data)
+	
+	portrait_picker.load_data(data)
+	
 	portrait_picker.visible = get_character_data() and len(get_character_data()['portraits']) > 1
 	
 	var has_port_defn = false
