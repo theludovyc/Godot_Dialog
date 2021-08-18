@@ -74,9 +74,6 @@ func _ready():
 	$TextBubble.connect("text_completed", self, "_on_text_completed")
 	$TextBubble/RichTextLabel.connect('meta_hover_started', self, '_on_RichTextLabel_meta_hover_started')
 	$TextBubble/RichTextLabel.connect('meta_hover_ended', self, '_on_RichTextLabel_meta_hover_ended')
-	
-	# Getting the character information
-	characters = GDialog_Util.get_character_list()
 
 	if Engine.is_editor_hint():
 		if preview:
@@ -154,39 +151,25 @@ func load_dialog():
 	# All this parse events should be happening in the same loop ideally
 	# But until performance is not an issue I will probably stay lazy
 	# And keep adding different functions for each parsing operation.
-	if settings.has_section_key('dialog', 'auto_color_names'):
-		if settings.get_value('dialog', 'auto_color_names'):
-			dialog_script = parse_characters(dialog_script)
-	else:
-		dialog_script = parse_characters(dialog_script)
-	
+	dialog_script = parse_characters(dialog_script)
 	dialog_script = parse_text_lines(dialog_script)
 	dialog_script = parse_branches(dialog_script)
 	return dialog_script
 
 
 func parse_characters(dialog_script):
-	var names = GDialog_Util.get_character_list()
+	var characters = GDialog.characters
 	# I should use regex here, but this is way easier :)
-	if names.size() > 0:
+	if !characters.empty():
 		var index = 0
-		for t in dialog_script['events']:
-			if t.has('text'):
-				for n in names:
-					var name_end_check = [' ', ',', '.', '?', '!', "'"]
-					if n.has('name'):
-						for c in name_end_check:
-							dialog_script['events'][index]['text'] = t['text'].replace(n['name'] + c,
-								'[color=#' + n['color'].to_html() + ']' + n['name'] + '[/color]' + c
-							)
-						if n.has('nickname') and n['nickname'] != '':
-							var nicknames_array = n['nickname'].split(",", true, 0)
-							for c in name_end_check:
-								for nn in nicknames_array:
-									dialog_script['events'][index]['text'] = t['text'].replace(nn + c,
-										'[color=#' + n['color'].to_html() + ']' + nn + '[/color]' + c
-									)
-			index += 1
+		for event in dialog_script["events"]:
+			if event.has("text"):
+				for character in characters:
+					var value = characters[character]
+					
+					if value.has("color"):
+						event["text"] = event["text"].replace(character,
+							"[color=" + value["color"] + "]" + character + "[/color]")
 	return dialog_script
 
 
@@ -196,7 +179,7 @@ func parse_text_lines(unparsed_dialog_script: Dictionary) -> Dictionary:
 	var split_new_lines = true
 	var remove_empty_messages = true
 
-	# Return the same thing if it doesn't have events
+	# Return the same thing if it doesn'event have events
 	if unparsed_dialog_script.has('events') == false:
 		return unparsed_dialog_script
 
@@ -599,7 +582,8 @@ func event_handler(event: Dictionary):
 		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
-			if event['character'] == '':# No character found on the event. Skip.
+			
+			if event["character"].empty():# No character found on the event. Skip.
 				_load_next_event()
 			else:
 				var character_data = get_character(event['character'])

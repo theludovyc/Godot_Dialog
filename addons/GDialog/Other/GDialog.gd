@@ -13,6 +13,8 @@ var values:Dictionary
 
 var timelines:Dictionary
 
+var characters:Dictionary
+
 var current_state := {}
 var autosave := true
 
@@ -80,6 +82,8 @@ func _init() -> void:
 		values[value_name]["current"] = current_value
 	
 	timelines = GDialog_Resources.load_timelines()
+	
+	characters = GDialog_Resources.load_characters()
 	
 	current_state = GDialog_Resources.get_saved_state()
 	
