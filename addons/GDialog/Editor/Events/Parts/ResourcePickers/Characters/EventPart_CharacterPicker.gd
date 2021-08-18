@@ -56,7 +56,7 @@ func _on_PickerMenu_about_to_show():
 	popup_menu.clear()
 	
 	for character in editor_reference.characters:
-		popup_menu.add_icon_item(character_icon, character["name"])
+		popup_menu.add_icon_item(character_icon, character)
 	
 	if not popup_menu.is_connected("index_pressed", self, "_on_PickerMenu_selected"):
 		popup_menu.connect("index_pressed", self, '_on_PickerMenu_selected', [popup_menu])
