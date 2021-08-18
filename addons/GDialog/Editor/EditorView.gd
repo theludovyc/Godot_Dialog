@@ -138,27 +138,28 @@ func _on_RemoveFolderConfirmation_confirmed():
 
 func _on_RemoveConfirmation_confirmed(what:String = "", what_name:String = ""):
 	match what:
-		"Timeline":
-			timelines.erase(what_name)
-			
-			GDialog_Resources.delete_timeline(what_name)
-			
-		"GlossaryEntry":
-			var target = $MainPanel/GlossaryEntryEditor.current_definition['id']
-			GDialog_Resources.delete_default_definition(target)
-			
 		"Value":
 			res_values.erase(what_name)
 			
 			GDialog_Resources.save_res_values(res_values)
+		
+		"Timeline":
+			timelines.erase(what_name)
+			
+			GDialog_Resources.delete_timeline(what_name)
+		
+		"Character":
+			characters.erase(what_name)
+			
+			GDialog_Resources.delete_character(what_name)
+		
+		"GlossaryEntry":
+			var target = $MainPanel/GlossaryEntryEditor.current_definition['id']
+			GDialog_Resources.delete_default_definition(target)
 			
 		"Theme":
 			var filename = $MainPanel/MasterTreeContainer/MasterTree.get_selected().get_metadata(0)['file']
 			GDialog_Resources.delete_theme(filename)
-			
-		"Character":
-			var filename = $MainPanel/CharacterEditor.opened_character_data['id']
-			GDialog_Resources.delete_character(filename)
 
 #	GDialog_Util.update_resource_folder_structure()
 	$MainPanel/MasterTreeContainer/MasterTree.remove_selected()

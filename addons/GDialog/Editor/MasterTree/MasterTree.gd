@@ -579,7 +579,7 @@ func _on_CharacterPopupMenu_id_pressed(id):
 	if id == 0:
 		OS.shell_open(ProjectSettings.globalize_path(GDialog_Resources.get_path('CHAR_DIR')))
 	if id == 1:
-		editor_reference.popup_remove_confirmation('Character')
+		editor_reference.popup_remove_confirmation("Character", get_selected().get_text(0))
 
 # Theme context menu
 func _on_ThemePopupMenu_id_pressed(id):
