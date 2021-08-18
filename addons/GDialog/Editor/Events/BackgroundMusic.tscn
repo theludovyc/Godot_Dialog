@@ -5,10 +5,9 @@
 [ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/background-music.svg" type="Texture" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/BackgroundMusic.tres" type="StyleBox" id=4]
 
-
 [node name="BackgroundMusic" instance=ExtResource( 2 )]
 margin_bottom = 74.0
-type = 15
+type = 16
 event_style = ExtResource( 4 )
 event_icon = ExtResource( 3 )
 event_name = "Background Music"

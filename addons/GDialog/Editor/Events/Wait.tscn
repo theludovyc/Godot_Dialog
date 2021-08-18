@@ -5,9 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/SecondsSelector.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=4]
 
-
 [node name="WaitSeconds" instance=ExtResource( 4 )]
-type = 11
+type = 12
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 1 )
 event_name = "Wait Seconds"

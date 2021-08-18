@@ -5,9 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/CharacterPicker.tscn" type="PackedScene" id=4]
 
-
 [node name="CharacterLeave" instance=ExtResource( 3 )]
-type = 2
+type = 3
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 1 )
 event_name = "Character Leave"
@@ -27,10 +26,10 @@ text = "Character Leave"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 153.0
-margin_right = 296.0
+margin_right = 291.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 306.0
+margin_left = 301.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

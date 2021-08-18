@@ -6,9 +6,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/TextEditor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=5]
 
-
 [node name="Question" instance=ExtResource( 3 )]
-type = 3
+type = 4
 event_style = ExtResource( 5 )
 event_icon = ExtResource( 1 )
 event_name = "Question"
@@ -36,15 +35,15 @@ text = "Question"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 111.0
-margin_right = 249.0
+margin_right = 353.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="4"]
 visible = true
-margin_left = 259.0
-margin_right = 311.0
+margin_left = 363.0
+margin_right = 415.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 321.0
+margin_left = 425.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

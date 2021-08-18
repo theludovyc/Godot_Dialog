@@ -86,12 +86,13 @@ stretch_mode = 4
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 42.0
 margin_top = 8.0
-margin_right = 42.0
+margin_right = 102.0
 margin_bottom = 22.0
+text = "Set Mood"
 
 [node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
-margin_left = 52.0
-margin_right = 211.0
+margin_left = 112.0
+margin_right = 354.0
 margin_bottom = 30.0
 mouse_filter = 1
 custom_constants/margin_right = 5
@@ -102,7 +103,7 @@ margin_left = 221.0
 margin_right = 285.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 221.0
+margin_left = 364.0
 margin_right = 928.0
 margin_bottom = 30.0
 

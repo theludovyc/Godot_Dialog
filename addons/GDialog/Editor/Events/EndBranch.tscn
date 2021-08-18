@@ -4,9 +4,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=2]
 [ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/end-branch.svg" type="Texture" id=5]
 
-
 [node name="EndBranch" instance=ExtResource( 1 )]
-type = 6
+type = 7
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 5 )
 event_name = "End Branch"
