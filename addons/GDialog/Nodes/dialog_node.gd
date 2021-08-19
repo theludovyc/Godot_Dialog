@@ -594,46 +594,29 @@ func event_handler(event: Dictionary):
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			
-			var character = event.get("character", "")
+			var char_name = event.get("character", "")
 			
-			if character.empty():# No character found on the event. Skip.
-				_load_next_event()
-			else:
-				var character_data:Dictionary = GDialog.characters[character]
+			if !char_name.empty():
+				var char_value:Dictionary = GDialog.characters[char_name]
 				
-				var exists = grab_portrait_focus(character_data)
+				var portrait_node:Node = char_value.get("portrait_node", null)
 				
-				if exists:
-					for portrait in $Portraits.get_children():
-						if portrait.character_data == character_data:
-							portrait.move_to_position(get_character_position(event['position']))
-							portrait.set_mirror(event.get('mirror', false))
-				else:
-					var p = Portrait.instance()
+				if portrait_node:
+					var char_portrait = event.get("portrait", "")
 					
-					var char_portrait = event['portrait']
+					if !char_portrait.empty():
+						portrait_node.init(char_portrait)
 					
-					if char_portrait.empty():
-						char_portrait = 'Default'
-					
-					if char_portrait == '[Definition]' and event.has('port_defn'):
-						var portrait_definition = event['port_defn']
-						if portrait_definition != '':
-							for d in GDialog_Resources.get_default_definitions()['variables']:
-								if d['id'] == portrait_definition:
-									char_portrait = d['value']
-									break
+					portrait_node.set_mirror(event.get('mirror', false))
 					
 					if current_theme.get_value('settings', 'single_portrait_mode', false):
-						p.single_portrait_mode = true
-						
-					p.character_data = character_data
-					p.init(char_portrait)
-					p.set_mirror(event.get('mirror', false))
+						portrait_node.single_portrait_mode = true
 					
-					$Portraits.add_child(p)
+					if !$Portraits.has_node(portrait_node.name):
+						$Portraits.add_child(portrait_node)
+
+					portrait_node.move_to_position(get_character_position(event['position']))
 					
-					p.move_to_position(get_character_position(event['position']))
 			_load_next_event()
 		# Character Leave event 
 		GDialog.Event_Type.CharacterLeave:
