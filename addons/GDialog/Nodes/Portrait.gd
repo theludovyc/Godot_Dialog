@@ -87,11 +87,7 @@ func fade_in(time = 0.5):
 		$TweenPosition.start()
 
 func fade_out(time = 0.5):
-	fading_out = true
-	var end = modulate
-	end.a = 0
-	tween_modulate(modulate, end, time)
-	$Tween.connect("tween_all_completed", self, "queue_free")
+	tween_modulate(modulate, Color(1,1,1, 0), time)
 
 func focus():
 	if not fading_out:

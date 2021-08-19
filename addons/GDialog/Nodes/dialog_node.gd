@@ -599,7 +599,7 @@ func event_handler(event: Dictionary):
 		# Join event
 		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
-			emit_signal("event_start", "action", event)
+			emit_signal("event_start", "CharacterJoin", event)
 			
 			var char_name = event.get("character", "")
 			
@@ -627,18 +627,20 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		# Character Leave event 
 		GDialog.Event_Type.CharacterLeave:
-			emit_signal("event_start", "action", event)
+			emit_signal("event_start", "CharacterLeave", event)
 			
-			var character = event['character']
+			var char_name = event.get("character", "")
 			
-			if character == '[All]':
-				characters_leave_all()
-			else:
-				var character_data:Dictionary = GDialog.characters[character]
-				
-				for p in $Portraits.get_children():
-					if p.character_data == character_data:
-						p.fade_out()
+			if !char_name.empty():
+				if char_name == '[All]':
+					characters_leave_all()
+				else:
+					var char_value:Dictionary = GDialog.characters[char_name]
+					
+					var portrait_node:Node = char_value.get("portrait_node", null)
+					
+					if portrait_node:
+						portrait_node.fade_out()
 						
 			_load_next_event()
 		
