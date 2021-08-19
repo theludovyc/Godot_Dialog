@@ -305,7 +305,7 @@ func build_characters(selected_item: String=''):
 	
 	if selected_item.empty():
 		for character_name in dic:
-			create_character_item(characters_tree, character_name, false, dic[character_name]["color"])
+			create_character_item(characters_tree, character_name, false, dic[character_name].get("color", Color.white))
 	else:
 		pass
 

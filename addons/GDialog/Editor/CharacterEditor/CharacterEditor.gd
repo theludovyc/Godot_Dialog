@@ -61,13 +61,6 @@ func on_offset_y_changed(value:float):
 	editor_reference.need_save()
 
 func clear_character_editor():
-	node_description.text = ""
-	node_color.color = Color('#ffffff')
-	node_mirror_portraits_checkbox.pressed = false
-	node_scale.value = 100
-	node_offset_x.value = 0
-	node_offset_y.value = 0
-
 	# Clearing portraits
 	for p in node_portraitList.get_children():
 		p.queue_free()
