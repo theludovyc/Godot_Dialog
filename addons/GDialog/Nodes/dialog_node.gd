@@ -1070,15 +1070,15 @@ func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 
 
 func get_character_position(positions) -> String:
-	if positions['0']:
+	if positions[0]:
 		return 'left'
-	if positions['1']:
+	if positions[1]:
 		return 'center_left'
-	if positions['2']:
+	if positions[2]:
 		return 'center'
-	if positions['3']:
+	if positions[3]:
 		return 'center_right'
-	if positions['4']:
+	if positions[4]:
 		return 'right'
 	return 'left'
 

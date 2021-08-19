@@ -62,8 +62,8 @@ func set_portrait(expression: String) -> void:
 
 
 func set_mirror(value):
-	if character_data["data"].has('mirror_portraits'):
-		if character_data["data"]['mirror_portraits']:
+	if character_data.has('mirror_portraits'):
+		if character_data['mirror_portraits']:
 			$TextureRect.flip_h = !value
 		else:
 			$TextureRect.flip_h = value
