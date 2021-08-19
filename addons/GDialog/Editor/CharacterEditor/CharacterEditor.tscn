@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/CharacterEditor/PortraitEntry.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/GDialog/Editor/CharacterEditor/CharacterEditor.gd" type="Script" id=2]
@@ -10,7 +10,7 @@ content_margin_top = 5.0
 content_margin_bottom = 5.0
 bg_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Image" id=4]
+[sub_resource type="Image" id=6]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "LumAlpha8",
@@ -22,7 +22,22 @@ data = {
 [sub_resource type="ImageTexture" id=3]
 flags = 4
 flags = 4
-image = SubResource( 4 )
+image = SubResource( 6 )
+size = Vector2( 16, 16 )
+
+[sub_resource type="Image" id=7]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "LumAlpha8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=5]
+flags = 4
+flags = 4
+image = SubResource( 7 )
 size = Vector2( 16, 16 )
 
 [node name="CharacterEditor" type="ScrollContainer"]
@@ -44,7 +59,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Container" type="VBoxContainer" parent="HBoxContainer"]
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 651.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -135,7 +150,7 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 140, 0 )
 
 [node name="Color" type="HBoxContainer" parent="HBoxContainer/Container"]
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="HBoxContainer/Container/Color"]
@@ -155,7 +170,7 @@ edit_alpha = false
 
 [node name="Description" type="HBoxContainer" parent="HBoxContainer/Container"]
 margin_top = 24.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 124.0
 
 [node name="Label" type="Label" parent="HBoxContainer/Container/Description"]
@@ -167,20 +182,20 @@ text = "Description: "
 
 [node name="TextEdit" type="TextEdit" parent="HBoxContainer/Container/Description"]
 margin_left = 134.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 size_flags_horizontal = 3
 
 [node name="Separator" type="Control" parent="HBoxContainer/Container"]
 margin_top = 128.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 138.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="Portraits" type="HBoxContainer" parent="HBoxContainer/Container"]
 margin_top = 142.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 156.0
 
 [node name="Label" type="Label" parent="HBoxContainer/Container/Portraits"]
@@ -190,7 +205,7 @@ text = "Portraits / Expressions"
 
 [node name="Labels" type="HBoxContainer" parent="HBoxContainer/Container"]
 margin_top = 160.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 174.0
 
 [node name="LineEdit" type="Label" parent="HBoxContainer/Container/Labels"]
@@ -208,28 +223,28 @@ text = "Path"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Container"]
 margin_top = 178.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Container/ScrollContainer"]
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 473.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PortraitList" type="VBoxContainer" parent="HBoxContainer/Container/ScrollContainer/VBoxContainer"]
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="PortraitEntry" parent="HBoxContainer/Container/ScrollContainer/VBoxContainer/PortraitList" instance=ExtResource( 1 )]
-margin_right = 523.0
+margin_right = 500.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Container/ScrollContainer/VBoxContainer"]
 margin_top = 28.0
-margin_right = 523.0
+margin_right = 500.0
 margin_bottom = 50.0
 
 [node name="Button" type="Button" parent="HBoxContainer/Container/ScrollContainer/VBoxContainer/HBoxContainer"]
@@ -244,7 +259,7 @@ margin_left = 163.0
 margin_right = 370.0
 margin_bottom = 22.0
 text = "  Import images from folder"
-icon = SubResource( 3 )
+icon = SubResource( 5 )
 
 [node name="FileName" type="HBoxContainer" parent="HBoxContainer/Container"]
 visible = false
@@ -268,14 +283,14 @@ size_flags_horizontal = 3
 editable = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 527.0
+margin_left = 504.0
 margin_right = 1051.0
 margin_bottom = 651.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Control" type="Panel" parent="HBoxContainer/VBoxContainer"]
-margin_right = 524.0
+margin_right = 547.0
 margin_bottom = 623.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -307,56 +322,51 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 627.0
-margin_right = 524.0
+margin_right = 547.0
 margin_bottom = 651.0
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 margin_top = 5.0
-margin_right = 33.0
+margin_right = 57.0
 margin_bottom = 19.0
-text = "Scale"
+text = "Scale (%)"
 
 [node name="Scale" type="SpinBox" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 37.0
-margin_right = 111.0
+margin_left = 61.0
+margin_right = 135.0
 margin_bottom = 24.0
 value = 100.0
 allow_greater = true
-align = 2
-suffix = "%"
 
 [node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 115.0
+margin_left = 139.0
 margin_top = 5.0
-margin_right = 186.0
+margin_right = 210.0
 margin_bottom = 19.0
 text = "        Offset"
 
 [node name="OffsetX" type="SpinBox" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 190.0
-margin_right = 290.0
+margin_left = 214.0
+margin_right = 314.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 100, 0 )
 allow_greater = true
 allow_lesser = true
-suffix = "X"
 
 [node name="OffsetY" type="SpinBox" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 294.0
-margin_right = 394.0
+margin_left = 318.0
+margin_right = 418.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 100, 0 )
 allow_greater = true
 allow_lesser = true
-suffix = "Y"
 
 [node name="MirrorOption" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 398.0
-margin_right = 523.0
+margin_left = 422.0
+margin_right = 547.0
 margin_bottom = 24.0
 
 [node name="MirrorPortraitsCheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer/HBoxContainer/MirrorOption"]
 margin_right = 125.0
 margin_bottom = 24.0
 text = "Mirror portraits"
-[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/MirrorOption/MirrorPortraitsCheckBox" to="." method="_on_MirrorPortraitsCheckBox_toggled"]

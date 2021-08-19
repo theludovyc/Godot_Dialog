@@ -26,6 +26,7 @@ func _ready():
 	node_scale.connect("value_changed", self, "on_scale_changed")
 	node_offset_x.connect("value_changed", self, "on_offset_x_changed")
 	node_offset_y.connect("value_changed", self, "on_offset_y_changed")
+	node_mirror_portraits_checkbox.connect("toggled", self, "_on_MirrorPortraitsCheckBox_toggled")
 	
 	var style = get('custom_styles/bg')
 	style.set('bg_color', get_color("base_color", "Editor"))
@@ -74,10 +75,14 @@ func load_character(name:String):
 
 	node_description.text = current_character.get('description', "")
 	node_color.color = Color(current_character.get('color','#ffffffff'))
-	node_scale.value = float(current_character.get("scale", 1) * 100)
-	node_offset_x.value = current_character.get('offset_x', 0)
-	node_offset_y.value = current_character.get('offset_y', 0)
+	node_scale.get_line_edit().text = str(current_character.get("scale", 1) * 100)
+	node_offset_x.get_line_edit().text = str(current_character.get('offset_x', 0))
+	node_offset_y.get_line_edit().text = str(current_character.get('offset_y', 0))
+	
+	node_mirror_portraits_checkbox.set_block_signals(true)
 	node_mirror_portraits_checkbox.pressed = current_character.get('mirror_portraits', false)
+	node_mirror_portraits_checkbox.set_block_signals(false)
+	
 	node_portrait_preview.flip_h = current_character.get('mirror_portraits', false)
 
 	# Portraits
