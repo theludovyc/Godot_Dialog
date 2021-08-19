@@ -81,7 +81,7 @@ func load_character(name:String):
 
 	node_description.text = current_character.get('description', "")
 	node_color.color = Color(current_character.get('color','#ffffffff'))
-	node_scale.value = float(current_character.get('scale', 100))
+	node_scale.value = float(current_character.get("scale", 1) * 100)
 	node_offset_x.value = current_character.get('offset_x', 0)
 	node_offset_y.value = current_character.get('offset_y', 0)
 	node_mirror_portraits_checkbox.pressed = current_character.get('mirror_portraits', false)
