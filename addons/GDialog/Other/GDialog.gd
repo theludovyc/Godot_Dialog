@@ -87,9 +87,11 @@ func _init() -> void:
 		var portraits = character.get("portraits", [])
 		
 		if !portraits.empty():
-			character["portrait_node"] = Portrait.instance()
-	
-		print(characters[key])
+			var portrait = Portrait.instance()
+			
+			portrait.name = key
+			
+			character["portrait_node"] = portrait
 	
 	current_state = GDialog_Resources.get_saved_state()
 	
