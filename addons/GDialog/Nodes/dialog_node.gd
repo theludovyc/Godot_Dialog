@@ -599,8 +599,10 @@ func event_handler(event: Dictionary):
 							portrait.set_mirror(event.get('mirror', false))
 				else:
 					var p = Portrait.instance()
+					
 					var char_portrait = event['portrait']
-					if char_portrait == '':
+					
+					if char_portrait.empty():
 						char_portrait = 'Default'
 					
 					if char_portrait == '[Definition]' and event.has('port_defn'):
@@ -613,22 +615,30 @@ func event_handler(event: Dictionary):
 					
 					if current_theme.get_value('settings', 'single_portrait_mode', false):
 						p.single_portrait_mode = true
+						
 					p.character_data = character_data
 					p.init(char_portrait)
 					p.set_mirror(event.get('mirror', false))
+					
 					$Portraits.add_child(p)
+					
 					p.move_to_position(get_character_position(event['position']))
 			_load_next_event()
 		# Character Leave event 
 		GDialog.Event_Type.CharacterLeave:
-			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
-			if event['character'] == '[All]':
+			
+			var character = event['character']
+			
+			if character == '[All]':
 				characters_leave_all()
 			else:
+				var character_data:Dictionary = GDialog.characters[character]
+				
 				for p in $Portraits.get_children():
-					if p.character_data['file'] == event['character']:
+					if p.character_data == character_data:
 						p.fade_out()
+						
 			_load_next_event()
 		
 		# LOGIC EVENTS
