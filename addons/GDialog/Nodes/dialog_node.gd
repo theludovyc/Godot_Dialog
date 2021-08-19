@@ -885,7 +885,7 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		_:
 			visible = false
-			dprint('[D] Other event. ', event)
+			printt('[D] Other event. ', event)
 	
 	$Options.visible = waiting_for_answer
 
