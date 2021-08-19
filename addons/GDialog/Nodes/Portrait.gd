@@ -24,42 +24,11 @@ func _ready():
 		print(rect_position, $TextureRect.rect_size)
 
 
-func set_portrait(expression: String) -> void:
-	if expression == '':
-		expression = 'Default'
-	
-	# Clearing old custom scenes
-	for n in get_children():
-		if 'DialogicCustomPortraitScene' in n.name:
-			n.queue_free()
-
-	var default
-	for p in character_data['portraits']:
-		if p['name'] == expression:
-			if is_scene(p['path']):
-				var custom_node = load(p['path'])
-				var instance = custom_node.instance()
-				instance.name = 'DialogicCustomPortraitScene'
-				add_child(instance)
-				
-				$TextureRect.texture = ImageTexture.new()
-				return
-			else:
-				if ResourceLoader.exists(p['path']):
-					$TextureRect.texture = load(p['path'])
-				else:
-					$TextureRect.texture = ImageTexture.new()
-				return
-		# Saving what the default is to fallback to it.
-		if p['name'] == 'Default':
-			default = p['path']
-	
-	# Everything failed, go with the default one
-	if ResourceLoader.exists(default):
-		$TextureRect.texture = load(default)
+func set_portrait(path:String) -> void:
+	if ResourceLoader.exists(path):
+		$TextureRect.texture = load(path)
 	else:
 		$TextureRect.texture = ImageTexture.new()
-
 
 func set_mirror(value):
 	if character_data.has('mirror_portraits'):
