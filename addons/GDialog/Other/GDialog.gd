@@ -1,26 +1,9 @@
 extends Node
 
-## This script is added as an AutoLoad when the plugin is activated
-## It is used during game execution to access the dialogic resources
-
-## Mainly it's used by the dialog_node.gd and the DialogicClass
-## In your game you should consider using the methods of the DialogicClass!
-
-var current_definitions := {}
-var default_definitions := {}
-
-var values:Dictionary
-
-var timelines:Dictionary
-
-var current_state := {}
-var autosave := true
-
-var current_timeline := ''
-
 enum Event_Type{
 	#Main Events
 	Text=0,
+	SetMood,
 	CharacterJoin,
 	CharacterLeave,
 	
@@ -48,6 +31,22 @@ enum Event_Type{
 	ChangeScene,
 	CallNode
 }
+
+var Portrait = load("res://addons/GDialog/Nodes/Portrait.tscn")
+
+var current_definitions := {}
+var default_definitions := {}
+
+var values:Dictionary
+
+var timelines:Dictionary
+
+var characters:Dictionary
+
+var current_state := {}
+var autosave := true
+
+var current_timeline := ''
 
 ## *****************************************************************************
 ##								INITIALIZATION
@@ -79,6 +78,25 @@ func _init() -> void:
 		values[value_name]["current"] = current_value
 	
 	timelines = GDialog_Resources.load_timelines()
+	
+	characters = GDialog_Resources.load_characters()
+	
+	for char_name in characters:
+		var character = characters[char_name]
+		
+		var portraits = character.get("portraits", [])
+		
+		if !portraits.empty():
+			var portrait = Portrait.instance()
+			
+			portrait.name = char_name
+			
+			if character.has("scale"):
+				var _scale = character["scale"]
+				
+				portrait.set_scale(Vector2(_scale, _scale))
+			
+			character["portrait_node"] = portrait
 	
 	current_state = GDialog_Resources.get_saved_state()
 	

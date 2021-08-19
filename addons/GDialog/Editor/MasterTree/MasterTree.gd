@@ -137,24 +137,22 @@ func _ready():
 ##						BUILDING THE TREE
 ## *****************************************************************************
 
+func _clear_tree_children(parent: TreeItem):
+	while parent.get_children() != null:
+		parent.get_children().free()
+
 func build_full_tree(selected_item: String = ''):
 	# Adding Values
 	build_values(selected_item)
 	# Adding timelines
 	build_timelines(selected_item)
 	# Adding characters
-	#build_characters(selected_item)
+	build_characters(selected_item)
 	
 	# Adding Definitions
 	#build_definitions(selected_item)
 	# Adding Themes
 	#build_themes(selected_item)
-
-
-func _clear_tree_children(parent: TreeItem):
-	while parent.get_children() != null:
-		parent.get_children().free()
-
 
 func build_resource_folder(parent_folder_item:TreeItem, folder_data:Dictionary, selected_item:String, folder_editor:String, resource_type: String):
 	## BUILD ALL THE FOLDER ITEMS (by calling this method for them)
@@ -230,6 +228,13 @@ func create_timeline_item(parent:TreeItem, name:String, select = false):
 	var item = create_res_item(parent, {"editor":"Timeline", "name":name}, select)
 	
 	item.set_icon(0, timeline_icon)
+	
+func create_character_item(parent:TreeItem, name:String, select = false, color:Color = Color.white):
+	var item = create_res_item(parent, {"editor":"Character", "name":name}, select)
+	
+	item.set_icon(0, character_icon)
+	
+	item.set_icon_modulate(0, color)
 
 func _add_resource_item(resource_type, parent_item, resource_data, select):
 	# create item
@@ -282,7 +287,6 @@ func build_values(selected_item: String = ""):
 	else:
 		pass
 
-
 ## TIMELINES
 func build_timelines(selected_item: String=''):
 	_clear_tree_children(timelines_tree)
@@ -293,14 +297,17 @@ func build_timelines(selected_item: String=''):
 	else:
 		pass
 
-
 ## CHARACTERS
 func build_characters(selected_item: String=''):
 	_clear_tree_children(characters_tree)
 	
-	GDialog_Util.update_resource_folder_structure()
-	var structure = GDialog_Util.get_characters_folder_structure()
-	build_resource_folder(characters_tree, structure, selected_item, "Character Root", "Character")
+	var dic = editor_reference.characters
+	
+	if selected_item.empty():
+		for character_name in dic:
+			create_character_item(characters_tree, character_name, false, dic[character_name].get("color", Color.white))
+	else:
+		pass
 
 ## DEFINTIONS
 func build_definitions(selected_item: String=''):
@@ -310,7 +317,6 @@ func build_definitions(selected_item: String=''):
 	var structure = GDialog_Util.get_definitions_folder_structure()
 	build_resource_folder(definitions_tree, structure, selected_item, "Definition Root", "Definition")
 
-
 ## THEMES
 func build_themes(selected_item: String=''):
 	_clear_tree_children(themes_tree)
@@ -318,7 +324,6 @@ func build_themes(selected_item: String=''):
 	GDialog_Util.update_resource_folder_structure()
 	var structure = GDialog_Util.get_theme_folder_structure()
 	build_resource_folder(themes_tree, structure, selected_item, "Theme Root", "Theme")
-
 
 func _on_item_collapsed(item: TreeItem):
 	if filter_tree_term.empty() and item != null and 'Root' in item.get_metadata(0)['editor'] and not 'Documentation' in item.get_metadata(0)['editor']:
@@ -353,7 +358,7 @@ func _on_item_selected():
 			timeline_editor.load_timeline(item_name)
 			show_timeline_editor()
 		'Character':
-			character_editor.load_character(metadata['file'])
+			character_editor.load_character(item_name)
 			show_character_editor()
 		'Value':
 			value_editor.load_value(item_name)
@@ -574,7 +579,7 @@ func _on_CharacterPopupMenu_id_pressed(id):
 	if id == 0:
 		OS.shell_open(ProjectSettings.globalize_path(GDialog_Resources.get_path('CHAR_DIR')))
 	if id == 1:
-		editor_reference.popup_remove_confirmation('Character')
+		editor_reference.popup_remove_confirmation("Character", get_selected().get_text(0))
 
 # Theme context menu
 func _on_ThemePopupMenu_id_pressed(id):
@@ -674,10 +679,7 @@ func new_timeline():
 # creates a new character and opens it
 # it will be added to the selected folder (if it's a character folder) or the Character root folder
 func new_character():
-	var character = editor_reference.get_node("MainPanel/CharacterEditor").create_character()
-	var folder = get_item_folder(get_selected(), "Characters")
-	GDialog_Util.add_file_to_folder(folder, character['metadata']['file'])
-	build_characters(character['metadata']['file'])
+	create_character_item(characters_tree, editor_reference.create_new_character(), true)
 
 # creates a new theme and opens it
 # it will be added to the selected folder (if it's a theme folder) or the Theme root folder
@@ -850,10 +852,8 @@ func _on_item_edited():
 		GDialog_Resources.set_theme_value(metadata['file'], 'settings', 'name', item.get_text(0))
 		build_themes(metadata['file'])
 		
-	if metadata['editor'] == 'Character':
-		character_editor.nodes['name'].text = item.get_text(0)
-		save_current_resource()
-		build_characters(metadata['file'])
+	if metadata["editor"] == "Character" and editor_reference.rename_character(metadata["name"], item_name):
+		change = true
 		
 	if metadata['editor'] == 'Value' and editor_reference.change_value_name(metadata["name"], item_name):
 		change = true

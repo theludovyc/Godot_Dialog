@@ -9,10 +9,14 @@ onready var position_picker = $HBox/PositionPicker
 onready var mirror_button = $HBox/MirrorButton
 
 # used to connect the signals
-func _ready():
-	# signals
+func on_ready():
 	mirror_button.connect("toggled", self, "_on_MirrorButton_toggled")
+	
+	character_portrait_picker.editor_reference = editor_reference
+	character_portrait_picker.on_ready()
 	character_portrait_picker.connect('data_changed', self, '_on_CharacterPortraitPicker_data_changed')
+	
+	position_picker.editor_reference = editor_reference
 	position_picker.connect('data_changed', self, '_on_PositionPicker_data_changed')
 	
 	# icons

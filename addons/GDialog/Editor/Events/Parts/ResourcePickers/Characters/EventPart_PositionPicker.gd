@@ -28,10 +28,7 @@ func get_preview():
 	return ''
 
 func get_character_color():
-	for ch in GDialog_Util.get_character_list():
-		if ch['file'] == event_data['character']:
-			return ch['color']
-	return Color.white
+	return editor_reference.characters[event_data["character"]]["color"] if event_data.has("character") else Color.white
 
 func position_button_pressed(name):
 	clear_all_positions()

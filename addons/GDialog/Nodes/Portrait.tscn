@@ -2,7 +2,6 @@
 
 [ext_resource path="res://addons/GDialog/Nodes/Portrait.gd" type="Script" id=2]
 
-
 [node name="Portrait" type="Control"]
 script = ExtResource( 2 )
 __meta__ = {

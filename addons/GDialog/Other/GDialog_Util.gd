@@ -326,6 +326,15 @@ static func get_singleton(name, caller = null):
 static func generate_random_id() -> String:
 	return str(OS.get_unix_time()) + '-' + str(100 + randi()%899+1)
 
+static func dic_rename(dic:Dictionary, oldName:String, newName:String) -> bool:
+	if dic.has(newName):
+		return false
+		
+	dic[newName] = dic[oldName]
+	
+	dic.erase(oldName)
+	
+	return true
 
 static func compare_dicts(dict_1: Dictionary, dict_2: Dictionary) -> bool:
 	# I tried using the .hash() function but it was returning different numbers

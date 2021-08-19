@@ -5,9 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/CloseDialog.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/TransitonLengthPicker.tscn" type="PackedScene" id=4]
 
-
 [node name="CloseDialog" instance=ExtResource( 1 )]
-type = 10
+type = 11
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 2 )
 event_name = "Close Dialog"

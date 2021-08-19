@@ -5,9 +5,8 @@
 [ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/change-timeline.svg" type="Texture" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Timelines/TimelinePicker.tscn" type="PackedScene" id=4]
 
-
 [node name="ChangeTimeline" instance=ExtResource( 1 )]
-type = 8
+type = 9
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 3 )
 event_name = "Change Timeline"

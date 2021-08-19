@@ -6,9 +6,8 @@
 [ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/change-background.svg" type="Texture" id=6]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Images/BackgroundPicker.tscn" type="PackedScene" id=7]
 
-
 [node name="ChangeBackground" instance=ExtResource( 4 )]
-type = 9
+type = 10
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 6 )
 event_name = "Change Background"
@@ -30,14 +29,15 @@ text = "Change Background"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 176.0
-margin_right = 512.0
+margin_right = 719.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="4"]
-margin_left = 535.0
-margin_right = 587.0
+visible = true
+margin_left = 729.0
+margin_right = 781.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 522.0
+margin_left = 791.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

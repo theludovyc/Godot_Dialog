@@ -74,9 +74,6 @@ func _ready():
 	$TextBubble.connect("text_completed", self, "_on_text_completed")
 	$TextBubble/RichTextLabel.connect('meta_hover_started', self, '_on_RichTextLabel_meta_hover_started')
 	$TextBubble/RichTextLabel.connect('meta_hover_ended', self, '_on_RichTextLabel_meta_hover_ended')
-	
-	# Getting the character information
-	characters = GDialog_Util.get_character_list()
 
 	if Engine.is_editor_hint():
 		if preview:
@@ -154,39 +151,25 @@ func load_dialog():
 	# All this parse events should be happening in the same loop ideally
 	# But until performance is not an issue I will probably stay lazy
 	# And keep adding different functions for each parsing operation.
-	if settings.has_section_key('dialog', 'auto_color_names'):
-		if settings.get_value('dialog', 'auto_color_names'):
-			dialog_script = parse_characters(dialog_script)
-	else:
-		dialog_script = parse_characters(dialog_script)
-	
+	dialog_script = parse_characters(dialog_script)
 	dialog_script = parse_text_lines(dialog_script)
 	dialog_script = parse_branches(dialog_script)
 	return dialog_script
 
 
 func parse_characters(dialog_script):
-	var names = GDialog_Util.get_character_list()
+	var characters = GDialog.characters
 	# I should use regex here, but this is way easier :)
-	if names.size() > 0:
+	if !characters.empty():
 		var index = 0
-		for t in dialog_script['events']:
-			if t.has('text'):
-				for n in names:
-					var name_end_check = [' ', ',', '.', '?', '!', "'"]
-					if n.has('name'):
-						for c in name_end_check:
-							dialog_script['events'][index]['text'] = t['text'].replace(n['name'] + c,
-								'[color=#' + n['color'].to_html() + ']' + n['name'] + '[/color]' + c
-							)
-						if n.has('nickname') and n['nickname'] != '':
-							var nicknames_array = n['nickname'].split(",", true, 0)
-							for c in name_end_check:
-								for nn in nicknames_array:
-									dialog_script['events'][index]['text'] = t['text'].replace(nn + c,
-										'[color=#' + n['color'].to_html() + ']' + nn + '[/color]' + c
-									)
-			index += 1
+		for event in dialog_script["events"]:
+			if event.has("text"):
+				for character in characters:
+					var value = characters[character]
+					
+					if value.has("color"):
+						event["text"] = event["text"].replace(character,
+							"[color=" + value["color"] + "]" + character + "[/color]")
 	return dialog_script
 
 
@@ -196,7 +179,7 @@ func parse_text_lines(unparsed_dialog_script: Dictionary) -> Dictionary:
 	var split_new_lines = true
 	var remove_empty_messages = true
 
-	# Return the same thing if it doesn't have events
+	# Return the same thing if it doesn'event have events
 	if unparsed_dialog_script.has('events') == false:
 		return unparsed_dialog_script
 
@@ -593,61 +576,72 @@ func event_handler(event: Dictionary):
 			show_dialog()
 			
 			finished = false
-			
-			if event.has('character'):
-				var character_data = get_character(event['character'])
-				
-				update_name(character_data)
-				
-				grab_portrait_focus(character_data, event)
 				
 			update_text(event['text'] if event.has("text") else "")
+			
+		GDialog.Event_Type.SetMood:
+			emit_signal("event_start", "SetMood", event)
+			
+			var char_name = event.get("character", "")
+			
+			if !char_name.empty():
+				var char_value:Dictionary = GDialog.characters[char_name]
+				
+				var char_portrait = event.get("portrait", "")
+				
+				if !char_portrait.empty():
+					var portrait_node:Node = char_value.get("portrait_node", null)
+				
+					if portrait_node:
+						portrait_node.set_portrait(char_value["portraits"][char_portrait])
+		
+			_load_next_event()
 		# Join event
 		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
-			emit_signal("event_start", "action", event)
-			if event['character'] == '':# No character found on the event. Skip.
-				_load_next_event()
-			else:
-				var character_data = get_character(event['character'])
-				var exists = grab_portrait_focus(character_data)
-				if exists:
-					for portrait in $Portraits.get_children():
-						if portrait.character_data == character_data:
-							portrait.move_to_position(get_character_position(event['position']))
-							portrait.set_mirror(event.get('mirror', false))
-				else:
-					var p = Portrait.instance()
-					var char_portrait = event['portrait']
-					if char_portrait == '':
-						char_portrait = 'Default'
+			emit_signal("event_start", "CharacterJoin", event)
+			
+			var char_name = event.get("character", "")
+			
+			if !char_name.empty():
+				var char_value:Dictionary = GDialog.characters[char_name]
+				
+				var portrait_node:Node = char_value.get("portrait_node", null)
+				
+				if portrait_node:
+					var char_portrait = event.get("portrait", "")
 					
-					if char_portrait == '[Definition]' and event.has('port_defn'):
-						var portrait_definition = event['port_defn']
-						if portrait_definition != '':
-							for d in GDialog_Resources.get_default_definitions()['variables']:
-								if d['id'] == portrait_definition:
-									char_portrait = d['value']
-									break
+					if !char_portrait.empty():
+						portrait_node.set_portrait(char_value["portraits"][char_portrait])
+					
+					portrait_node.set_mirror(event.get('mirror', false))
 					
 					if current_theme.get_value('settings', 'single_portrait_mode', false):
-						p.single_portrait_mode = true
-					p.character_data = character_data
-					p.init(char_portrait)
-					p.set_mirror(event.get('mirror', false))
-					$Portraits.add_child(p)
-					p.move_to_position(get_character_position(event['position']))
+						portrait_node.single_portrait_mode = true
+					
+					if !$Portraits.has_node(portrait_node.name):
+						$Portraits.add_child(portrait_node)
+
+					portrait_node.move_to_position(get_character_position(event['position']))
+					
 			_load_next_event()
 		# Character Leave event 
 		GDialog.Event_Type.CharacterLeave:
-			## PLEASE UPDATE THIS! BUT HOW? 
-			emit_signal("event_start", "action", event)
-			if event['character'] == '[All]':
-				characters_leave_all()
-			else:
-				for p in $Portraits.get_children():
-					if p.character_data['file'] == event['character']:
-						p.fade_out()
+			emit_signal("event_start", "CharacterLeave", event)
+			
+			var char_name = event.get("character", "")
+			
+			if !char_name.empty():
+				if char_name == '[All]':
+					characters_leave_all()
+				else:
+					var char_value:Dictionary = GDialog.characters[char_name]
+					
+					var portrait_node:Node = char_value.get("portrait_node", null)
+					
+					if portrait_node:
+						portrait_node.fade_out()
+						
 			_load_next_event()
 		
 		# LOGIC EVENTS
@@ -893,8 +887,7 @@ func event_handler(event: Dictionary):
 			$TextBubble.visible = true
 			_load_next_event()
 		_:
-			visible = false
-			dprint('[D] Other event. ', event)
+			printt('[D] Other event. ', event)
 	
 	$Options.visible = waiting_for_answer
 
@@ -1064,35 +1057,40 @@ func _on_option_selected(option, variable, value):
 
 func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 	var exists = false
+	
 	var visually_focus = true
+	
 	if settings.has_section_key('dialog', 'dim_characters'):
 		visually_focus = settings.get_value('dialog', 'dim_characters')
 
-	for portrait in $Portraits.get_children():
-		if portrait.character_data == character_data:
+	for portrait_node in $Portraits.get_children():
+		if portrait_node.character_data == character_data:
 			exists = true
 			
 			if visually_focus:
-				portrait.focus()
-			if event.has('portrait'):
-				if event['portrait'] != '':
-					portrait.set_portrait(event['portrait'])
+				portrait_node.focus()
+				
+			if !event.empty() and event.has("portrait"):
+				var portrait = event["portrait"]
+				
+				if !portrait.empty():
+					portrait_node.set_portrait(portrait)
 		else:
 			if visually_focus:
-				portrait.focusout()
+				portrait_node.focusout()
 	return exists
 
 
 func get_character_position(positions) -> String:
-	if positions['0']:
+	if positions[0]:
 		return 'left'
-	if positions['1']:
+	if positions[1]:
 		return 'center_left'
-	if positions['2']:
+	if positions[2]:
 		return 'center'
-	if positions['3']:
+	if positions[3]:
 		return 'center_right'
-	if positions['4']:
+	if positions[4]:
 		return 'right'
 	return 'left'
 

@@ -1,41 +1,35 @@
 tool
 extends HBoxContainer
 
+signal path_changed(path)
+
+onready var node_nameEdit = $NameEdit
+onready var node_pathEdit = $PathEdit
+onready var node_buttonDelete = $ButtonDelete
+
 var editor_reference
 var image_node
 var image_label
 
 func _ready():
-	$ButtonDelete.icon = get_icon("Remove", "EditorIcons")
-
-
-func _on_ButtonDelete_pressed():
-	if $NameEdit.text == 'Default':
-		$PathEdit.text = ''
-		update_preview('')
-	else:
-		queue_free()
-
+	node_buttonDelete.icon = get_icon("Remove", "EditorIcons")
 
 func _on_ButtonSelect_pressed():
-	editor_reference.godot_dialog("*.png, *.svg, *.tscn")
-	editor_reference.godot_dialog_connect(self, "_on_file_selected")
+	editor_reference.popup_select_file(self, "on_file_selected", "*.png, *.svg")
 
-
-func _on_file_selected(path, target):
+func on_file_selected(path):
+	node_pathEdit.text = path
+		
 	update_preview(path)
-	$PathEdit.text = path
-	if $NameEdit.text == '':
-		$NameEdit.text = GDialog_Resources.get_filename_from_path(path)
-
+	
+	emit_signal("path_changed", path)
 
 func _on_focus_entered():
-	if $PathEdit.text == '':
+	if node_pathEdit.text == '':
 		image_label.text = 'Preview - No image on this portrait entry.'
 		image_node.texture = null
 	else:
-		update_preview($PathEdit.text)
-
+		update_preview(node_pathEdit.text)
 
 func update_preview(path):
 	image_label.text = 'Preview'

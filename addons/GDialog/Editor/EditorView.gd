@@ -15,6 +15,8 @@ var res_values:Dictionary
 
 var timelines:Dictionary
 
+var characters:Dictionary
+
 onready var timeline_editor = $MainPanel/TimelineEditor
 
 onready var save_button = $ToolBar/SaveButton
@@ -25,6 +27,8 @@ func _init():
 	res_values = GDialog_Resources.load_res_values()
 	
 	timelines = GDialog_Resources.load_timelines()
+	
+	characters = GDialog_Resources.load_characters()
 
 func _ready():
 	# Adding file dialog to get used by Events
@@ -134,33 +138,61 @@ func _on_RemoveFolderConfirmation_confirmed():
 
 func _on_RemoveConfirmation_confirmed(what:String = "", what_name:String = ""):
 	match what:
-		"Timeline":
-			timelines.erase(what_name)
-			
-			GDialog_Resources.delete_timeline(what_name)
-			
-		"GlossaryEntry":
-			var target = $MainPanel/GlossaryEntryEditor.current_definition['id']
-			GDialog_Resources.delete_default_definition(target)
-			
 		"Value":
 			res_values.erase(what_name)
 			
 			GDialog_Resources.save_res_values(res_values)
+		
+		"Timeline":
+			timelines.erase(what_name)
+			
+			GDialog_Resources.delete_timeline(what_name)
+		
+		"Character":
+			characters.erase(what_name)
+			
+			GDialog_Resources.delete_character(what_name)
+		
+		"GlossaryEntry":
+			var target = $MainPanel/GlossaryEntryEditor.current_definition['id']
+			GDialog_Resources.delete_default_definition(target)
 			
 		"Theme":
 			var filename = $MainPanel/MasterTreeContainer/MasterTree.get_selected().get_metadata(0)['file']
 			GDialog_Resources.delete_theme(filename)
-			
-		"Character":
-			var filename = $MainPanel/CharacterEditor.opened_character_data['id']
-			GDialog_Resources.delete_character(filename)
 
 #	GDialog_Util.update_resource_folder_structure()
 	$MainPanel/MasterTreeContainer/MasterTree.remove_selected()
 	
 	$MainPanel/MasterTreeContainer/MasterTree.hide_all_editors()
 
+func popup_select_file(who, method_name:String, filter:String = ""):
+	editor_file_dialog.mode = EditorFileDialog.MODE_OPEN_FILE
+	editor_file_dialog.clear_filters()
+	
+	if !filter.empty():
+		editor_file_dialog.add_filter(filter)
+	
+	editor_file_dialog.popup_centered_ratio(0.75)
+	
+	for _signal in editor_file_dialog.get_signal_connection_list("file_selected"):
+		editor_file_dialog.disconnect("file_selected", _signal["target"], _signal["method"])
+	
+	editor_file_dialog.connect("file_selected", who, method_name)
+
+func popup_select_files(who, method_name:String, filter:String = ""):
+	editor_file_dialog.mode = EditorFileDialog.MODE_OPEN_FILES
+	editor_file_dialog.clear_filters()
+	
+	if !filter.empty():
+		editor_file_dialog.add_filter(filter)
+	
+	editor_file_dialog.popup_centered_ratio(0.75)
+	
+	for _signal in editor_file_dialog.get_signal_connection_list("files_selected"):
+		editor_file_dialog.disconnect("files_selected", _signal["target"], _signal["method"])
+	
+	editor_file_dialog.connect("files_selected", who, method_name)
 
 # Godot dialog
 func godot_dialog(filter, mode = EditorFileDialog.MODE_OPEN_FILE):
@@ -211,7 +243,7 @@ func create_new_res(dic:Dictionary, name:String, data) -> String:
 	
 	return key
 
-func change_res_name(dic:Dictionary, oldName:String, newName:String) -> bool:
+func rename_res(dic:Dictionary, oldName:String, newName:String) -> bool:
 	if dic.has(newName):
 		return false
 		
@@ -230,7 +262,7 @@ func create_new_value() -> String:
 	return create_new_res(res_values, "NewValue", "0")
 
 func change_value_name(oldName:String, newName:String) -> bool:
-	return change_res_name(res_values, oldName, newName)
+	return rename_res(res_values, oldName, newName)
 
 func set_value(name:String, value:String):
 	res_values[name] = value
@@ -244,8 +276,21 @@ func create_new_timeline() -> String:
 	return create_new_res(timelines, "NewTimeline", {"events": []})
 	
 func change_timeline_name(oldName:String, newName:String) -> bool:
-	if change_res_name(timelines, oldName, newName):
+	if rename_res(timelines, oldName, newName):
 		GDialog_Resources.rename_timeline(oldName, newName)
+		return true
+	return false
+
+## *****************************************************************************
+##						 CHARACTER
+## *****************************************************************************
+
+func create_new_character() -> String:
+	return create_new_res(characters, "NewCharacter", {"portraits":{}})
+	
+func rename_character(oldName:String, newName:String) -> bool:
+	if rename_res(characters, oldName, newName):
+		GDialog_Resources.rename_character(oldName, newName)
 		return true
 	return false
 
@@ -266,6 +311,10 @@ func on_save_button_pressed():
 	if !timelines.empty():
 		for timeline in timelines:
 			GDialog_Resources.save_timeline(timeline, timelines[timeline])
+	
+	if !characters.empty():
+		for character in characters:
+			GDialog_Resources.save_character(character, characters[character])
 	
 	save_button.text = "Save"
 		
