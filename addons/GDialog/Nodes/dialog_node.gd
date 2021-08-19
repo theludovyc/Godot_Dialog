@@ -582,13 +582,20 @@ func event_handler(event: Dictionary):
 		GDialog.Event_Type.SetMood:
 			emit_signal("event_start", "SetMood", event)
 			
-			var character = event.get("character", "")
+			var char_name = event.get("character", "")
 			
-			if character.empty():
-				_load_next_event()
-			else:
-				pass
-			
+			if !char_name.empty():
+				var char_value:Dictionary = GDialog.characters[char_name]
+				
+				var char_portrait = event.get("portrait", "")
+				
+				if !char_portrait.empty():
+					var portrait_node:Node = char_value.get("portrait_node", null)
+				
+					if portrait_node:
+						portrait_node.set_portrait(char_value["portraits"][char_portrait])
+		
+			_load_next_event()
 		# Join event
 		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 
