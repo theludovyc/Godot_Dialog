@@ -1,21 +1,5 @@
 extends Node
 
-var Portrait = preload("res://addons/GDialog/Nodes/Portrait.tscn")
-
-var current_definitions := {}
-var default_definitions := {}
-
-var values:Dictionary
-
-var timelines:Dictionary
-
-var characters:Dictionary
-
-var current_state := {}
-var autosave := true
-
-var current_timeline := ''
-
 enum Event_Type{
 	#Main Events
 	Text=0,
@@ -47,6 +31,22 @@ enum Event_Type{
 	ChangeScene,
 	CallNode
 }
+
+var Portrait = load("res://addons/GDialog/Nodes/Portrait.tscn")
+
+var current_definitions := {}
+var default_definitions := {}
+
+var values:Dictionary
+
+var timelines:Dictionary
+
+var characters:Dictionary
+
+var current_state := {}
+var autosave := true
+
+var current_timeline := ''
 
 ## *****************************************************************************
 ##								INITIALIZATION
