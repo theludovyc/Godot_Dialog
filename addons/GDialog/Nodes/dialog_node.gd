@@ -578,6 +578,17 @@ func event_handler(event: Dictionary):
 			finished = false
 				
 			update_text(event['text'] if event.has("text") else "")
+			
+		GDialog.Event_Type.SetMood:
+			emit_signal("event_start", "SetMood", event)
+			
+			var character = event.get("character", "")
+			
+			if character.empty():
+				_load_next_event()
+			else:
+				pass
+			
 		# Join event
 		GDialog.Event_Type.CharacterJoin:
 			## PLEASE UPDATE THIS! BUT HOW? 

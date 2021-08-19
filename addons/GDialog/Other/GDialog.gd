@@ -1,10 +1,6 @@
 extends Node
 
-## This script is added as an AutoLoad when the plugin is activated
-## It is used during game execution to access the dialogic resources
-
-## Mainly it's used by the dialog_node.gd and the DialogicClass
-## In your game you should consider using the methods of the DialogicClass!
+var Portrait = preload("res://addons/GDialog/Nodes/Portrait.tscn")
 
 var current_definitions := {}
 var default_definitions := {}
@@ -84,6 +80,16 @@ func _init() -> void:
 	timelines = GDialog_Resources.load_timelines()
 	
 	characters = GDialog_Resources.load_characters()
+	
+	for key in characters:
+		var character = characters[key]
+		
+		var portraits = character.get("portraits", [])
+		
+		if !portraits.empty():
+			character["portrait_node"] = Portrait.instance()
+	
+		print(characters[key])
 	
 	current_state = GDialog_Resources.get_saved_state()
 	
