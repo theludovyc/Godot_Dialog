@@ -86,18 +86,22 @@ func move_to_position(position_offset, time = 0.5):
 	
 	# Setting the scale of the portrait
 	var custom_scale = Vector2(1, 1)
-	if character_data.has('data'):
-		if character_data['data'].has('scale'):
-			custom_scale = Vector2(
-				float(character_data['data']['scale']) / 100,
-				float(character_data['data']['scale']) / 100
-			)
-			rect_scale = custom_scale
-		if character_data['data'].has('offset_x'):
-			rect_position += Vector2(
-				character_data['data']['offset_x'],
-				character_data['data']['offset_y']
-			)
+	
+	if character_data.has('scale'):
+		var scale = character_data['scale']
+		
+		custom_scale = Vector2(
+			scale / 100.0,
+			scale / 100.0
+		)
+		
+		rect_scale = custom_scale
+		
+	if character_data.has('offset_x'):
+		rect_position += Vector2(
+			character_data['offset_x'],
+			character_data['offset_y']
+		)
 			
 	if $TextureRect.get('texture'):
 		rect_position -= Vector2(
