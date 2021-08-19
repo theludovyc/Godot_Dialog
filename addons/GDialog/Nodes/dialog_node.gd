@@ -605,7 +605,7 @@ func event_handler(event: Dictionary):
 					var char_portrait = event.get("portrait", "")
 					
 					if !char_portrait.empty():
-						portrait_node.set_portrait(char_portrait)
+						portrait_node.set_portrait(char_value["Portraits"][char_portrait])
 					
 					portrait_node.set_mirror(event.get('mirror', false))
 					

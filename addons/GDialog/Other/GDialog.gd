@@ -81,15 +81,20 @@ func _init() -> void:
 	
 	characters = GDialog_Resources.load_characters()
 	
-	for key in characters:
-		var character = characters[key]
+	for char_name in characters:
+		var character = characters[char_name]
 		
 		var portraits = character.get("portraits", [])
 		
 		if !portraits.empty():
 			var portrait = Portrait.instance()
 			
-			portrait.name = key
+			portrait.name = char_name
+			
+			if character.has("scale"):
+				var _scale = character["scale"]
+				
+				portrait.set_scale(Vector2(_scale, _scale))
 			
 			character["portrait_node"] = portrait
 	
