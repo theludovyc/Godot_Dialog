@@ -583,11 +583,15 @@ func event_handler(event: Dictionary):
 			## PLEASE UPDATE THIS! BUT HOW? 
 			emit_signal("event_start", "action", event)
 			
-			if event["character"].empty():# No character found on the event. Skip.
+			var character = event.get("character", "")
+			
+			if character.empty():# No character found on the event. Skip.
 				_load_next_event()
 			else:
-				var character_data = get_character(event['character'])
+				var character_data:Dictionary = GDialog.characters[character]
+				
 				var exists = grab_portrait_focus(character_data)
+				
 				if exists:
 					for portrait in $Portraits.get_children():
 						if portrait.character_data == character_data:
@@ -1041,22 +1045,27 @@ func _on_option_selected(option, variable, value):
 
 func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 	var exists = false
+	
 	var visually_focus = true
+	
 	if settings.has_section_key('dialog', 'dim_characters'):
 		visually_focus = settings.get_value('dialog', 'dim_characters')
 
-	for portrait in $Portraits.get_children():
-		if portrait.character_data == character_data:
+	for portrait_node in $Portraits.get_children():
+		if portrait_node.character_data == character_data:
 			exists = true
 			
 			if visually_focus:
-				portrait.focus()
-			if event.has('portrait'):
-				if event['portrait'] != '':
-					portrait.set_portrait(event['portrait'])
+				portrait_node.focus()
+				
+			if !event.empty() and event.has("portrait"):
+				var portrait = event["portrait"]
+				
+				if !portrait.empty():
+					portrait_node.set_portrait(portrait)
 		else:
 			if visually_focus:
-				portrait.focusout()
+				portrait_node.focusout()
 	return exists
 
 
