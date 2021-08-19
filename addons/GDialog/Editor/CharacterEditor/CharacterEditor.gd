@@ -46,7 +46,7 @@ func on_description_changed():
 	editor_reference.need_save()
 
 func on_scale_changed(value:float):
-	current_character["scale"] = value
+	current_character["scale"] = value / 100
 	
 	editor_reference.need_save()
 	

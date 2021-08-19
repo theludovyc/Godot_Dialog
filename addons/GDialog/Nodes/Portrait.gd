@@ -47,33 +47,36 @@ func set_mirror(value):
 
 func move_to_position(position_offset, time = 0.5):
 	direction = position_offset
-	
-	modulate = Color(1,1,1,0)
-	
-	tween_modulate(modulate, Color(1,1,1, 1), time)
-	
+
 	rect_position = positions[position_offset]
-		
+
 	rect_position += position
-			
+	
 	if $TextureRect.get('texture'):
 		rect_position -= Vector2(
-			$TextureRect.texture.get_width() * 0.5,
+			$TextureRect.texture.get_width() / 2,
 			$TextureRect.texture.get_height()
-		)
-		
+		) * rect_scale
+	
 	fade_in()
 
 # Tween stuff
 func fade_in(time = 0.5):
+	modulate = Color(1,1,1, 0)
+	
 	tween_modulate(modulate, Color(1,1,1, 1), time)
 	
 	if single_portrait_mode == false:
 		var end_pos = Vector2(0, -40) # starting at center
+		
 		if direction == 'right':
-			end_pos = Vector2(+40, 0)
-		elif direction == 'left':
+			rect_position.x += 40
+			
 			end_pos = Vector2(-40, 0)
+		elif direction == 'left':
+			rect_position.x -= 40
+			
+			end_pos = Vector2(+40, 0)
 		else:
 			rect_position += Vector2(0, 40)
 
