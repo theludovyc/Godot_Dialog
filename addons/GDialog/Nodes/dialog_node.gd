@@ -884,7 +884,6 @@ func event_handler(event: Dictionary):
 			$TextBubble.visible = true
 			_load_next_event()
 		_:
-			visible = false
 			printt('[D] Other event. ', event)
 	
 	$Options.visible = waiting_for_answer
