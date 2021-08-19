@@ -88,9 +88,11 @@ func load_character(name:String):
 	node_portrait_preview.flip_h = current_character.get('mirror_portraits', false)
 
 	# Portraits
-	if current_character.has('portraits'):
-		for p in current_character['portraits']:
-			create_portrait_entry(p['name'], p['path'])
+	if current_character.has("portraits"):
+		var portraits = current_character["portraits"]
+		
+		for portrait_name in portraits:
+			create_portrait_entry(portrait_name, portraits[portrait_name])
 
 # Portraits
 func on_files_selected(paths:PoolStringArray):
@@ -100,27 +102,26 @@ func on_files_selected(paths:PoolStringArray):
 		
 			create_portrait_entry(name, path)
 		
-			current_character["portraits"].append({"name":name, "path":path})
+			current_character["portraits"][name] = path
 	
 		editor_reference.need_save()
 
 func _on_New_Portrait_Button_pressed():
 	editor_reference.popup_select_files(self, "on_files_selected", "*.png, *.svg")
 
-func create_portrait_entry(p_name = "", path = "", grab_focus = false):
+func create_portrait_entry(p_name, path, grab_focus = false):
 	var p = portrait_entry.instance()
 	
+	p.name = p_name
 	p.editor_reference = editor_reference
 	p.image_node = node_portrait_preview
 	p.image_label = node_image_label
 		
 	node_portraitList.add_child(p)
 	
-	if !p_name.empty():
-		p.node_nameEdit.text = p_name
+	p.node_nameEdit.text = p_name
 		
-	if !path.empty():
-		p.node_pathEdit.text = path
+	p.node_pathEdit.text = path
 		
 	if grab_focus:
 		p.node_nameEdit.grab_focus()
@@ -132,21 +133,25 @@ func create_portrait_entry(p_name = "", path = "", grab_focus = false):
 	return p
 
 func on_portrait_buttonDelete(p):
-	current_character["portraits"].remove(p.get_index())
+	current_character["portraits"].erase(p.name)
 	
 	p.queue_free()
 	
 	editor_reference.need_save()
 	
 func on_portrait_path_changed(path, p):
-	current_character["portraits"][p.get_index()]["path"] = path
+	current_character["portraits"][p.name] = path
 	
 	editor_reference.need_save()
 	
 func on_portrait_name_changed(text, p):
-	current_character["portraits"][p.get_index()]["name"] = text
+	if GDialog_Util.dic_rename(current_character["portraits"], p.name, text):
+		p.name = text
+		
+		editor_reference.need_save()
+	else:
+		p.node_nameEdit.text = p.name
 	
-	editor_reference.need_save()
 
 func _on_MirrorPortraitsCheckBox_toggled(button_pressed):
 	node_portrait_preview.flip_h = button_pressed

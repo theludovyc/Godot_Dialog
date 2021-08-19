@@ -286,11 +286,7 @@ func change_timeline_name(oldName:String, newName:String) -> bool:
 ## *****************************************************************************
 
 func create_new_character() -> String:
-	return create_new_res(characters, "NewCharacter", {
-		"color": "#ffffff",
-		"mirror_portraits": false,
-		"portraits": []
-	})
+	return create_new_res(characters, "NewCharacter", {"portraits":{}})
 	
 func rename_character(oldName:String, newName:String) -> bool:
 	if rename_res(characters, oldName, newName):
