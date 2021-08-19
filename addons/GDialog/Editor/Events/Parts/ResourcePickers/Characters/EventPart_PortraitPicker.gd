@@ -46,4 +46,4 @@ func _on_PickerMenu_about_to_show():
 		
 		if character.has("portraits"):
 			for p in character["portraits"]:
-				popup_menu.add_item(p["name"])
+				popup_menu.add_item(p)
