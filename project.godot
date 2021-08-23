@@ -1,0 +1,77 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Control",
+"class": "DialogicBackgroundMusic",
+"language": "GDScript",
+"path": "res://addons/GDialog/Nodes/BackgroundMusic.gd"
+}, {
+"base": "Control",
+"class": "EditorView",
+"language": "GDScript",
+"path": "res://addons/GDialog/Editor/EditorView.gd"
+}, {
+"base": "Control",
+"class": "EventPart",
+"language": "GDScript",
+"path": "res://addons/GDialog/Editor/Events/Parts/EventPart.gd"
+}, {
+"base": "Node",
+"class": "GDialog_Class",
+"language": "GDScript",
+"path": "res://addons/GDialog/Other/GDialog_Class.gd"
+}, {
+"base": "Node",
+"class": "GDialog_DefinitionsUtil",
+"language": "GDScript",
+"path": "res://addons/GDialog/Other/GDialog_DefinitionsUtil.gd"
+}, {
+"base": "Reference",
+"class": "GDialog_Resources",
+"language": "GDScript",
+"path": "res://addons/GDialog/Other/GDialog_Resources.gd"
+}, {
+"base": "Reference",
+"class": "GDialog_Util",
+"language": "GDScript",
+"path": "res://addons/GDialog/Other/GDialog_Util.gd"
+} ]
+_global_script_class_icons={
+"DialogicBackgroundMusic": "",
+"EditorView": "",
+"EventPart": "",
+"GDialog_Class": "",
+"GDialog_DefinitionsUtil": "",
+"GDialog_Resources": "",
+"GDialog_Util": ""
+}
+
+[application]
+
+config/name="Godot_Dialog"
+run/main_scene="res://Test.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+GDialog="*res://addons/GDialog/Other/GDialog.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/GDialog/plugin.cfg" )
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
