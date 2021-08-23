@@ -1,8 +1,7 @@
 {
 	"events": [
 		{
-			"character": "Bernard",
-			"text": "Bla :) !",
+			"text": "Bla !",
 			"type": 4
 		},
 		{
@@ -10,11 +9,14 @@
 			"condition": "",
 			"definition": "NewValue0",
 			"type": 5,
-			"value": ""
+			"value": "0"
 		},
 		{
 			"choice": "b",
-			"type": 5
+			"condition": "",
+			"definition": "",
+			"type": 5,
+			"value": ""
 		},
 		{
 			"type": 7

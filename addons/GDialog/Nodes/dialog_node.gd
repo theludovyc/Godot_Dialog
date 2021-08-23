@@ -908,14 +908,16 @@ func reset_options():
 
 
 func _should_add_choice_button(option: Dictionary):
-	if not option['definition'].empty():
-		var def_value = null
-		for d in definitions['variables']:
-			if d['id'] == option['definition']:
-				def_value = d['value']
-		return def_value != null and _compare_definitions(def_value, option['value'], option['condition']);
+	var value_name = option['definition']
+	
+	if not value_name.empty():
+		if GDialog.values.has(value_name):
+			printt("dialog_node", GDialog.values[value_name]["current"], option["value"], option["condition"])
+			return _compare_definitions(GDialog.get_value(value_name), option["value"], option["condition"])
 	else:
 		return true
+	
+	return false
 
 
 func use_custom_choice_button():
