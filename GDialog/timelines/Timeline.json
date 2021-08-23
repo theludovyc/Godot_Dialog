@@ -1,0 +1,30 @@
+{
+	"events": [
+		{
+			"definition": "NewValue0",
+			"type": 6,
+			"value": "0"
+		},
+		{
+			"text": "Hello =) !",
+			"type": 0
+		},
+		{
+			"definition": "NewValue0",
+			"operation": "=",
+			"set_random": false,
+			"set_value": "1",
+			"type": 8
+		},
+		{
+			"type": 11
+		},
+		{
+			"type": 7
+		},
+		{
+			"text": "Hola =) !",
+			"type": 0
+		}
+	]
+}

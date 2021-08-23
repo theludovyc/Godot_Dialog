@@ -15,8 +15,9 @@ func load_data(data:Dictionary):
 	# First set the event_data
 	.load_data(data)
 	
-	# Now update the ui nodes to display the data. 
-	number_box.value = event_data['transition_duration']
+	# Now update the ui nodes to display the data.
+	if data.has("transition_duration"):
+		number_box.value = event_data["transition_duration"]
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
