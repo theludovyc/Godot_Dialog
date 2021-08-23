@@ -1,29 +1,20 @@
 {
 	"events": [
 		{
-			"text": "Hello =) !",
-			"type": 0
-		},
-		{
 			"character": "Bernard",
 			"text": "Bla :) !",
 			"type": 4
 		},
 		{
 			"choice": "a",
-			"type": 5
-		},
-		{
-			"text": "a",
-			"type": 0
+			"condition": "",
+			"definition": "NewValue0",
+			"type": 5,
+			"value": ""
 		},
 		{
 			"choice": "b",
 			"type": 5
-		},
-		{
-			"text": "b",
-			"type": 0
 		},
 		{
 			"type": 7

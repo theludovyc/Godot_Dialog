@@ -534,6 +534,8 @@ func create_event(data:Dictionary, id:int = -1):
 	
 	node.event_data = data
 	
+	printt("create_event", node.name)
+	
 	add_child_event_node(node)
 	
 	return node
@@ -543,6 +545,7 @@ func load_timeline(name:String):
 	deselect_all_items()
 	
 	for event_node in timeline_node.get_children():
+		timeline_node.remove_child(event_node)
 		event_node.queue_free()
 	
 	#load it
@@ -550,8 +553,12 @@ func load_timeline(name:String):
 	
 	current_events = current_timeline["events"]
 	
+	printt("load_timeline", "-----", current_events.size(), timeline_node.get_child_count())
+	
 	for i in current_events.size():
 		create_event(current_events[i], i)
+	
+	printt("load_timeline", timeline_node.get_child_count())
 	
 	indent_events()
 
@@ -606,7 +613,12 @@ func move_event_node(event_node, direction):
 ##					 EVENT_DATA
 ## *****************************************************************************
 func on_event_data_changed(metadata, node):
-	var event = current_events[node.get_index()]
+	var index = node.get_index()
+	
+	if index > current_events.size():
+		printt(metadata, index, node.name, current_events)
+	
+	var event = current_events[index]
 	
 	for key in metadata.keys():
 		event[key] = metadata[key]
