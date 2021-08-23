@@ -42,6 +42,7 @@ func load_data(data:Dictionary):
 	if data["type"] == GDialog.Event_Type.Choice:
 		optional_view.show()
 		
+		use_condition_check.set_block_signals(true)
 		# Checking if definition is selected
 		if data.has("definition") and !data["definition"].empty():
 			use_condition_check.pressed = true
@@ -51,6 +52,7 @@ func load_data(data:Dictionary):
 			use_condition_check.pressed = false
 			
 			enabled_view.hide()
+		use_condition_check.set_block_signals(false)
 	else:
 		optional_view.hide()
 	

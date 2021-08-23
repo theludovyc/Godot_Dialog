@@ -553,12 +553,8 @@ func load_timeline(name:String):
 	
 	current_events = current_timeline["events"]
 	
-	printt("load_timeline", "-----", current_events.size(), timeline_node.get_child_count())
-	
 	for i in current_events.size():
 		create_event(current_events[i], i)
-	
-	printt("load_timeline", timeline_node.get_child_count())
 	
 	indent_events()
 
