@@ -266,6 +266,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 			event['event_idx'] = event_idx
 			event['question_idx'] = question_idx
 			event['answered'] = false
+			event["options"] = []
 			question_idx += 1
 			questions.append(event)
 			parser_queue.append(event)
@@ -426,16 +427,19 @@ func set_dialog_script(value):
 	dialog_script = value
 
 
-func update_name(character) -> void:
-	if character.has('name'):
-		var parsed_name = character['name']
-		if character.has('display_name'):
-			if character['display_name'] != '':
-				parsed_name = character['display_name']
-		parsed_name = parse_definitions(parsed_name, true, false)
-		$TextBubble.update_name(parsed_name, character.get('color', Color.white), current_theme.get_value('name', 'auto_color', true))
-	else:
-		$TextBubble.update_name('')
+func update_name(name:String, color:Color) -> void:
+	$TextBubble.update_name(name, color, current_theme.get_value('name', 'auto_color', true))
+	
+#	if character.has('name'):
+#		var parsed_name = character['name']
+#		if character.has('display_name'):
+#			if character['display_name'] != '':
+#				parsed_name = character['display_name']
+#		parsed_name = parse_definitions(parsed_name, true, false)
+#
+#		$TextBubble.update_name(parsed_name, character.get('color', Color.white), current_theme.get_value('name', 'auto_color', true))
+#	else:
+#		$TextBubble.update_name('')
 
 
 func update_text(text: String) -> String:
@@ -647,17 +651,22 @@ func event_handler(event: Dictionary):
 		# LOGIC EVENTS
 		# Question event
 		GDialog.Event_Type.Question:
-			emit_signal("event_start", "question", event)
+			emit_signal("event_start", "Question", event)
+			
 			show_dialog()
+			
 			finished = false
+			
 			waiting_for_answer = true
-			if event.has('name'):
-				update_name(event['name'])
-			elif event.has('character'):
-				var character_data = get_character(event['character'])
-				update_name(character_data)
-				grab_portrait_focus(character_data, event)
-			update_text(event['question'])
+
+#			if event.has('character'):
+#				var char_name = event["character"]
+#
+#				var char_data = GDialog.characters[char_name]
+#
+#				update_name(char_name, char_data.get("color", Color.white))
+#				grab_portrait_focus(character_data, event)
+			update_text(event["text"])
 		# Choice event
 		GDialog.Event_Type.Choice:
 			emit_signal("event_start", "choice", event)

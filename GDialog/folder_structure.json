@@ -1,0 +1,67 @@
+{
+	"files": [
+
+	],
+	"folders": {
+		"Characters": {
+			"files": [
+
+			],
+			"folders": {
+
+			},
+			"metadata": {
+				"color": null,
+				"folded": false
+			}
+		},
+		"Definitions": {
+			"files": [
+				"1629722719-648"
+			],
+			"folders": {
+
+			},
+			"metadata": {
+				"color": null,
+				"folded": false
+			}
+		},
+		"Themes": {
+			"files": [
+
+			],
+			"folders": {
+
+			},
+			"metadata": {
+				"color": null,
+				"folded": false
+			}
+		},
+		"Timelines": {
+			"files": [
+
+			],
+			"folders": {
+
+			},
+			"metadata": {
+				"color": null,
+				"folded": false
+			}
+		},
+		"Values": {
+			"files": [
+
+			],
+			"folders": {
+
+			},
+			"metadata": {
+				"color": null,
+				"folded": false
+			}
+		}
+	}
+}
