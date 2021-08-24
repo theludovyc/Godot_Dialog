@@ -417,14 +417,6 @@ func select_item(item: Node, multi_possible:bool = true):
 #
 #	visual_update_selection()
 
-func deselect_event_node():
-	var current_item = selected_items[0]
-	
-	if current_item != null:
-		current_item.visual_deselect()
-		
-		selected_items[0] = null
-
 # checks all the events and sets their styles (selected/deselected)
 func visual_update_selection():
 	for item in timeline_node.get_children():
@@ -450,7 +442,12 @@ func select_all_items():
 #	visual_update_selection()
 
 func deselect_all_items():
-	selected_items[0] = null
+	var current_item = selected_items[0]
+	
+	if current_item != null:
+		current_item.visual_deselect()
+		
+		selected_items[0] = null
 	
 #	visual_update_selection()
 
@@ -466,7 +463,7 @@ func delete_event(event_node):
 	editor_reference.need_save()
 	
 	if is_event_select(event_node):
-		deselect_event_node()
+		deselect_all_items()
 	
 	indent_events()
 
@@ -489,7 +486,7 @@ func _on_event_options_action(action: String, event_node: Node):
 
 # Event Creation signal for buttons
 func _create_event_button_pressed(button_name):
-	select_item(create_event0(button_name))
+	create_event0(button_name)
 	
 	indent_events()
 	
@@ -511,7 +508,7 @@ func _on_ButtonCondition_pressed() -> void:
 	create_event1(GDialog.Event_Type.Condition)
 	create_event1(GDialog.Event_Type.EndBranch)
 	
-	#indent_events()
+	indent_events()
 	
 	editor_reference.need_save()
 
@@ -541,6 +538,8 @@ func add_child_event_node(node):
 		timeline_node.add_child_below_node(current_selected_item, node)
 	else:
 		timeline_node.add_child(node)
+		
+	select_item(node)
 
 func create_event0(type:String):
 	var node = create_event_node(type)
@@ -567,7 +566,7 @@ func create_event(data:Dictionary, id:int = -1):
 
 func load_timeline(name:String):
 	#clear timeline
-	deselect_event_node()
+	deselect_all_items()
 	
 	for event_node in timeline_node.get_children():
 		timeline_node.remove_child(event_node)
