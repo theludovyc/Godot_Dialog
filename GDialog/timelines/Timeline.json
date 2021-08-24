@@ -1,14 +1,8 @@
 {
 	"events": [
 		{
-			"condition": "=",
-			"type": 6
-		},
-		{
+			"text": "Hi =) !",
 			"type": 0
-		},
-		{
-			"type": 7
 		}
 	]
 }
