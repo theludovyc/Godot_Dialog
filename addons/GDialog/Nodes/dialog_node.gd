@@ -912,7 +912,6 @@ func _should_add_choice_button(option: Dictionary):
 	
 	if not value_name.empty():
 		if GDialog.values.has(value_name):
-			printt("dialog_node", GDialog.values[value_name]["current"], option["value"], option["condition"])
 			return _compare_definitions(GDialog.get_value(value_name), option["value"], option["condition"])
 	else:
 		return true
@@ -1187,7 +1186,7 @@ func _compare_definitions(def_value, event_value, condition: String):
 		event_value = float(event_value)
 		
 	match condition:
-		"==":
+		"=":
 			condition_met = def_value == event_value
 		"!=":
 			condition_met = def_value != event_value

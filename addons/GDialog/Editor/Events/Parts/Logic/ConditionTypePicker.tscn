@@ -1,24 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/EventPart_ConditionTypePicker.gd" type="Script" id=1]
-[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/ConditionPickerOld.gd" type="Script" id=2]
-
+[ext_resource path="res://addons/GDialog/Editor/Events/styles/MenuButtonHover.tres" type="StyleBox" id=2]
+[ext_resource path="res://addons/GDialog/Editor/Events/styles/MenuButtonNormal.tres" type="StyleBox" id=3]
 
 [node name="ConditionTypePicker" type="VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
+size_flags_vertical = 3
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MenuButton" type="MenuButton" parent="."]
-margin_top = 10.0
-margin_right = 79.0
-margin_bottom = 30.0
-size_flags_vertical = 6
-text = "[ Equal to ]"
-script = ExtResource( 2 )
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_vertical = 3
+custom_styles/hover = ExtResource( 2 )
+custom_styles/normal = ExtResource( 3 )
+text = "="
+flat = false
+items = [ "=", null, 0, false, false, 0, 0, null, "", false, "not =", null, 0, false, false, 1, 0, null, "", false, ">", null, 0, false, false, 2, 0, null, "", false, "> or =", null, 0, false, false, 3, 0, null, "", false, "<", null, 0, false, false, 4, 0, null, "", false, "< or =", null, 0, false, false, 5, 0, null, "", false, "=", null, 0, false, false, 6, 0, null, "", false, "not =", null, 0, false, false, 7, 0, null, "", false, ">", null, 0, false, false, 8, 0, null, "", false, "> or =", null, 0, false, false, 9, 0, null, "", false, "<", null, 0, false, false, 10, 0, null, "", false, "< or =", null, 0, false, false, 11, 0, null, "", false, "=", null, 0, false, false, 12, 0, null, "", false, "not =", null, 0, false, false, 13, 0, null, "", false, ">", null, 0, false, false, 14, 0, null, "", false, "> or =", null, 0, false, false, 15, 0, null, "", false, "<", null, 0, false, false, 16, 0, null, "", false, "< or =", null, 0, false, false, 17, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }

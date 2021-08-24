@@ -19,6 +19,8 @@ func on_ready():
 	for value in operations.values():
 		picker_popup.add_item(value)
 	
+	printt("OperationPicker", "hello")
+	
 	picker_popup.connect("index_pressed", self, '_on_PickerMenu_selected')
 
 # called by the event block
@@ -28,11 +30,11 @@ func load_data(data:Dictionary):
 	
 	# Now update the ui nodes to display the data.
 	if !data.has("operation"):
-		data["operation"] = "="
+		event_data["operation"] = "="
 		
 		data_changed()
 	
-	picker_menu.text = operations[data["operation"]]
+	picker_menu.text = operations[event_data["operation"]]
 	
 # has to return the wanted preview, only useful for body parts
 func get_preview():
