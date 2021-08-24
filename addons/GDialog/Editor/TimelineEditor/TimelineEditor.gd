@@ -296,7 +296,7 @@ func delete_selected_events():
 	# get next element
 	var next = min(timeline_node.get_child_count() - 1, selected_items[-1].get_index() + 1)
 	var next_node = timeline_node.get_child(next)
-	if _is_item_selected(next_node):
+	if is_event_select(next_node):
 		next_node = null
 	
 	for event in selected_items:
@@ -362,8 +362,8 @@ func paste_events():
 ##					 	BLOCK SELECTION
 ## *****************************************************************************
 
-func _is_item_selected(item: Node):
-	return item in selected_items
+func is_event_select(item: Node):
+	return selected_items[0] == item
 
 func select_item(item: Node, multi_possible:bool = true):
 	if item == null:
@@ -372,6 +372,8 @@ func select_item(item: Node, multi_possible:bool = true):
 	print(selected_items)
 	
 	var current_item = selected_items[0]
+	
+	print(current_item)
 	
 	if current_item != null:
 		current_item.visual_deselect()
@@ -383,7 +385,7 @@ func select_item(item: Node, multi_possible:bool = true):
 #todo
 #	if Input.is_key_pressed(KEY_CONTROL) and multi_possible:
 #		# deselect the item if it is selected
-#		if _is_item_selected(item):
+#		if is_event_select(item):
 #			selected_items.erase(item)
 #		else:
 #			selected_items.append(item)
@@ -404,7 +406,7 @@ func select_item(item: Node, multi_possible:bool = true):
 #					break
 #	else:
 #		if len(selected_items) == 1:
-#			if _is_item_selected(item):
+#			if is_event_select(item):
 #				selected_items.erase(item)
 #			else:
 #				selected_items = [item]
@@ -414,6 +416,14 @@ func select_item(item: Node, multi_possible:bool = true):
 #	sort_selection()
 #
 #	visual_update_selection()
+
+func deselect_event_node():
+	var current_item = selected_items[0]
+	
+	if current_item != null:
+		current_item.visual_deselect()
+		
+		selected_items[0] = null
 
 # checks all the events and sets their styles (selected/deselected)
 func visual_update_selection():
@@ -454,6 +464,9 @@ func delete_event(event_node):
 	event_node.queue_free()
 	
 	editor_reference.need_save()
+	
+	if is_event_select(event_node):
+		deselect_event_node()
 	
 	indent_events()
 
@@ -522,10 +535,12 @@ func create_event_node(scene: String):
 	return node
 
 func add_child_event_node(node):
-	timeline_node.add_child(node)
-#	#todo
-#	if len(selected_items) != 0:
-#		timeline_node.add_child_below_node(selected_items[0], node)
+	var current_selected_item = selected_items[0]
+	
+	if current_selected_item != null:
+		timeline_node.add_child_below_node(current_selected_item, node)
+	else:
+		timeline_node.add_child(node)
 
 func create_event0(type:String):
 	var node = create_event_node(type)
@@ -552,7 +567,7 @@ func create_event(data:Dictionary, id:int = -1):
 
 func load_timeline(name:String):
 	#clear timeline
-	deselect_all_items()
+	deselect_event_node()
 	
 	for event_node in timeline_node.get_children():
 		timeline_node.remove_child(event_node)
