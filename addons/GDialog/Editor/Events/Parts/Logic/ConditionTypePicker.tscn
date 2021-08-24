@@ -21,7 +21,6 @@ custom_styles/hover = ExtResource( 2 )
 custom_styles/normal = ExtResource( 3 )
 text = "="
 flat = false
-items = [ "=", null, 0, false, false, 0, 0, null, "", false, "not =", null, 0, false, false, 1, 0, null, "", false, ">", null, 0, false, false, 2, 0, null, "", false, "> or =", null, 0, false, false, 3, 0, null, "", false, "<", null, 0, false, false, 4, 0, null, "", false, "< or =", null, 0, false, false, 5, 0, null, "", false, "=", null, 0, false, false, 6, 0, null, "", false, "not =", null, 0, false, false, 7, 0, null, "", false, ">", null, 0, false, false, 8, 0, null, "", false, "> or =", null, 0, false, false, 9, 0, null, "", false, "<", null, 0, false, false, 10, 0, null, "", false, "< or =", null, 0, false, false, 11, 0, null, "", false, "=", null, 0, false, false, 12, 0, null, "", false, "not =", null, 0, false, false, 13, 0, null, "", false, ">", null, 0, false, false, 14, 0, null, "", false, "> or =", null, 0, false, false, 15, 0, null, "", false, "<", null, 0, false, false, 16, 0, null, "", false, "< or =", null, 0, false, false, 17, 0, null, "", false ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
