@@ -11,7 +11,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-default_text = "[Select Definition]"
 
 [node name="MenuButton" type="MenuButton" parent="."]
 margin_right = 132.0
@@ -20,5 +19,5 @@ rect_min_size = Vector2( 0, 30 )
 size_flags_vertical = 6
 custom_styles/hover = ExtResource( 3 )
 custom_styles/normal = ExtResource( 2 )
-text = "[Select definition]"
+text = "Select Value"
 flat = false

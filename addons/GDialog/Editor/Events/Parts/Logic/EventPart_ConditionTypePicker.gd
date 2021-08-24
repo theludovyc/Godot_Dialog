@@ -51,3 +51,11 @@ func _on_PickerMenu_selected(index):
 	
 	# informs the parent about the changes!
 	data_changed()
+
+func reset():
+	if event_data["condition"] != "=":
+		event_data["condition"] = "="
+	
+		picker_menu.text = options["="]
+	
+		data_changed()

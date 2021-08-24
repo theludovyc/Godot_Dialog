@@ -1,5 +1,23 @@
 {
 	"events": [
-
+		{
+			"text": "ab",
+			"type": 4
+		},
+		{
+			"choice": "a",
+			"condition": "=",
+			"definition": "",
+			"type": 5,
+			"value": ""
+		},
+		{
+			"choice": "b",
+			"condition": "=",
+			"type": 5
+		},
+		{
+			"type": 7
+		}
 	]
 }

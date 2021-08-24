@@ -64,11 +64,16 @@ func get_preview():
 func _on_UseCondition_toggled(checkbox_value):
 	enabled_view.visible = checkbox_value
 	if checkbox_value == false:
-		event_data['definition'] = ''
-		event_data['condition'] = ''
-		event_data['value'] = ''
-	
-	data_changed()
+		definition_picker.reset()
+		
+		condition_type_picker.reset()
+		
+		if event_data["value"] != "":
+			value_input.text = ""
+			
+			event_data["value"] = ""
+		
+			data_changed()
 
 func _on_DefinitionPicker_data_changed(data):
 	event_data['definition'] = data['definition']

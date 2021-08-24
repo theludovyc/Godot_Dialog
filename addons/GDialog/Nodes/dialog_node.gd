@@ -237,30 +237,18 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 	for event in dialog_script['events']:
 		if event["type"] == GDialog.Event_Type.Choice:
 			var opened_branch = parser_queue.back()
+
 			var option = {
 				'question_idx': opened_branch['question_idx'],
 				'label': parse_definitions(event['choice'], true, false),
 				'event_idx': event_idx,
-				}
-			if event.has('condition') and event.has('definition') and event.has('value'):
-				option = {
-					'question_idx': opened_branch['question_idx'],
-					'label': parse_definitions(event['choice'], true, false),
-					'event_idx': event_idx,
-					'condition': event['condition'],
-					'definition': event['definition'],
-					'value': event['value'],
-					}
-			else:
-				option = {
-					'question_idx': opened_branch['question_idx'],
-					'label': parse_definitions(event['choice'], true, false),
-					'event_idx': event_idx,
-					'condition': '',
-					'definition': '',
-					'value': '',
-					}
+				'condition': event.get("condition", ""),
+				'definition': event.get("definition", ""),
+				'value': event.get("value", ""),
+			}
+			
 			dialog_script['events'][opened_branch['event_idx']]['options'].append(option)
+			
 			event['question_idx'] = opened_branch['question_idx']
 		elif event["type"] == GDialog.Event_Type.Question:
 			event['event_idx'] = event_idx
@@ -908,6 +896,8 @@ func reset_options():
 
 
 func _should_add_choice_button(option: Dictionary):
+	print("hello", option)
+	
 	var value_name = option['definition']
 	
 	if not value_name.empty():

@@ -2,7 +2,7 @@ tool
 extends EventPart
 
 # has an event_data variable that stores the current data!!!
-export (String) var default_text = "Select Definition"
+export (String) var default_text = "Select Value"
 
 ## node references
 onready var picker_menu = $MenuButton
@@ -77,3 +77,12 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu
 	
 	return current_folder_name
+
+func reset():
+	if event_data["definition"] != "":
+		picker_menu.text = default_text
+		
+		event_data["definition"] = ""
+		
+		# informs the parent about the changes!
+		data_changed()
