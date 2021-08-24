@@ -1,25 +1,5 @@
 {
 	"events": [
-		{
-			"text": "Bla !",
-			"type": 4
-		},
-		{
-			"choice": "a",
-			"condition": "",
-			"definition": "NewValue0",
-			"type": 5,
-			"value": "0"
-		},
-		{
-			"choice": "b",
-			"condition": "",
-			"definition": "",
-			"type": 5,
-			"value": ""
-		},
-		{
-			"type": 7
-		}
+
 	]
 }

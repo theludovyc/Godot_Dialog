@@ -466,18 +466,10 @@ func _create_event_button_pressed(button_name):
 
 # the Question button adds multiple blocks 
 func _on_ButtonQuestion_pressed() -> void:
-	if len(selected_items) != 0:
-		# Events are added bellow the selected node
-		# So we must reverse the adding order
-		create_event1(GDialog.Event_Type.EndBranch)
-		create_event1(GDialog.Event_Type.Choice)
-		create_event1(GDialog.Event_Type.Choice)
-		create_event1(GDialog.Event_Type.Question)
-	else:
-		create_event1(GDialog.Event_Type.Question)
-		create_event1(GDialog.Event_Type.Choice)
-		create_event1(GDialog.Event_Type.Choice)
-		create_event1(GDialog.Event_Type.EndBranch)
+	create_event1(GDialog.Event_Type.Question)
+	create_event1(GDialog.Event_Type.Choice)
+	create_event1(GDialog.Event_Type.Choice)
+	create_event1(GDialog.Event_Type.EndBranch)
 	
 	indent_events()
 	
