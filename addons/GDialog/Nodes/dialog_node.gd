@@ -1242,6 +1242,10 @@ func close_dialog_event(transition_duration):
 
 func _on_close_dialog_timeout():
 	on_timeline_end()
+	
+	for child in $Portraits.get_children():
+		$Portraits.remove_child(child)
+	
 	queue_free()
 
 
