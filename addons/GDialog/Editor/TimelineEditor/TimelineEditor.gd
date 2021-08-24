@@ -60,6 +60,9 @@ func _ready():
 	
 	var style = $TimelineArea.get('custom_styles/bg')
 	style.set('bg_color', get_color("dark_color_1", "Editor"))
+	
+	#refactoring don't touch it
+	selected_items.append(null)
 
 # handles dragging/moving of events
 func _process(delta):
@@ -365,40 +368,52 @@ func _is_item_selected(item: Node):
 func select_item(item: Node, multi_possible:bool = true):
 	if item == null:
 		return
-
-	if Input.is_key_pressed(KEY_CONTROL) and multi_possible:
-		# deselect the item if it is selected
-		if _is_item_selected(item):
-			selected_items.erase(item)
-		else:
-			selected_items.append(item)
-	elif Input.is_key_pressed(KEY_SHIFT) and multi_possible:
+	
+	print(selected_items)
+	
+	var current_item = selected_items[0]
+	
+	if current_item != null:
+		current_item.visual_deselect()
 		
-		if len(selected_items) == 0:
-			selected_items = [item]
-		else:
-			var index = selected_items[-1].get_index()
-			var goal_idx = item.get_index()
-			while true:
-				if index < goal_idx: index += 1
-				else: index -= 1
-				if not timeline_node.get_child(index) in selected_items:
-					selected_items.append(timeline_node.get_child(index))
-				
-				if index == goal_idx:
-					break
-	else:
-		if len(selected_items) == 1:
-			if _is_item_selected(item):
-				selected_items.erase(item)
-			else:
-				selected_items = [item]
-		else:
-			selected_items = [item]
+	selected_items[0] = item
 	
-	sort_selection()
-	
-	visual_update_selection()
+	item.visual_select()
+
+#todo
+#	if Input.is_key_pressed(KEY_CONTROL) and multi_possible:
+#		# deselect the item if it is selected
+#		if _is_item_selected(item):
+#			selected_items.erase(item)
+#		else:
+#			selected_items.append(item)
+#	elif Input.is_key_pressed(KEY_SHIFT) and multi_possible:
+#
+#		if len(selected_items) == 0:
+#			selected_items = [item]
+#		else:
+#			var index = selected_items[-1].get_index()
+#			var goal_idx = item.get_index()
+#			while true:
+#				if index < goal_idx: index += 1
+#				else: index -= 1
+#				if not timeline_node.get_child(index) in selected_items:
+#					selected_items.append(timeline_node.get_child(index))
+#
+#				if index == goal_idx:
+#					break
+#	else:
+#		if len(selected_items) == 1:
+#			if _is_item_selected(item):
+#				selected_items.erase(item)
+#			else:
+#				selected_items = [item]
+#		else:
+#			selected_items = [item]
+#
+#	sort_selection()
+#
+#	visual_update_selection()
 
 # checks all the events and sets their styles (selected/deselected)
 func visual_update_selection():
@@ -417,14 +432,17 @@ func custom_sort_selection(item1, item2):
 
 ## Helpers
 func select_all_items():
-	selected_items = []
-	for event in timeline_node.get_children():
-		selected_items.append(event)
-	visual_update_selection()
+	#todo
+	pass
+#	selected_items = []
+#	for event in timeline_node.get_children():
+#		selected_items.append(event)
+#	visual_update_selection()
 
 func deselect_all_items():
-	selected_items = []
-	visual_update_selection()
+	selected_items[0] = null
+	
+#	visual_update_selection()
 
 ## *****************************************************************************
 ##				SPECIAL BLOCK OPERATIONS
