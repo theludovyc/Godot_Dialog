@@ -369,11 +369,7 @@ func select_item(item: Node, multi_possible:bool = true):
 	if item == null:
 		return
 	
-	print(selected_items)
-	
 	var current_item = selected_items[0]
-	
-	print(current_item)
 	
 	if current_item != null:
 		current_item.visual_deselect()
@@ -539,9 +535,16 @@ func create_event0(type:String):
 	var selected_event_node = selected_items[0]
 	
 	if selected_event_node != null:
-		current_events.insert(selected_event_node.get_index(), data)
+		var index = selected_event_node.get_index() + 1
 		
-		timeline_node.add_child_below_node(selected_event_node, node)
+		if index < current_events.size():
+			current_events.insert(index, data)
+		
+			timeline_node.add_child_below_node(selected_event_node, node)
+		else:
+			current_events.append(data)
+	
+			timeline_node.add_child(node)
 	else:
 		current_events.append(data)
 	
@@ -558,8 +561,6 @@ func load_event(data:Dictionary, id:int = -1):
 	var node = create_event_node(GDialog.Event_Type.keys()[data["type"]])
 	
 	node.event_data = data
-	
-	printt("load_event", node.name)
 	
 	timeline_node.add_child(node)
 	
@@ -635,9 +636,6 @@ func move_event_node(event_node, direction):
 ## *****************************************************************************
 func on_event_data_changed(metadata, node):
 	var index = node.get_index()
-	
-	if index > current_events.size():
-		printt(metadata, index, node.name, current_events)
 	
 	var event = current_events[index]
 	
