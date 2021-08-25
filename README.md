@@ -40,6 +40,8 @@ add_child(new_dialog)
 
 And using the editor, you can drag and drop the scene located at `/addons/GDialog/Dialog.tscn` and set the current timeline via the inspector.
 
+For further informations see this [wiki](https://github.com/theludovyc/Godot_Dialog/wiki).
+
 ---
 
 ## FAQ
