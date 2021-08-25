@@ -351,7 +351,7 @@ func paste_events():
 			
 			var new_items = []
 			for event in event_list:
-				new_items.append(create_event(event))
+				new_items.append(load_event(event))
 			selected_items = new_items
 			sort_selection()
 			visual_update_selection()
@@ -531,36 +531,37 @@ func create_event_node(scene: String):
 
 	return node
 
-func add_child_event_node(node):
-	var current_selected_item = selected_items[0]
-	
-	if current_selected_item != null:
-		timeline_node.add_child_below_node(current_selected_item, node)
-	else:
-		timeline_node.add_child(node)
-		
-	select_item(node)
-
 func create_event0(type:String):
 	var node = create_event_node(type)
-		
-	current_events.append({"type":GDialog.Event_Type[type]})
 	
-	add_child_event_node(node)
+	var data = {"type":GDialog.Event_Type[type]}
+	
+	var selected_event_node = selected_items[0]
+	
+	if selected_event_node != null:
+		current_events.insert(selected_event_node.get_index(), data)
+		
+		timeline_node.add_child_below_node(selected_event_node, node)
+	else:
+		current_events.append(data)
+	
+		timeline_node.add_child(node)
+	
+	select_item(node)
 	
 	return node
 
 func create_event1(type:int):
 	return create_event0(GDialog.Event_Type.keys()[type])
 
-func create_event(data:Dictionary, id:int = -1):
+func load_event(data:Dictionary, id:int = -1):
 	var node = create_event_node(GDialog.Event_Type.keys()[data["type"]])
 	
 	node.event_data = data
 	
-	printt("create_event", node.name)
+	printt("load_event", node.name)
 	
-	add_child_event_node(node)
+	timeline_node.add_child(node)
 	
 	return node
 
@@ -578,7 +579,7 @@ func load_timeline(name:String):
 	current_events = current_timeline["events"]
 	
 	for i in current_events.size():
-		create_event(current_events[i], i)
+		load_event(current_events[i], i)
 	
 	indent_events()
 
