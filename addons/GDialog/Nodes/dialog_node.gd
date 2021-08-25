@@ -1262,9 +1262,6 @@ func close_dialog_event(transition_duration):
 func _on_close_dialog_timeout():
 	on_timeline_end()
 	
-	for child in portraits_node.get_children():
-		portraits_node.remove_child(child)
-	
 	queue_free()
 
 
