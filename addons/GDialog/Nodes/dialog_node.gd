@@ -1,6 +1,8 @@
 tool
 extends Control
 
+onready var portraits_node = $Portraits
+
 var last_mouse_mode = null
 var input_next: String = 'ui_accept'
 var dialog_index: int = 0
@@ -45,6 +47,23 @@ var questions #for keeping track of the questions answered
 
 
 func _ready():
+	for char_name in GDialog.characters:
+		var character = GDialog.characters[char_name]
+		
+		var portraits = character.get("portraits", [])
+		
+		if !portraits.empty():
+			var portrait = Portrait.instance()
+			
+			portrait.name = char_name
+			
+			if character.has("scale"):
+				var _scale = character["scale"]
+				
+				portrait.set_scale(Vector2(_scale, _scale))
+			
+			portraits_node.add_child(portrait)
+	
 	# Loading the config files
 	load_config_files()
 	
@@ -582,7 +601,7 @@ func event_handler(event: Dictionary):
 				var char_portrait = event.get("portrait", "")
 				
 				if !char_portrait.empty():
-					var portrait_node:Node = char_value.get("portrait_node", null)
+					var portrait_node:Node = portraits_node.get_node(char_name)
 				
 					if portrait_node:
 						portrait_node.set_portrait(char_value["portraits"][char_portrait])
@@ -598,7 +617,7 @@ func event_handler(event: Dictionary):
 			if !char_name.empty():
 				var char_value:Dictionary = GDialog.characters[char_name]
 				
-				var portrait_node:Node = char_value.get("portrait_node", null)
+				var portrait_node:Node = portraits_node.get_node(char_name)
 				
 				if portrait_node:
 					var char_portrait = event.get("portrait", "")
@@ -611,8 +630,8 @@ func event_handler(event: Dictionary):
 					if current_theme.get_value('settings', 'single_portrait_mode', false):
 						portrait_node.single_portrait_mode = true
 					
-					if !$Portraits.has_node(portrait_node.name):
-						$Portraits.add_child(portrait_node)
+					if !portraits_node.has_node(portrait_node.name):
+						portraits_node.add_child(portrait_node)
 
 					portrait_node.move_to_position(get_character_position(event['position']))
 					
@@ -629,7 +648,7 @@ func event_handler(event: Dictionary):
 				else:
 					var char_value:Dictionary = GDialog.characters[char_name]
 					
-					var portrait_node:Node = char_value.get("portrait_node", null)
+					var portrait_node:Node = portraits_node.get_node(char_name)
 					
 					if portrait_node:
 						portrait_node.fade_out()
@@ -1063,7 +1082,7 @@ func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 	if settings.has_section_key('dialog', 'dim_characters'):
 		visually_focus = settings.get_value('dialog', 'dim_characters')
 
-	for portrait_node in $Portraits.get_children():
+	for portrait_node in portraits_node.get_children():
 		if portrait_node.character_data == character_data:
 			exists = true
 			
@@ -1243,8 +1262,8 @@ func close_dialog_event(transition_duration):
 func _on_close_dialog_timeout():
 	on_timeline_end()
 	
-	for child in $Portraits.get_children():
-		$Portraits.remove_child(child)
+	for child in portraits_node.get_children():
+		portraits_node.remove_child(child)
 	
 	queue_free()
 

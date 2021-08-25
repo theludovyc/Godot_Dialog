@@ -2,6 +2,6 @@
 	"color": "#ffc52222",
 	"description": "Blablabla",
 	"portraits": {
-
+		"df-1": "res://addons/GDialog/Example Assets/portraits/df-1.png"
 	}
 }

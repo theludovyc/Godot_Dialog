@@ -1,8 +1,23 @@
 {
 	"events": [
 		{
+			"character": "Bernard",
+			"portrait": "df-1",
+			"position": [
+				true,
+				false,
+				false,
+				false,
+				false
+			],
+			"type": 2
+		},
+		{
 			"text": "Hi =) !",
 			"type": 0
+		},
+		{
+			"type": 11
 		}
 	]
 }
