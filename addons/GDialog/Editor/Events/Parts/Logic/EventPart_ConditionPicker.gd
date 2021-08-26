@@ -68,7 +68,9 @@ func _on_UseCondition_toggled(checkbox_value):
 		
 		condition_type_picker.reset()
 		
-		if event_data["value"] != "":
+		var val = event_data.get("value", "")
+		
+		if !val.empty():
 			value_input.text = ""
 			
 			event_data["value"] = ""

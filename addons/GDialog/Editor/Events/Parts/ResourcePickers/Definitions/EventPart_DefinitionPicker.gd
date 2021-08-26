@@ -79,7 +79,9 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 	return current_folder_name
 
 func reset():
-	if event_data["definition"] != "":
+	var def = event_data.get("definition", "")
+	
+	if !def.empty():
 		picker_menu.text = default_text
 		
 		event_data["definition"] = ""
