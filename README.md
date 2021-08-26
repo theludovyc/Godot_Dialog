@@ -1,5 +1,5 @@
 # Godot_Dialog
-![Godot v3.3](https://img.shields.io/badge/godot-v3.3-informational?style=flat-square&logo=godotengine)
+![Godot v3.3](https://img.shields.io/badge/Godot-v3.3-informational?style=flat&logo=godotengine)
 
 A powerful plugin to easily create interactive dialogs, for your visual novels, rpgs, or other game in Godot-Engine.
 
