@@ -27,7 +27,7 @@ onready var title_label = $PanelContainer/MarginContainer/VBoxContainer/Header/T
 onready var icon_texture  = $PanelContainer/MarginContainer/VBoxContainer/Header/IconTexture
 onready var expand_control = $PanelContainer/MarginContainer/VBoxContainer/Header/ExpandControl
 onready var options_control = $PanelContainer/MarginContainer/VBoxContainer/Header/OptionsControl
-onready var header_content_container = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
+onready var header_content = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
 onready var body_container = $PanelContainer/MarginContainer/VBoxContainer/Body
 onready var body_content_container = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
 onready var indent_node = $Indent
@@ -106,7 +106,7 @@ func _set_event_name(text: String):
 
 
 func _set_header(scene: PackedScene):
-	header_node = _set_content(header_content_container, scene)
+	header_node = _set_content(header_content, scene)
 
 
 func _set_body(scene: PackedScene):
@@ -114,20 +114,6 @@ func _set_body(scene: PackedScene):
 
 	# show the expand toggle
 	expand_control.set_enabled(body_node != null)
-
-
-func _setup_event():
-	if event_style != null:
-		set_event_style(event_style)
-	if event_icon != null:
-		_set_event_icon(event_icon)
-	if event_name != null:
-		_set_event_name(event_name)
-	if header_scene != null:
-		_set_header(header_scene)
-	if body_scene != null:
-		_set_body(body_scene)
-
 
 func _set_content(container: Control, scene: PackedScene):
 	for c in container.get_children():
@@ -221,7 +207,12 @@ func _request_selection():
 func _ready():
 	event_data["type"] = type
 	
-	_setup_event()
+	if event_style != null:
+		set_event_style(event_style)
+	if event_icon != null:
+		_set_event_icon(event_icon)
+	if event_name != null:
+		_set_event_name(event_name)
 	
 	set_focus_mode(1) # Allowing this node to grab focus
 	
