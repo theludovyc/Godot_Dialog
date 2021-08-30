@@ -3,5 +3,6 @@
 	"description": "Blablabla",
 	"portraits": {
 		"df-1": "res://addons/GDialog/Example Assets/portraits/df-1.png"
-	}
+	},
+	"scale": 0.5
 }
