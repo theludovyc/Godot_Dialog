@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/ExpandControl.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/CharacterJoin.tres" type="StyleBox" id=6]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/CharacterPicker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/PortraitPicker.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/PositionPicker.tscn" type="PackedScene" id=9]
 
 [node name="CharacterJoin" type="HBoxContainer"]
 anchor_right = 1.0
@@ -91,7 +92,7 @@ text = "Character Join"
 
 [node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 139.0
-margin_right = 349.0
+margin_right = 600.0
 margin_bottom = 30.0
 
 [node name="CharacterPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 7 )]
@@ -100,14 +101,18 @@ margin_bottom = 30.0
 
 [node name="PortraitPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
 margin_left = 110.0
-margin_right = 210.0
+margin_right = 203.0
+
+[node name="PositionPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 9 )]
+margin_left = 207.0
+margin_right = 461.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
-margin_left = 172.0
-margin_right = 236.0
+margin_left = 610.0
+margin_right = 674.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 359.0
+margin_left = 610.0
 margin_right = 928.0
 margin_bottom = 30.0
 
