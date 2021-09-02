@@ -20,10 +20,9 @@ __meta__ = {
 }
 
 [node name="LineEdit" type="LineEdit" parent="."]
-margin_right = 48.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 0, 27 )
-size_flags_vertical = 6
+margin_right = 75.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 75, 27 )
 custom_styles/read_only = SubResource( 1 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/normal = SubResource( 1 )
@@ -34,7 +33,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_uneditable = Color( 0, 0, 0, 1 )
-expand_to_text_length = true
 caret_blink = true
 caret_blink_speed = 0.5
 __meta__ = {
