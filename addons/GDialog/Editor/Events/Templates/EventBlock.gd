@@ -230,7 +230,11 @@ func _ready():
 	# If there is any external data, it will be set already BEFORE the event is added to tree
 	# if have a header
 	for node in header_content.get_children():
-		node.connect("data_changed", self, "_on_data_changed", [node])
+		node.editor_reference = editor_reference
+		
+		node.connect("send_data", self, "_on_send_data", [node])
+		
+		node.init_data(event_data)
 	
 #	if header_node:
 #		header_node.connect("data_changed", self, "_on_Header_data_changed")
@@ -240,8 +244,8 @@ func _ready():
 #		header_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
 #		header_node.connect("set_warning", self, "set_warning")
 #		header_node.connect("remove_warning", self, "remove_warning")
-		
-		header_node.load_data(event_data)
+#
+#		header_node.load_data(event_data)
 		
 	# if have a body
 	if body_node:
@@ -259,14 +263,19 @@ func _ready():
 	
 	_on_Indent_visibility_changed()
 
-func _on_data_changed(data, node):
-	var array = header_content.get_children()
+func _on_send_data(data, node):
+	var array:Array
 	
-	array.append(body_content.get_children())
+	array += header_content.get_children()
+	
+	array += body_content.get_children()
 	
 	array.erase(node)
 	
+	printt("event_block", array)
+	
 	for _node in array:
+		printt("event_block", _node, _node.name)
 		_node.load_data(data)
 
 func _on_HelpButton_pressed():

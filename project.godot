@@ -66,7 +66,7 @@ GDialog="*res://addons/GDialog/Other/GDialog.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "GDialog" )
 
 [physics]
 

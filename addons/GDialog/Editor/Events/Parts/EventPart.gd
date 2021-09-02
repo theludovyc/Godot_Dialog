@@ -9,6 +9,7 @@ var editor_reference:EditorView
 var event_data = {}
 
 signal data_changed
+signal send_data(data)
 
 # emit this to set the enabling of the body
 signal request_set_body_enabled(enabled)
@@ -34,8 +35,7 @@ func on_ready():
 
 # to be overwritten by the subclasses
 func load_data(data:Dictionary):
-	for key in data:
-		event_data[key] = data[key]
+	pass
 
 # to be overwritten by body-parts that provide a preview
 func get_preview_text():
@@ -46,3 +46,5 @@ func get_preview_text():
 func data_changed():
 	emit_signal("data_changed", event_data)
 
+func send_data(data):
+	emit_signal("send_data", data)

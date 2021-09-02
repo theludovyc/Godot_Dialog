@@ -1,59 +1,50 @@
 tool
 extends EventPart
 
-# has an event_data variable that stores the current data!!!
-var default_icon_color = Color("#65989898")
-
 ## node references
 onready var positions_container = $HBox/PositionsContainer
 
+# has an event_data variable that stores the current data!!!
+const default_color = Color("#65989898")
+
+var index:int
+
+var current_color:Color
+
 # used to connect the signals
 func _ready():
-	for p in positions_container.get_children():
-		p.connect('pressed', self, "position_button_pressed", [p.name])
+	for button in positions_container.get_children():
+		button.connect('pressed', self, "position_button_pressed", [button])
 
 # called by the event block
 func load_data(data:Dictionary):
-	# First set the event_data
-	.load_data(data)
+	if data.has("character"):
+		var char_name = data["character"]
 	
-	# Now update the ui nodes to display the data.
-	if !data.has("position"):
-		data["position"] = [true, false, false, false, false]
+		current_color = editor_reference.characters[char_name]["color"]
 	
-	check_active_position()
+		positions_container.get_child(index).set('self_modulate', current_color)
+
+# called by the event block
+func init_data(data:Dictionary):
+	index = data.get("position", 0)
+	
+	positions_container.get_child(index).pressed = true
+	
+	load_data(data)
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
 	return ''
 
-func get_character_color():
-	return editor_reference.characters[event_data["character"]]["color"] if event_data.has("character") else Color.white
-
-func position_button_pressed(name):
-	clear_all_positions()
-	var selected_index = name.split('-')[1]
-	var button = positions_container.get_node('position-' + selected_index)
-	button.set('self_modulate', get_character_color())
+func position_button_pressed(button:Node):
+	for _button in positions_container.get_children():
+		_button.set('self_modulate', default_color)
+		_button.pressed = false
+	
+	button.set('self_modulate', current_color)
 	button.pressed = true
 	
-	event_data['position'][int(selected_index)] = true
+	index = button.get_index()
 	
-	data_changed()
-
-func clear_all_positions():
-	for i in range(5):
-		event_data['position'][i] = false
-	for p in positions_container.get_children():
-		p.set('self_modulate', default_icon_color)
-		p.pressed = false
-
-
-func check_active_position(active_color = Color("#ffffff")):
-	var index = 0
-	for p in positions_container.get_children():
-		if event_data.has("position") and event_data['position'][index]:
-			p.pressed = true
-			p.set('self_modulate', get_character_color())
-		index += 1
-
+	send_data({"position":index})
