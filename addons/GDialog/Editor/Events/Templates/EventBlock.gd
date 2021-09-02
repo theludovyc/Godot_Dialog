@@ -29,7 +29,7 @@ onready var expand_control = $PanelContainer/MarginContainer/VBoxContainer/Heade
 onready var options_control = $PanelContainer/MarginContainer/VBoxContainer/Header/OptionsControl
 onready var header_content = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
 onready var body_container = $PanelContainer/MarginContainer/VBoxContainer/Body
-onready var body_content_container = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
+onready var body_content = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
 onready var indent_node = $Indent
 onready var help_button = $PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton
 var header_node
@@ -110,7 +110,7 @@ func _set_header(scene: PackedScene):
 
 
 func _set_body(scene: PackedScene):
-	body_node = _set_content(body_content_container, scene)
+	body_node = _set_content(body_content, scene)
 
 	# show the expand toggle
 	expand_control.set_enabled(body_node != null)
@@ -229,14 +229,17 @@ func _ready():
 	# when it enters the tree, load the data into the header/body
 	# If there is any external data, it will be set already BEFORE the event is added to tree
 	# if have a header
-	if header_node:
-		header_node.connect("data_changed", self, "_on_Header_data_changed")
-		header_node.connect("request_open_body", expand_control, "set_expanded", [true])
-		header_node.connect("request_close_body", expand_control, "set_expanded", [false])
-		header_node.connect("request_selection", self, "_request_selection")
-		header_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		header_node.connect("set_warning", self, "set_warning")
-		header_node.connect("remove_warning", self, "remove_warning")
+	for node in header_content.get_children():
+		node.connect("data_changed", self, "_on_data_changed", [node])
+	
+#	if header_node:
+#		header_node.connect("data_changed", self, "_on_Header_data_changed")
+#		header_node.connect("request_open_body", expand_control, "set_expanded", [true])
+#		header_node.connect("request_close_body", expand_control, "set_expanded", [false])
+#		header_node.connect("request_selection", self, "_request_selection")
+#		header_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
+#		header_node.connect("set_warning", self, "set_warning")
+#		header_node.connect("remove_warning", self, "remove_warning")
 		
 		header_node.load_data(event_data)
 		
@@ -256,6 +259,15 @@ func _ready():
 	
 	_on_Indent_visibility_changed()
 
+func _on_data_changed(data, node):
+	var array = header_content.get_children()
+	
+	array.append(body_content.get_children())
+	
+	array.erase(node)
+	
+	for _node in array:
+		_node.load_data(data)
 
 func _on_HelpButton_pressed():
 	if help_page_path:

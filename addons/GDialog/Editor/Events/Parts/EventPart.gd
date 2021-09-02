@@ -34,8 +34,8 @@ func on_ready():
 
 # to be overwritten by the subclasses
 func load_data(data:Dictionary):
-	event_data = data
-
+	for key in data:
+		event_data[key] = data[key]
 
 # to be overwritten by body-parts that provide a preview
 func get_preview_text():

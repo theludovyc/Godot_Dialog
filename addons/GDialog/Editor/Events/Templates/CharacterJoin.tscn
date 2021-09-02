@@ -152,6 +152,5 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_top = 2
 custom_constants/margin_bottom = 2
-
 [connection signal="visibility_changed" from="Indent" to="." method="_on_Indent_visibility_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton" to="." method="_on_HelpButton_pressed"]
