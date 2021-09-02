@@ -1,12 +1,6 @@
 {
 	"events": [
 		{
-			"character": "Bernard",
-			"portrait": "df-1",
-			"position": 3,
-			"type": 2
-		},
-		{
 			"text": "aaaaa\nbbbb",
 			"type": 0
 		},
@@ -14,6 +8,12 @@
 			"character": "Bernard",
 			"portrait": "df-1",
 			"type": 1
+		},
+		{
+			"character": "Bernard",
+			"portrait": "df-1",
+			"position": 3,
+			"type": 2
 		},
 		{
 			"type": 3

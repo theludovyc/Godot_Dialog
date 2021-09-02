@@ -2,13 +2,13 @@
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/ExpandControl.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/GDialog/Editor/Events/styles/Main.tres" type="StyleBox" id=3]
+[ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=5]
-[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/TextEditor.tscn" type="PackedScene" id=6]
-[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/text-event.svg" type="Texture" id=7]
-[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/question.svg" type="Texture" id=8]
-[ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/DefinitionPicker.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/condition.svg" type="Texture" id=7]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/ConditionTypePicker.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=9]
 
 [node name="EventTemplate" type="HBoxContainer"]
 anchor_right = 1.0
@@ -21,10 +21,9 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-type = 4
-event_style = ExtResource( 5 )
-event_icon = ExtResource( 8 )
-event_name = "Question"
+type = 6
+event_style = ExtResource( 3 )
+event_icon = ExtResource( 7 )
 expand_on_default = true
 
 [node name="Indent" type="Control" parent="."]
@@ -33,7 +32,7 @@ margin_bottom = 64.0
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 50.0
+margin_bottom = 42.0
 mouse_filter = 1
 mouse_default_cursor_shape = 6
 size_flags_horizontal = 3
@@ -42,7 +41,7 @@ custom_styles/panel = ExtResource( 3 )
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1024.0
-margin_bottom = 50.0
+margin_bottom = 42.0
 mouse_filter = 1
 custom_constants/margin_right = 6
 custom_constants/margin_top = 6
@@ -53,7 +52,7 @@ custom_constants/margin_bottom = 6
 margin_left = 6.0
 margin_top = 6.0
 margin_right = 1018.0
-margin_bottom = 44.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 
@@ -87,24 +86,34 @@ stretch_mode = 4
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 42.0
 margin_top = 8.0
-margin_right = 69.0
+margin_right = 42.0
 margin_bottom = 22.0
-text = "Text"
 
-[node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
-margin_left = 79.0
-margin_right = 89.0
+[node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
+margin_left = 52.0
+margin_right = 234.0
 margin_bottom = 30.0
-mouse_filter = 1
-custom_constants/margin_right = 5
-custom_constants/margin_left = 5
+
+[node name="DefinitionPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
+margin_right = 98.0
+
+[node name="ConditionTypePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
+margin_left = 102.0
+margin_right = 130.0
+margin_bottom = 30.0
+
+[node name="CustomLineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 9 )]
+margin_left = 143.0
+margin_top = 1.0
+margin_right = 182.0
+margin_bottom = 28.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
-margin_left = 99.0
-margin_right = 163.0
+margin_left = 178.0
+margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 99.0
+margin_left = 244.0
 margin_right = 928.0
 margin_bottom = 30.0
 
@@ -121,30 +130,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 9 )]
+[node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 5 )]
 margin_left = 978.0
 margin_right = 1012.0
 margin_bottom = 30.0
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]
 
 [node name="Body" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
 margin_top = 34.0
 margin_right = 1012.0
-margin_bottom = 38.0
+margin_bottom = 42.0
 custom_constants/separation = 0
 
 [node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Body"]
+margin_top = 4.0
 margin_right = 1012.0
-margin_bottom = 4.0
+margin_bottom = 8.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_top = 2
 custom_constants/margin_bottom = 2
-
-[node name="TextEditor" parent="PanelContainer/MarginContainer/VBoxContainer/Body/Content" instance=ExtResource( 6 )]
-margin_top = 2.0
-margin_right = 1012.0
-margin_bottom = 2.0
 [connection signal="visibility_changed" from="Indent" to="." method="_on_Indent_visibility_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton" to="." method="_on_HelpButton_pressed"]
