@@ -261,11 +261,12 @@ func _ready():
 #		body_node.load_data(event_data)
 	
 	for node in array:
-		node.editor_reference = editor_reference
-		
-		node.connect("send_data", self, "_on_send_data", [node])
-		
-		node.init_data(event_data)
+		if node is EventPart:
+			node.editor_reference = editor_reference
+			
+			node.connect("send_data", self, "_on_send_data", [node])
+			
+			node.init_data(event_data)
 	
 	_on_Indent_visibility_changed()
 

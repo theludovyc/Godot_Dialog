@@ -17,6 +17,14 @@
 		},
 		{
 			"type": 3
+		},
+		{
+			"condition": "=",
+			"definition": "NewValue0",
+			"type": 6
+		},
+		{
+			"type": 7
 		}
 	]
 }
