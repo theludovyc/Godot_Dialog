@@ -264,6 +264,8 @@ func _ready():
 	_on_Indent_visibility_changed()
 
 func _on_send_data(data, node):
+	emit_signal("event_data_changed", data)
+	
 	var array:Array
 	
 	array += header_content.get_children()
