@@ -2,8 +2,10 @@
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/ChangeTimeline.tres" type="StyleBox" id=2]
-[ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/change-timeline.svg" type="Texture" id=3]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/change-timeline.svg" type="Texture" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Timelines/TimelinePicker.tscn" type="PackedScene" id=4]
+
+
 
 [node name="ChangeTimeline" instance=ExtResource( 1 )]
 type = 9

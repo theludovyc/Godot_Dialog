@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/ExpandControl.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/GDialog/Images/Event Icons/Portrait.svg" type="Texture" id=3]
+[ext_resource path="res://addons/GDialog/Editor/Events/styles/Main.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=5]
-[ext_resource path="res://addons/GDialog/Editor/Events/styles/CharacterJoin.tres" type="StyleBox" id=6]
-[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/CharacterAndPortraitPicker.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/CharacterPicker.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Portrait.svg" type="Texture" id=7]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/PortraitPicker.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/GDialog/Editor/Events/styles/Character.tres" type="StyleBox" id=9]
 
 [node name="EventTemplate" type="HBoxContainer"]
 anchor_right = 1.0
@@ -20,10 +22,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 type = 1
-event_style = ExtResource( 6 )
-event_icon = ExtResource( 3 )
+event_style = ExtResource( 9 )
+event_icon = ExtResource( 7 )
 event_name = "Set Mood"
-header_scene = ExtResource( 7 )
 expand_on_default = true
 
 [node name="Indent" type="Control" parent="."]
@@ -37,7 +38,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 6
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = ExtResource( 6 )
+custom_styles/panel = ExtResource( 3 )
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1024.0
@@ -80,7 +81,7 @@ margin_left = 10.0
 margin_right = 32.0
 margin_bottom = 30.0
 grow_horizontal = 0
-texture = ExtResource( 3 )
+texture = ExtResource( 7 )
 stretch_mode = 4
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
@@ -90,20 +91,25 @@ margin_right = 102.0
 margin_bottom = 22.0
 text = "Set Mood"
 
-[node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
+[node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 112.0
-margin_right = 354.0
+margin_right = 315.0
 margin_bottom = 30.0
-mouse_filter = 1
-custom_constants/margin_right = 5
-custom_constants/margin_left = 5
+
+[node name="CharacterPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
+margin_right = 106.0
+margin_bottom = 30.0
+
+[node name="PortraitPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
+margin_left = 110.0
+margin_right = 203.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
-margin_left = 221.0
-margin_right = 285.0
+margin_left = 178.0
+margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 364.0
+margin_left = 325.0
 margin_right = 928.0
 margin_bottom = 30.0
 

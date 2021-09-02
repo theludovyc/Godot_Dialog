@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Characters/EventPart_PositionPicker.gd" type="Script" id=1]
-[ext_resource path="res://addons/GDialog/Images/Event Icons/character.svg" type="Texture" id=2]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/character.svg" type="Texture" id=2]
+
+
 
 [node name="PositionPicker" type="VBoxContainer"]
 margin_right = 186.0

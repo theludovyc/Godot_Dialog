@@ -9,6 +9,14 @@
 		{
 			"text": "aaaaa\nbbbb",
 			"type": 0
+		},
+		{
+			"character": "Bernard",
+			"portrait": "df-1",
+			"type": 1
+		},
+		{
+			"type": 3
 		}
 	]
 }

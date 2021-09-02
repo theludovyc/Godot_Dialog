@@ -1,8 +1,9 @@
 extends Node
 
 enum Event_Type{
-	#Main Events
 	Text=0,
+	
+	#Character Events
 	SetMood,
 	CharacterJoin,
 	CharacterLeave,

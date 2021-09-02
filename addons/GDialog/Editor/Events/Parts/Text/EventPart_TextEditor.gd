@@ -25,7 +25,7 @@ func _ready():
 
 func init_data(data:Dictionary):
 	if data.has("text"):
-		text_editor.text = event_data["text"]
+		text_editor.text = data["text"]
 	
 	# resize the text_editor to the correct size 
 	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
