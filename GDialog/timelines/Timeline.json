@@ -21,6 +21,7 @@
 		{
 			"condition": "=",
 			"definition": "NewValue0",
+			"text": "aaaa",
 			"type": 6
 		},
 		{

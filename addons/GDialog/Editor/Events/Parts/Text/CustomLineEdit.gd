@@ -1,3 +1,4 @@
+tool
 extends EventPart
 
 onready var node_text = $LineEdit

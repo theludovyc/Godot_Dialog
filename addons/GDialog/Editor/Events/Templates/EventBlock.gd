@@ -280,7 +280,7 @@ func _on_send_data(data, node):
 	array += body_content.get_children()
 	
 	for _node in array:
-		if _node != node:
+		if _node is EventPart and _node != node:
 			_node.load_data(data)
 
 func _on_HelpButton_pressed():
