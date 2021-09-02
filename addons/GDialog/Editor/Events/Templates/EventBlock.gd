@@ -272,13 +272,9 @@ func _on_send_data(data, node):
 	
 	array += body_content.get_children()
 	
-	array.erase(node)
-	
-	printt("event_block", array)
-	
 	for _node in array:
-		printt("event_block", _node, _node.name)
-		_node.load_data(data)
+		if _node != node:
+			_node.load_data(data)
 
 func _on_HelpButton_pressed():
 	if help_page_path:

@@ -17,21 +17,24 @@ func _ready():
 		button.connect('pressed', self, "position_button_pressed", [button])
 
 # called by the event block
-func load_data(data:Dictionary):
-	if data.has("character"):
-		var char_name = data["character"]
-	
-		current_color = editor_reference.characters[char_name]["color"]
-	
-		positions_container.get_child(index).set('self_modulate', current_color)
-
-# called by the event block
 func init_data(data:Dictionary):
 	index = data.get("position", 0)
 	
 	positions_container.get_child(index).pressed = true
 	
-	load_data(data)
+	if data.has("character"):
+		current_color = editor_reference.characters[data["character"]]["color"]
+	else:
+		current_color = Color.white
+	
+	positions_container.get_child(index).set('self_modulate', current_color)
+	
+# called by the event block
+func load_data(data:Dictionary):
+	if data.has("character"):
+		current_color = editor_reference.characters[data["character"]]["color"]
+	
+		positions_container.get_child(index).set('self_modulate', current_color)
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():

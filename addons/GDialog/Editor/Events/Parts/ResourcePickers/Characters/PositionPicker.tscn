@@ -27,6 +27,7 @@ margin_right = 254.0
 margin_bottom = 30.0
 
 [node name="position-0" type="ToolButton" parent="HBox/PositionsContainer"]
+self_modulate = Color( 0.596078, 0.596078, 0.596078, 0.396078 )
 margin_right = 34.0
 margin_bottom = 30.0
 icon = ExtResource( 2 )

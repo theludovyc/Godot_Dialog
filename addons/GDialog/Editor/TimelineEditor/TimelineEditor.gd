@@ -521,7 +521,7 @@ func create_event_node(scene: String):
 
 	node.connect("option_action", self, '_on_event_options_action', [node])
 	node.connect("gui_input", self, '_on_event_block_gui_input', [node])
-	node.connect("event_data_changed", self, "on_event_data_changed", [node])
+	node.connect("event_data_changed", self, "_on_event_data_changed", [node])
 	
 	events_warning.visible = false
 
@@ -634,13 +634,15 @@ func move_event_node(event_node, direction):
 ## *****************************************************************************
 ##					 EVENT_DATA
 ## *****************************************************************************
-func on_event_data_changed(metadata, node):
+func _on_event_data_changed(metadata, node):
 	var index = node.get_index()
 	
 	var event = current_events[index]
 	
 	for key in metadata.keys():
 		event[key] = metadata[key]
+		
+	editor_reference.need_save()
 
 ## *****************************************************************************
 ##					 UTILITIES/HELPERS

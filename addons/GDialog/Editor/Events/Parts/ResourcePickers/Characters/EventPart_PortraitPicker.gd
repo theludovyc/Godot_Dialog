@@ -15,7 +15,7 @@ func _ready():
 # called by the event block
 func init_data(data:Dictionary):
 	if data.has("portrait"):
-		picker_menu.text = event_data["portrait"]
+		picker_menu.text = data["portrait"]
 
 # called by the event block
 func load_data(data:Dictionary):
