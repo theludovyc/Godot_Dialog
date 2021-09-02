@@ -7,10 +7,6 @@ onready var positions_container = $HBox/PositionsContainer
 # has an event_data variable that stores the current data!!!
 const default_color = Color("#65989898")
 
-var index:int
-
-var current_color:Color
-
 # used to connect the signals
 func _ready():
 	for button in positions_container.get_children():
@@ -18,23 +14,10 @@ func _ready():
 
 # called by the event block
 func init_data(data:Dictionary):
-	index = data.get("position", 0)
+	var button = positions_container.get_child(data.get("position", 0))
 	
-	positions_container.get_child(index).pressed = true
-	
-	if data.has("character"):
-		current_color = editor_reference.characters[data["character"]]["color"]
-	else:
-		current_color = Color.white
-	
-	positions_container.get_child(index).set('self_modulate', current_color)
-	
-# called by the event block
-func load_data(data:Dictionary):
-	if data.has("character"):
-		current_color = editor_reference.characters[data["character"]]["color"]
-	
-		positions_container.get_child(index).set('self_modulate', current_color)
+	button.pressed = true
+	button.set("self_modulate", Color.white)
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
@@ -45,9 +28,7 @@ func position_button_pressed(button:Node):
 		_button.set('self_modulate', default_color)
 		_button.pressed = false
 	
-	button.set('self_modulate', current_color)
+	button.set('self_modulate', Color.white)
 	button.pressed = true
 	
-	index = button.get_index()
-	
-	send_data({"position":index})
+	send_data({"position":button.get_index()})
