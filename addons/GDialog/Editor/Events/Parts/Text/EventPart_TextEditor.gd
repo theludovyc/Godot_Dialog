@@ -7,7 +7,6 @@ var text_height = 21
 ## node references
 onready var text_editor = $TextEdit
 
-
 # used to connect the signals
 func _ready():
 	# signals
@@ -23,15 +22,8 @@ func _ready():
 	_scale = _scale * 0.125
 	text_height = text_height * _scale
 	text_editor.set("rect_min_size", Vector2(0, text_height*2))
-	
 
-# called by the event block
-func load_data(data:Dictionary):
-	# First set the event_data
-	.load_data(data)
-	
-	# Now update the ui nodes to display the data. 
-	# in case this is a text event
+func init_data(data:Dictionary):
 	if data.has("text"):
 		text_editor.text = event_data["text"]
 	
@@ -57,13 +49,10 @@ func get_preview():
 	return ""
 
 func _on_TextEditor_text_changed():
-	# in case this is a text event
-	event_data['text'] = text_editor.text
-		
 	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
 	
 	# informs the parent about the changes!
-	data_changed()
+	send_data({"text":text_editor.text})
 
 func _on_TextEditor_focus_entered() -> void:
 	if (Input.is_mouse_button_pressed(BUTTON_LEFT)):
@@ -73,4 +62,4 @@ func _on_TextEditor_focus_entered() -> void:
 func _on_TextEdit_focus_exited():
 	# Remove text selection to visually notify the user that the text will not 
 	# be copied if they use a hotkey like CTRL + C 
-	$TextEdit.deselect()
+	text_editor.deselect()

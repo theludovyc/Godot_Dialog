@@ -33,6 +33,9 @@ func _ready():
 func on_ready():
 	pass
 
+func init_data(data:Dictionary):
+	pass
+
 # to be overwritten by the subclasses
 func load_data(data:Dictionary):
 	pass

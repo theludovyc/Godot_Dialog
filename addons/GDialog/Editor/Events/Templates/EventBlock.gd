@@ -226,15 +226,12 @@ func _ready():
 		help_button.icon = get_icon("HelpSearch", "EditorIcons")
 		help_button.show()
 	
+	var array:Array
+	
 	# when it enters the tree, load the data into the header/body
 	# If there is any external data, it will be set already BEFORE the event is added to tree
 	# if have a header
-	for node in header_content.get_children():
-		node.editor_reference = editor_reference
-		
-		node.connect("send_data", self, "_on_send_data", [node])
-		
-		node.init_data(event_data)
+	array += header_content.get_children()
 	
 #	if header_node:
 #		header_node.connect("data_changed", self, "_on_Header_data_changed")
@@ -248,18 +245,27 @@ func _ready():
 #		header_node.load_data(event_data)
 		
 	# if have a body
-	if body_node:
-		body_node.connect("data_changed", self, "_on_Body_data_changed")
-		body_node.connect("request_open_body", expand_control, "set_expanded", [true])
-		body_node.connect("request_close_body", expand_control, "set_expanded", [false])
-		body_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		body_node.connect("request_selection", self, "_request_selection")
-		body_node.connect("set_warning", self, "set_warning")
-		body_node.connect("remove_warning", self, "remove_warning")
+	array += body_content.get_children()
+
+#	if body_node:
+#		body_node.connect("data_changed", self, "_on_Body_data_changed")
+#		body_node.connect("request_open_body", expand_control, "set_expanded", [true])
+#		body_node.connect("request_close_body", expand_control, "set_expanded", [false])
+#		body_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
+#		body_node.connect("request_selection", self, "_request_selection")
+#		body_node.connect("set_warning", self, "set_warning")
+#		body_node.connect("remove_warning", self, "remove_warning")
+#
+#		set_expanded(expand_on_default)
+#
+#		body_node.load_data(event_data)
+	
+	for node in array:
+		node.editor_reference = editor_reference
 		
-		set_expanded(expand_on_default)
+		node.connect("send_data", self, "_on_send_data", [node])
 		
-		body_node.load_data(event_data)
+		node.init_data(event_data)
 	
 	_on_Indent_visibility_changed()
 

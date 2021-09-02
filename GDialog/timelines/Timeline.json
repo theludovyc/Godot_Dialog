@@ -5,6 +5,10 @@
 			"portrait": "df-1",
 			"position": 3,
 			"type": 2
+		},
+		{
+			"text": "aaaaa\nbbbb",
+			"type": 0
 		}
 	]
 }
