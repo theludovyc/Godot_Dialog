@@ -1,31 +1,21 @@
 {
 	"events": [
 		{
-			"text": "aaaaa\nbbbb",
+			"character": "Bernard",
+			"portrait": "df-1",
+			"type": 2
+		},
+		{
+			"text": "Hello, I'm Bernard !",
 			"type": 0
 		},
 		{
 			"character": "Bernard",
-			"portrait": "df-1",
+			"portrait": "df-2",
 			"type": 1
 		},
 		{
-			"character": "Bernard",
-			"portrait": "df-1",
-			"position": 3,
-			"type": 2
-		},
-		{
-			"type": 3
-		},
-		{
-			"condition": "=",
-			"definition": "NewValue0",
-			"text": "aaaa",
-			"type": 6
-		},
-		{
-			"type": 7
+			"type": 11
 		}
 	]
 }

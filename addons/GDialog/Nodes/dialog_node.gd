@@ -633,7 +633,7 @@ func event_handler(event: Dictionary):
 					if !portraits_node.has_node(portrait_node.name):
 						portraits_node.add_child(portrait_node)
 
-					portrait_node.move_to_position(get_character_position(event['position']))
+					portrait_node.move_to_position(event.get("position", 0))
 					
 			_load_next_event()
 		# Character Leave event 
@@ -1098,21 +1098,6 @@ func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 			if visually_focus:
 				portrait_node.focusout()
 	return exists
-
-
-func get_character_position(positions) -> String:
-	if positions[0]:
-		return 'left'
-	if positions[1]:
-		return 'center_left'
-	if positions[2]:
-		return 'center'
-	if positions[3]:
-		return 'center_right'
-	if positions[4]:
-		return 'right'
-	return 'left'
-
 
 func deferred_resize(current_size, result):
 	#var result = theme.get_value('box', 'size', Vector2(910, 167))

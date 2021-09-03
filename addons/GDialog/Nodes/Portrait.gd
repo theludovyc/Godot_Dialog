@@ -46,9 +46,9 @@ func set_mirror(value):
 		$TextureRect.flip_h = value
 
 func move_to_position(position_offset, time = 0.5):
-	direction = position_offset
+	direction = positions.keys()[position_offset]
 
-	rect_position = positions[position_offset]
+	rect_position = positions[direction]
 
 	rect_position += position
 	

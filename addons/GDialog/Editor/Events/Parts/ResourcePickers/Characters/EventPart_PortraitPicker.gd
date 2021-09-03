@@ -13,11 +13,6 @@ func _ready():
 	popup_menu.connect("index_pressed", self, '_on_PickerMenu_selected')
 
 # called by the event block
-func init_data(data:Dictionary):
-	if data.has("portrait"):
-		picker_menu.text = data["portrait"]
-
-# called by the event block
 func load_data(data:Dictionary):
 	if data.has("character"):
 		var char_name = data["character"]
@@ -29,6 +24,13 @@ func load_data(data:Dictionary):
 		if character.has("portraits"):
 			for p in character["portraits"]:
 				popup_menu.add_item(p)
+
+# called by the event block
+func init_data(data:Dictionary):
+	if data.has("portrait"):
+		picker_menu.text = data["portrait"]
+
+	load_data(data)
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
