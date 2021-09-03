@@ -264,24 +264,14 @@ func _ready():
 		if node is EventPart:
 			node.editor_reference = editor_reference
 			
-			node.connect("send_data", self, "_on_send_data", [node])
+			node.connect("send_data", self, "_on_send_data")
 			
 			node.init_data(event_data)
 	
 	_on_Indent_visibility_changed()
 
-func _on_send_data(data, node):
+func _on_send_data(data):
 	emit_signal("event_data_changed", data)
-	
-	var array:Array
-	
-	array += header_content.get_children()
-	
-	array += body_content.get_children()
-	
-	for _node in array:
-		if _node is EventPart and _node != node:
-			_node.load_data(data)
 
 func _on_HelpButton_pressed():
 	if help_page_path:
