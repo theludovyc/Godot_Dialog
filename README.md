@@ -27,6 +27,8 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
   * Emit signals as needed to connect on your logic
 * Easily customizable
   * Use Theme Editor to customize your dialog's look
+* json
+  * All files are saved in json format
 
 ## Installation
 
