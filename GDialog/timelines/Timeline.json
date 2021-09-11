@@ -1,6 +1,10 @@
 {
 	"events": [
 		{
+			"file": "res://icon.png",
+			"type": 10
+		},
+		{
 			"character": "Bernard",
 			"portrait": "df-1",
 			"type": 2
@@ -14,6 +18,10 @@
 			"text": "1",
 			"type": 8,
 			"value": "NewValue0"
+		},
+		{
+			"character": "Bernard",
+			"type": 3
 		},
 		{
 			"condition": "=",

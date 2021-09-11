@@ -764,6 +764,7 @@ func event_handler(event: Dictionary):
 		# TIMELINE EVENTS
 		# Change Timeline event
 		GDialog.Event_Type.ChangeTimeline:
+			emit_signal("event_start", "ChangeTimeline", event)
 			var timeline_name = event.get("timeline", "")
 			
 			if !timeline_name.empty():
@@ -773,17 +774,16 @@ func event_handler(event: Dictionary):
 				_load_next_event()
 		# Change Backround event
 		GDialog.Event_Type.ChangeBackground:
-			emit_signal("event_start", "background", event)
-			var fade_time = event.get('fade_duration', 1)
-			var value = event.get('background', '')
-			var background = get_node_or_null('Background')
+			emit_signal("event_start", "ChangeBackground", event)
 			
-			if background != null:
-				background.name = 'BackgroundFadingOut'
-				background.fade_out(fade_time)
+			var file_name = event.get("file", "")
 			
-			background = Background.instance()
-			background.name = 'Background'
+			if !file_name.empty():
+				var background_node = get_node_or_null('Background')
+			
+				if !background_node:
+					background = Background.instance()
+					background.name = 'Background'
 			
 			if value != '':
 				add_child(background)
