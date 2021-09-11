@@ -17,16 +17,16 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
 
 ## Features
 * Timeline Editor
- * Lots of event-nodes (Text, If/Else, Character Join, Set Background... see wiki)
+  * Lots of event-nodes (Text, If/Else, Character Join, Set Background... see wiki)
 * Branching dialog
- * Show dialog depending on previous choices
+  * Show dialog depending on previous choices
 * Conditional dialog
- * Show dialog and choices depending on in-game values
- * Display custom values in dialog
+  * Show dialog and choices depending on in-game values
+  * Display custom values in dialog
 * Execute actions with dialog
- * Emit signals as needed to connect on your logic
+  * Emit signals as needed to connect on your logic
 * Easily customizable
- * Use Theme Editor to customize your dialog's look
+  * Use Theme Editor to customize your dialog's look
 
 ## Installation
 
