@@ -689,8 +689,8 @@ func event_handler(event: Dictionary):
 			
 			var condition_met = false
 			
-			if event.has("definition") and event.has("value"):
-				condition_met = _compare_definitions(GDialog.get_value(event["definition"]), event["value"], event.get("condition", "=="));
+			if event.has("value") and event.has("text"):
+				condition_met = _compare_definitions(GDialog.get_value(event["value"]), event["text"], event.get("condition", "="));
 			
 			current_question['answered'] = !condition_met
 			
