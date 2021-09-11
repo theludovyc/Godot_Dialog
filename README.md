@@ -37,7 +37,7 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
   * Display custom values in dialog
 * Execute actions with dialog
   * Emit/Receive signals as needed to connect on your logic
-* json
+* Json
   * All files are saved in json format
 
 ## Installation
