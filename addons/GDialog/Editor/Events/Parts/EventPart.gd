@@ -2,12 +2,6 @@ tool
 extends Control
 class_name EventPart
 
-# has to be set by the parent before adding it to the tree
-var editor_reference:EditorView
-#var editorPopup
-
-var event_data = {}
-
 signal data_changed
 signal send_data(data)
 
@@ -25,6 +19,13 @@ signal request_selection
 signal set_warning(text)
 signal remove_warning()
 
+export(String) var dataName = "data"
+
+# has to be set by the parent before adding it to the tree
+var editor_reference:EditorView
+#var editorPopup
+
+var event_data = {}
 
 # when the node is ready
 func _ready():

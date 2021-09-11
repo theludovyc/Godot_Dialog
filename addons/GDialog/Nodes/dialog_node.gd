@@ -854,9 +854,9 @@ func event_handler(event: Dictionary):
 			var file_path = event.get("file", "")
 			
 			if !file_path.empty():
-				$FX/BackgroundMusic.crossfade_to(file_path, event.get('audio_bus', 'Master'), event.get('volume', 0.5), event.get('fade_length', 1))
+				$FX/BackgroundMusic.crossfade_to(file_path, event.get('audio_bus', 'Master'), event.get('volume', 50)/100.0, event.get('fade', 1))
 			else:
-				$FX/BackgroundMusic.fade_out(event.get('fade_length', 1))
+				$FX/BackgroundMusic.fade_out(event.get('fade', 1))
 			
 			_load_next_event()
 		

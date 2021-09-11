@@ -8,6 +8,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+dataName = "number"
 
 [node name="NameLabel" type="Label" parent="."]
 margin_top = 5.0

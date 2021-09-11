@@ -1,8 +1,10 @@
 {
 	"events": [
 		{
+			"fade": 0,
 			"file": "res://addons/GDialog/Example Assets/Music/Etirwer.ogg",
-			"type": 16
+			"type": 16,
+			"volume": 50
 		},
 		{
 			"file": "res://addons/GDialog/Example Assets/backgrounds/bg_uni.jpg",

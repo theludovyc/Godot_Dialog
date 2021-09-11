@@ -1,28 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/ExpandControl.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Audio.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=5]
-[ext_resource path="res://addons/GDialog/Images/Plugin/plugin-editor-icon-dark-theme.svg" type="Texture" id=6]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/NumberPicker.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/background-music.svg" type="Texture" id=7]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/File/FilePicker.tscn" type="PackedScene" id=8]
-
-[sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 0.0
-content_margin_right = 0.0
-content_margin_top = 0.0
-content_margin_bottom = 0.0
-bg_color = Color( 0.262745, 0.262745, 0.262745, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
 
 [node name="BackgroundMusic" type="HBoxContainer"]
 anchor_right = 1.0
@@ -52,7 +37,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 6
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = ExtResource( 3 )
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1024.0
@@ -92,38 +77,81 @@ stretch_mode = 4
 
 [node name="IconTexture" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 10.0
-margin_right = 26.0
+margin_right = 32.0
 margin_bottom = 30.0
 grow_horizontal = 0
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 stretch_mode = 4
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
-margin_left = 36.0
+margin_left = 42.0
 margin_top = 8.0
-margin_right = 36.0
+margin_right = 158.0
 margin_bottom = 22.0
+text = "Background Music"
 
-[node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
-margin_left = 46.0
-margin_right = 174.0
+[node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
+margin_left = 168.0
+margin_right = 545.0
 margin_bottom = 30.0
-mouse_filter = 1
-custom_constants/margin_right = 5
-custom_constants/margin_left = 5
 
 [node name="FilePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
-margin_left = 5.0
-margin_right = 123.0
+margin_right = 118.0
 margin_bottom = 30.0
+dataName = "file"
 filetype = "*.wav, *.ogg, *.mp3"
+
+[node name="VolumePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
+margin_left = 122.0
+margin_right = 257.0
+margin_bottom = 30.0
+dataName = "volume"
+
+[node name="NameLabel" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/VolumePicker" index="0"]
+margin_top = 8.0
+margin_right = 57.0
+margin_bottom = 22.0
+text = "Volume :"
+
+[node name="NumberBox" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/VolumePicker" index="1"]
+margin_left = 61.0
+margin_top = 3.0
+margin_right = 135.0
+margin_bottom = 27.0
+step = 1.0
+value = 50.0
+rounded = true
+allow_greater = false
+suffix = "%"
+
+[node name="FadePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
+margin_left = 261.0
+margin_right = 377.0
+margin_bottom = 30.0
+dataName = "fade"
+
+[node name="NameLabel" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/FadePicker" index="0"]
+margin_top = 8.0
+margin_right = 38.0
+margin_bottom = 22.0
+text = "Fade :"
+
+[node name="NumberBox" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/FadePicker" index="1"]
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 116.0
+margin_bottom = 27.0
+max_value = 10.0
+rounded = true
+allow_greater = false
+suffix = "s"
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
 margin_left = 178.0
 margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 184.0
+margin_left = 555.0
 margin_right = 928.0
 margin_bottom = 30.0
 
@@ -164,3 +192,7 @@ custom_constants/margin_top = 2
 custom_constants/margin_bottom = 2
 [connection signal="visibility_changed" from="Indent" to="." method="_on_Indent_visibility_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton" to="." method="_on_HelpButton_pressed"]
+
+[editable path="PanelContainer/MarginContainer/VBoxContainer/Header/Content/VolumePicker"]
+
+[editable path="PanelContainer/MarginContainer/VBoxContainer/Header/Content/FadePicker"]

@@ -9,6 +9,9 @@ onready var clear_button = $ClearButton
 
 export(String) var filetype
 
+func _init():
+	dataName = "file"
+
 # used to connect the signals
 func _ready():
 	pass
