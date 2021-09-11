@@ -706,10 +706,10 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		# Set Value event
 		GDialog.Event_Type.SetValue:
-			emit_signal("event_start", "set_value", event)
+			emit_signal("event_start", "SetValue", event)
 			
-			if event.has("definition"):
-				var value_name = event["definition"]
+			if event.has("value"):
+				var value_name = event["value"]
 				
 				if GDialog.values.has(value_name):
 					var value
@@ -720,8 +720,8 @@ func event_handler(event: Dictionary):
 						value = randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0)
 				
 						update = true
-					elif event.has("set_value"):
-						value = event["set_value"]
+					elif event.has("text"):
+						value = event["text"]
 			
 						update = true
 				
