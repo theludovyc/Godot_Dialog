@@ -31,16 +31,12 @@
 			"type": 0
 		},
 		{
-			"operation": "=",
-			"text": "1",
-			"type": 8,
-			"value": "NewValue0"
+			"text": "Do you like flowers ?",
+			"type": 4
 		},
 		{
-			"condition": "=",
-			"text": "1",
-			"type": 6,
-			"value": "NewValue0"
+			"text": "yes",
+			"type": 5
 		},
 		{
 			"character": "Bernard",
@@ -48,8 +44,27 @@
 			"type": 1
 		},
 		{
-			"text": "I like flowers !",
+			"text": "I like flowers too !",
 			"type": 0
+		},
+		{
+			"text": "no",
+			"type": 5
+		},
+		{
+			"operation": "=",
+			"text": "1",
+			"type": 8,
+			"value": "NewValue0"
+		},
+		{
+			"type": 7
+		},
+		{
+			"condition": "=",
+			"text": "1",
+			"type": 6,
+			"value": "NewValue0"
 		},
 		{
 			"character": "Bernard",

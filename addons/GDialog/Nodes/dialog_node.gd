@@ -259,7 +259,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 
 			var option = {
 				'question_idx': opened_branch['question_idx'],
-				'label': parse_definitions(event['choice'], true, false),
+				'label': parse_definitions(event["text"], true, false),
 				'event_idx': event_idx,
 				'condition': event.get("condition", ""),
 				'definition': event.get("definition", ""),
@@ -797,10 +797,6 @@ func event_handler(event: Dictionary):
 			transition_duration = transition_duration
 			close_dialog_event(transition_duration)
 			while_dialog_animation = true
-			var background = get_node_or_null('Background')
-			if background != null:
-				background.name = 'BackgroundFadingOut'
-				background.fade_out(transition_duration)
 		# Wait seconds event
 		GDialog.Event_Type.Wait:
 			emit_signal("event_start", "wait", event)
@@ -913,8 +909,6 @@ func reset_options():
 
 
 func _should_add_choice_button(option: Dictionary):
-	print("hello", option)
-	
 	var value_name = option['definition']
 	
 	if not value_name.empty():

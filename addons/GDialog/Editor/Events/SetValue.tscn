@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
-[ext_resource path="res://addons/GDialog/Editor/Events/Icons/Main Icons/set-value.svg" type="Texture" id=2]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/set-value.svg" type="Texture" id=2]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/OperationPicker.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=5]
@@ -9,6 +9,7 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/ValuePicker.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=9]
+
 
 [node name="EventTemplate" type="HBoxContainer"]
 anchor_right = 1.0

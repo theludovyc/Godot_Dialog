@@ -1,15 +1,18 @@
 tool
 extends EventPart
 
-onready var node_text = $LineEdit
+onready var lineEdit = $LineEdit
+
+func _init():
+	dataName = "text"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	node_text.connect("text_changed", self, "_on_text_changed")
+	lineEdit.connect("text_changed", self, "_on_text_changed")
 
 func init_data(data:Dictionary):
-	if data.has("text"):
-		node_text.text = data["text"]
+	if data.has(dataName):
+		lineEdit.text = data[dataName]
 
 func _on_text_changed(text:String):
-	send_data({"text":text})
+	send_data({dataName:text})

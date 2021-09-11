@@ -11,14 +11,10 @@ corner_radius_bottom_left = 4
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[node name="CustomLineEdit" type="Control"]
-margin_right = 48.0
-margin_bottom = 30.0
-mouse_filter = 2
+[node name="Control" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LineEdit" type="LineEdit" parent="."]
 margin_right = 75.0
