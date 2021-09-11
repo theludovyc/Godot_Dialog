@@ -10,8 +10,14 @@
 			"type": 0
 		},
 		{
+			"operation": "=",
+			"text": "1",
+			"type": 8,
+			"value": "NewValue0"
+		},
+		{
 			"condition": "=",
-			"text": "0",
+			"text": "1",
 			"type": 6,
 			"value": "NewValue0"
 		},
@@ -28,6 +34,7 @@
 			"type": 1
 		},
 		{
+			"operation": "=",
 			"type": 11
 		}
 	]
