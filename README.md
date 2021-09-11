@@ -15,6 +15,15 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
 
 ---
 
+## Features
+* Timeline Editor
+* Branching dialog
+ * Show dialog depending on previous choices
+* Conditional dialog
+    * Show dialog and choices depending on in-game variables
+    * Display custom variables in dialog
+* Execute actions with dialog
+
 ## Installation
 
 To install Godot_Dialog plugin, download it as a [ZIP archive](https://github.com/theludovyc/Godot_Dialogic/releases). Then extract the `addons/GDialog` folder into your project folder. Then, enable the plugin in project settings and restart Godot-Engine.
