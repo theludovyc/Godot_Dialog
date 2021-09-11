@@ -1,6 +1,10 @@
 {
 	"events": [
 		{
+			"file": "res://addons/GDialog/Example Assets/Music/Etirwer.ogg",
+			"type": 16
+		},
+		{
 			"file": "res://addons/GDialog/Example Assets/backgrounds/bg_uni.jpg",
 			"type": 10
 		},

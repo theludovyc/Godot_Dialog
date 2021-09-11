@@ -849,11 +849,15 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		# Background Music event
 		GDialog.Event_Type.BackgroundMusic:
-			emit_signal("event_start", "background-music", event)
-			if event['background-music'] == 'play' and 'file' in event.keys() and not event['file'].empty():
-				$FX/BackgroundMusic.crossfade_to(event['file'], event.get('audio_bus', 'Master'), event.get('volume', 0), event.get('fade_length', 1))
+			emit_signal("event_start", "BackgroundMusic", event)
+			
+			var file_path = event.get("file", "")
+			
+			if !file_path.empty():
+				$FX/BackgroundMusic.crossfade_to(file_path, event.get('audio_bus', 'Master'), event.get('volume', 0.5), event.get('fade_length', 1))
 			else:
 				$FX/BackgroundMusic.fade_out(event.get('fade_length', 1))
+			
 			_load_next_event()
 		
 		# GODOT EVENTS
