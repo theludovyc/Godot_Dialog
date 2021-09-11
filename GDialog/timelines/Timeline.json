@@ -36,6 +36,10 @@
 		{
 			"operation": "=",
 			"type": 11
+		},
+		{
+			"timeline": "Timeline",
+			"type": 9
 		}
 	]
 }

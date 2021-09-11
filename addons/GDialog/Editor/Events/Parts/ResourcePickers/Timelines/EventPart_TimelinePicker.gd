@@ -33,8 +33,8 @@ func get_preview():
 	return ''
 
 # when an index is selected on one of the menus.
-func _on_PickerMenu_selected(index, menu):
-	var text = menu.get_item_text(index)
+func _on_PickerMenu_selected(index):
+	var text = popup_menu.get_item_text(index)
 	
 	picker_menu.text = text
 	
