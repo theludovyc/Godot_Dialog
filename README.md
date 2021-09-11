@@ -36,7 +36,7 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
   * Show dialog and choices depending on in-game values
   * Display custom values in dialog
 * Execute actions with dialog
-  * Emit signals as needed to connect on your logic
+  * Emit/Receive signals as needed to connect on your logic
 * json
   * All files are saved in json format
 
