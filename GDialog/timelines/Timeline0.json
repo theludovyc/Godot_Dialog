@@ -1,6 +1,10 @@
 {
 	"events": [
 		{
+			"file": "res://addons/GDialog/Example Assets/backgrounds/bg_club.jpg",
+			"type": 10
+		},
+		{
 			"text": "Blop",
 			"type": 0
 		}
