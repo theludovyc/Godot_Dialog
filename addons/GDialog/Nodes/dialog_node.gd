@@ -776,29 +776,18 @@ func event_handler(event: Dictionary):
 		GDialog.Event_Type.ChangeBackground:
 			emit_signal("event_start", "ChangeBackground", event)
 			
-			var file_name = event.get("file", "")
+			var file_path = event.get("file", "")
 			
-			if !file_name.empty():
+			if !file_path.empty():
 				var background_node = get_node_or_null('Background')
 			
 				if !background_node:
-					background = Background.instance()
-					background.name = 'Background'
-			
-			if value != '':
-				add_child(background)
-				background.create_tween()
-				if value.ends_with('.tscn'):
-					var bg_scene = load(event['background'])
-					bg_scene = bg_scene.instance()
-					background.modulate = Color(1,1,1,0)
-					background.fade_in(fade_time)
-					background.add_child(bg_scene)
-				else:
-					background.texture = load(value)
-					background.create_tween()
-					background.fade_in(fade_time)
-				call_deferred('resize_main') # Executing the resize main to update the background size
+					background_node = Background.instance()
+					background_node.name = 'Background'
+					add_child(background_node)
+					move_child(background_node, 0)
+				
+				background_node.texture = load(file_path)
 
 			_load_next_event()
 		# Close Dialog event
