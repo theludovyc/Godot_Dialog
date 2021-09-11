@@ -764,8 +764,13 @@ func event_handler(event: Dictionary):
 		# TIMELINE EVENTS
 		# Change Timeline event
 		GDialog.Event_Type.ChangeTimeline:
-			dialog_script = set_current_dialog(event['change_timeline'])
-			_init_dialog()
+			var timeline_name = event.get("timeline", "")
+			
+			if !timeline_name.empty():
+				dialog_script = set_current_dialog(event["timeline"])
+				_init_dialog()
+			else:
+				_load_next_event()
 		# Change Backround event
 		GDialog.Event_Type.ChangeBackground:
 			emit_signal("event_start", "background", event)

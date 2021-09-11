@@ -34,12 +34,12 @@
 			"type": 1
 		},
 		{
-			"operation": "=",
-			"type": 11
+			"timeline": "Timeline0",
+			"type": 9
 		},
 		{
-			"timeline": "Timeline",
-			"type": 9
+			"operation": "=",
+			"type": 11
 		}
 	]
 }
