@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/NumberPicker.gd" type="Script" id=1]
+
+[node name="NumberPicker" type="HBoxContainer"]
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 19.0
+text = "Name :"
+
+[node name="NumberBox" type="SpinBox" parent="."]
+margin_left = 50.0
+margin_right = 124.0
+margin_bottom = 24.0
+size_flags_vertical = 6
+step = 0.1
+value = 1.0
+allow_greater = true
+align = 1
