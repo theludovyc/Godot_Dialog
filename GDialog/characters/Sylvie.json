@@ -1,0 +1,8 @@
+{
+	"color": "#ffd688c3",
+	"portraits": {
+		"sylvie_smile1": "res://addons/GDialog/Example Assets/portraits/sylvie_smile1.png",
+		"sylvie_smile2": "res://addons/GDialog/Example Assets/portraits/sylvie_smile2.png"
+	},
+	"scale": 0.4
+}
