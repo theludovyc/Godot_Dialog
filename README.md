@@ -17,7 +17,16 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
 
 ## Features
 * Timeline Editor
+  * Easily create timeline with this visual editor
   * Lots of event-nodes (Text, If/Else, Character Join, Set Background... see wiki)
+  * Change timeline to another with an event
+* Character Editor
+  * Easily create character with this visual editor
+  * Load portraits/moods and scale it
+  * Names are automatically colored in dialogs
+* Theme Editor
+  * Easily customize your dialog's look
+  * See what can be look during edition
 * Branching dialog
   * Show dialog depending on previous choices
 * Conditional dialog
@@ -25,8 +34,6 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
   * Display custom values in dialog
 * Execute actions with dialog
   * Emit signals as needed to connect on your logic
-* Easily customizable
-  * Use Theme Editor to customize your dialog's look
 * json
   * All files are saved in json format
 
