@@ -120,3 +120,7 @@ func _ready():
 Initial project [dialogic](https://github.com/coppolaemilio/dialogic) made by [Emilio Coppola](https://github.com/coppolaemilio)
 
 My incredible tester https://github.com/LauraCrossheart
+
+Art sutemo https://sutemo.itch.io/
+
+Music Joseph Gilbert / Kistol
