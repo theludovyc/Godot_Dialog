@@ -10,6 +10,19 @@
 			"type": 0
 		},
 		{
+			"condition": "=",
+			"text": "0",
+			"type": 6,
+			"value": "NewValue0"
+		},
+		{
+			"text": "I like flowers",
+			"type": 0
+		},
+		{
+			"type": 7
+		},
+		{
 			"character": "Bernard",
 			"portrait": "df-2",
 			"type": 1

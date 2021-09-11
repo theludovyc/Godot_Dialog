@@ -16,8 +16,8 @@ func _ready():
 	picker_menu.connect("about_to_show", self, "_on_PickerMenu_about_to_show")
 
 func init_data(data:Dictionary):
-	if data.has("definition"):
-		var value_name = data["definition"]
+	if data.has("value"):
+		var value_name = data["value"]
 		
 		if editor_reference.res_values.has(value_name):
 			picker_menu.text = value_name
@@ -33,7 +33,7 @@ func _on_PickerMenu_selected(index):
 	picker_menu.text = text
 	
 	# informs the parent about the changes!
-	send_data({"definition":text})
+	send_data({"value":text})
 
 func _on_PickerMenu_about_to_show():
 	current_popup_menu = picker_menu.get_popup()
@@ -52,4 +52,4 @@ func reset():
 	if picker_menu.text != default_text:
 		picker_menu.text = default_text
 	
-		send_data({"definition":""})
+		send_data({"value":""})
