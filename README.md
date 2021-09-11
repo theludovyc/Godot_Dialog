@@ -17,13 +17,16 @@ Complete solution with visual editor to edit dialog's themes, timelines, charact
 
 ## Features
 * Timeline Editor
-  * Easily create timeline with this visual editor
+  * Easily create new timeline and edit it
   * Lots of event-nodes (Text, If/Else, Character Join, Set Background... see wiki)
   * Change timeline to another with an event
 * Character Editor
-  * Easily create character with this visual editor
+  * Easily create new character and edit it
   * Load portraits/moods and scale it
   * Names are automatically colored in dialogs
+* Value Editor
+  * Easily create new values and edit it
+  * Use them with timeline events or in your code
 * Theme Editor
   * Easily customize your dialog's look
   * See what can be look during edition
