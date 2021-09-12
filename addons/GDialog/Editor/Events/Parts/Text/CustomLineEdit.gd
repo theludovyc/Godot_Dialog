@@ -16,3 +16,9 @@ func init_data(data:Dictionary):
 
 func _on_text_changed(text:String):
 	send_data({dataName:text})
+
+func reset():
+	if lineEdit.text != "":
+		lineEdit.text = ""
+		
+		send_data({dataName:""})

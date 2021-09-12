@@ -31,12 +31,22 @@
 			"type": 0
 		},
 		{
+			"operation": "=",
+			"text": "1",
+			"type": 8,
+			"value": "NewValue0"
+		},
+		{
 			"text": "Do you like flowers ?",
 			"type": 4
 		},
 		{
-			"text": "yes",
-			"type": 5
+			"check": true,
+			"condition": ">=",
+			"text": "Yes",
+			"text1": "0",
+			"type": 5,
+			"value": "NewValue0"
 		},
 		{
 			"character": "Bernard",
@@ -48,12 +58,16 @@
 			"type": 0
 		},
 		{
-			"text": "no",
-			"type": 5
+			"check": false,
+			"condition": "=",
+			"text": "No",
+			"text1": "",
+			"type": 5,
+			"value": ""
 		},
 		{
 			"operation": "=",
-			"text": "1",
+			"text": "2",
 			"type": 8,
 			"value": "NewValue0"
 		},
@@ -62,7 +76,7 @@
 		},
 		{
 			"condition": "=",
-			"text": "1",
+			"text": "2",
 			"type": 6,
 			"value": "NewValue0"
 		},
@@ -78,7 +92,6 @@
 			"type": 9
 		},
 		{
-			"operation": "=",
 			"type": 11
 		}
 	]

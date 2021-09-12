@@ -52,3 +52,6 @@ func data_changed():
 
 func send_data(data):
 	emit_signal("send_data", data)
+	
+func reset():
+	pass

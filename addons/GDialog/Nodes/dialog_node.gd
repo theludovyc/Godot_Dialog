@@ -262,8 +262,8 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 				'label': parse_definitions(event["text"], true, false),
 				'event_idx': event_idx,
 				'condition': event.get("condition", ""),
-				'definition': event.get("definition", ""),
-				'value': event.get("value", ""),
+				'definition': event.get("value", ""),
+				'value': event.get("text1", ""),
 			}
 			
 			dialog_script['events'][opened_branch['event_idx']]['options'].append(option)

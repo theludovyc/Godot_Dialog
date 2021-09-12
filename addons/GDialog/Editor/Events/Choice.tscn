@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/OptionsControl.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/choice.svg" type="Texture" id=7]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/ValuePicker.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/ConditionTypePicker.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/CheckPicker.tscn" type="PackedScene" id=10]
 
 [node name="Choice" type="HBoxContainer"]
 anchor_right = 1.0
@@ -89,26 +92,55 @@ margin_right = 85.0
 margin_bottom = 22.0
 text = "Choice"
 
-[node name="Content" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
+[node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 95.0
-margin_right = 105.0
+margin_right = 306.0
 margin_bottom = 30.0
-mouse_filter = 1
-custom_constants/margin_right = 5
-custom_constants/margin_left = 5
 
 [node name="CustomLineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
-margin_left = 5.0
-margin_right = 5.0
+margin_right = 75.0
 margin_bottom = 30.0
-dataName = "text"
+
+[node name="CheckPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 10 )]
+margin_left = 79.0
+margin_right = 203.0
+margin_bottom = 30.0
+dataName = "check"
+paths = [ NodePath("../ValuePicker"), NodePath("../ConditionTypePicker"), NodePath("../CustomLineEdit2") ]
+
+[node name="ValuePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
+visible = false
+margin_left = 207.0
+margin_right = 305.0
+
+[node name="ConditionTypePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 9 )]
+visible = false
+margin_left = 309.0
+margin_right = 337.0
+margin_bottom = 30.0
+
+[node name="Control" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content"]
+margin_left = 207.0
+margin_right = 211.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 4, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CustomLineEdit2" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
+visible = false
+margin_left = 215.0
+margin_right = 290.0
+margin_bottom = 30.0
+dataName = "text1"
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
 margin_left = 178.0
 margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
-margin_left = 115.0
+margin_left = 316.0
 margin_right = 928.0
 margin_bottom = 30.0
 
