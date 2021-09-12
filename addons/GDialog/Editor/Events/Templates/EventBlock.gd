@@ -27,9 +27,9 @@ onready var title_label = $PanelContainer/MarginContainer/VBoxContainer/Header/T
 onready var icon_texture  = $PanelContainer/MarginContainer/VBoxContainer/Header/IconTexture
 onready var expand_control = $PanelContainer/MarginContainer/VBoxContainer/Header/ExpandControl
 onready var options_control = $PanelContainer/MarginContainer/VBoxContainer/Header/OptionsControl
-onready var header_content_container = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
+onready var header_content = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
 onready var body_container = $PanelContainer/MarginContainer/VBoxContainer/Body
-onready var body_content_container = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
+onready var body_content = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
 onready var indent_node = $Indent
 onready var help_button = $PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton
 var header_node
@@ -106,28 +106,14 @@ func _set_event_name(text: String):
 
 
 func _set_header(scene: PackedScene):
-	header_node = _set_content(header_content_container, scene)
+	header_node = _set_content(header_content, scene)
 
 
 func _set_body(scene: PackedScene):
-	body_node = _set_content(body_content_container, scene)
+	body_node = _set_content(body_content, scene)
 
 	# show the expand toggle
 	expand_control.set_enabled(body_node != null)
-
-
-func _setup_event():
-	if event_style != null:
-		set_event_style(event_style)
-	if event_icon != null:
-		_set_event_icon(event_icon)
-	if event_name != null:
-		_set_event_name(event_name)
-	if header_scene != null:
-		_set_header(header_scene)
-	if body_scene != null:
-		_set_body(body_scene)
-
 
 func _set_content(container: Control, scene: PackedScene):
 	for c in container.get_children():
@@ -221,7 +207,12 @@ func _request_selection():
 func _ready():
 	event_data["type"] = type
 	
-	_setup_event()
+	if event_style != null:
+		set_event_style(event_style)
+	if event_icon != null:
+		_set_event_icon(event_icon)
+	if event_name != null:
+		_set_event_name(event_name)
 	
 	set_focus_mode(1) # Allowing this node to grab focus
 	
@@ -235,36 +226,52 @@ func _ready():
 		help_button.icon = get_icon("HelpSearch", "EditorIcons")
 		help_button.show()
 	
+	var array:Array
+	
 	# when it enters the tree, load the data into the header/body
 	# If there is any external data, it will be set already BEFORE the event is added to tree
 	# if have a header
-	if header_node:
-		header_node.connect("data_changed", self, "_on_Header_data_changed")
-		header_node.connect("request_open_body", expand_control, "set_expanded", [true])
-		header_node.connect("request_close_body", expand_control, "set_expanded", [false])
-		header_node.connect("request_selection", self, "_request_selection")
-		header_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		header_node.connect("set_warning", self, "set_warning")
-		header_node.connect("remove_warning", self, "remove_warning")
-		
-		header_node.load_data(event_data)
+	array += header_content.get_children()
+	
+#	if header_node:
+#		header_node.connect("data_changed", self, "_on_Header_data_changed")
+#		header_node.connect("request_open_body", expand_control, "set_expanded", [true])
+#		header_node.connect("request_close_body", expand_control, "set_expanded", [false])
+#		header_node.connect("request_selection", self, "_request_selection")
+#		header_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
+#		header_node.connect("set_warning", self, "set_warning")
+#		header_node.connect("remove_warning", self, "remove_warning")
+#
+#		header_node.load_data(event_data)
 		
 	# if have a body
-	if body_node:
-		body_node.connect("data_changed", self, "_on_Body_data_changed")
-		body_node.connect("request_open_body", expand_control, "set_expanded", [true])
-		body_node.connect("request_close_body", expand_control, "set_expanded", [false])
-		body_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		body_node.connect("request_selection", self, "_request_selection")
-		body_node.connect("set_warning", self, "set_warning")
-		body_node.connect("remove_warning", self, "remove_warning")
-		
-		set_expanded(expand_on_default)
-		
-		body_node.load_data(event_data)
+	array += body_content.get_children()
+
+#	if body_node:
+#		body_node.connect("data_changed", self, "_on_Body_data_changed")
+#		body_node.connect("request_open_body", expand_control, "set_expanded", [true])
+#		body_node.connect("request_close_body", expand_control, "set_expanded", [false])
+#		body_node.connect("request_set_body_enabled", self, "_request_set_body_enabled")
+#		body_node.connect("request_selection", self, "_request_selection")
+#		body_node.connect("set_warning", self, "set_warning")
+#		body_node.connect("remove_warning", self, "remove_warning")
+#
+#		set_expanded(expand_on_default)
+#
+#		body_node.load_data(event_data)
+	
+	for node in array:
+		if node is EventPart:
+			node.editor_reference = editor_reference
+			
+			node.connect("send_data", self, "_on_send_data")
+			
+			node.init_data(event_data)
 	
 	_on_Indent_visibility_changed()
 
+func _on_send_data(data):
+	emit_signal("event_data_changed", data)
 
 func _on_HelpButton_pressed():
 	if help_page_path:

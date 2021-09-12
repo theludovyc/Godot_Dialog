@@ -4,13 +4,14 @@ var native_dialogic_background = true
 var tween
 
 func _ready():
-	expand = true
-	name = 'Background'
-	anchor_right = 1
-	anchor_bottom = 1
-	stretch_mode = TextureRect.STRETCH_SCALE
-	show_behind_parent = true
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+#	expand = true
+#	name = 'Background'
+#	anchor_right = 1
+#	anchor_bottom = 1
+#	stretch_mode = TextureRect.STRETCH_SCALE
+#	show_behind_parent = true
+#	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pass
 
 
 func create_tween():

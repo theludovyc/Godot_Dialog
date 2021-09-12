@@ -2,7 +2,10 @@
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Logic.tres" type="StyleBox" id=2]
-[ext_resource path="res://addons/GDialog/Images/Event Icons/Main Icons/end-branch.svg" type="Texture" id=5]
+[ext_resource path="res://addons/GDialog/Editor/Events/Icons/end-branch.svg" type="Texture" id=5]
+
+
+
 
 [node name="EndBranch" instance=ExtResource( 1 )]
 type = 7

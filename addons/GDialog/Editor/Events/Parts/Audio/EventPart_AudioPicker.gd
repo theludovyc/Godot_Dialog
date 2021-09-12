@@ -35,10 +35,6 @@ func _ready():
 
 # called by the event block
 func load_data(data:Dictionary):
-	# First set the event_data
-	.load_data(data)
-	
-	# Now update the ui nodes to display the data. 
 	if data.has('audio_bus'): 
 		for idx in range(bus_selector.get_item_count()):
 			if bus_selector.get_item_text(idx) == data['audio_bus']:
@@ -46,7 +42,8 @@ func load_data(data:Dictionary):
 		
 	if data.has('volume'):
 		volume_input.value = data['volume']
-	load_audio(data['file'])
+	
+	load_audio(data.get("file", ""))
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
@@ -69,32 +66,32 @@ func _on_file_selected(path, target):
 
 ### Loading the audio
 func load_audio(path: String):
-	if not path.empty():
+	var data = {}
+	
+	if !path.empty():
 		name_label.text = path.get_file()
 		name_label.hint_tooltip = path
 		audio_button.hint_tooltip = path
 		clear_button.disabled = false
 		preview_play_button.disabled = false
-		event_data['file'] = path
 		
+		data['audio'] = 'play'
+		data['background-music'] = 'play'
 		
-		if event_data.has('audio'): event_data['audio'] = 'play'
-		if event_data.has('background-music'): event_data['background-music'] = 'play'
-		
-		data_changed()
+		send_data(data)
 		
 		show_options()
-	
-	else:
-		name_label.text = 'No sound (will stop previous '+event_name+')'
-		event_data['file'] = ''
 		
-		if event_data.has('audio'): event_data['audio'] = 'stop'
-		if event_data.has('background-music'): event_data['background-music'] = 'stop'
-		
-		data_changed()
+		return
 
-		hide_options()
+	name_label.text = 'No sound (will stop previous '+event_name+')'
+	
+	data['audio'] = 'stop'
+	data['background-music'] = 'stop'
+	
+	send_data(data)
+
+	hide_options()
 
 
 func _on_ButtonPreviewPlay_pressed():
@@ -126,12 +123,10 @@ func update_bus_selector():
 				bus_selector.select(i)
 
 func _on_BusSelector_item_selected(index):
-	event_data['audio_bus'] = bus_selector.get_item_text(index)
-	data_changed()
+	send_data({"audio_bus":bus_selector.get_item_text(index)})
 
 func _on_Volume_value_changed(value):
-	event_data['volume'] = value
-	data_changed()
+	send_data({"volume":value})
 
 func show_options():
 	clear_button.show()

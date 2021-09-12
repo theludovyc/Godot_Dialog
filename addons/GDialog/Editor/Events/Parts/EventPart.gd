@@ -2,13 +2,8 @@ tool
 extends Control
 class_name EventPart
 
-# has to be set by the parent before adding it to the tree
-var editor_reference:EditorView
-#var editorPopup
-
-var event_data = {}
-
 signal data_changed
+signal send_data(data)
 
 # emit this to set the enabling of the body
 signal request_set_body_enabled(enabled)
@@ -24,6 +19,13 @@ signal request_selection
 signal set_warning(text)
 signal remove_warning()
 
+export(String) var dataName = "data"
+
+# has to be set by the parent before adding it to the tree
+var editor_reference:EditorView
+#var editorPopup
+
+var event_data = {}
 
 # when the node is ready
 func _ready():
@@ -32,10 +34,12 @@ func _ready():
 func on_ready():
 	pass
 
+func init_data(data:Dictionary):
+	pass
+
 # to be overwritten by the subclasses
 func load_data(data:Dictionary):
-	event_data = data
-
+	pass
 
 # to be overwritten by body-parts that provide a preview
 func get_preview_text():
@@ -46,3 +50,8 @@ func get_preview_text():
 func data_changed():
 	emit_signal("data_changed", event_data)
 
+func send_data(data):
+	emit_signal("send_data", data)
+	
+func reset():
+	pass

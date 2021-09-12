@@ -1,7 +1,10 @@
 {
-	"color": "#ffc52222",
+	"color": "#ffe32020",
 	"description": "Blablabla",
 	"portraits": {
-		"df-1": "res://addons/GDialog/Example Assets/portraits/df-1.png"
-	}
+		"Bernard_Smile1": "res://addons/GDialog/Example Assets/portraits/Bernard_Smile1.png",
+		"Bernard_Smile2": "res://addons/GDialog/Example Assets/portraits/Bernard_Smile2.png",
+		"Bernard_Smile3": "res://addons/GDialog/Example Assets/portraits/Bernard_Smile3.png"
+	},
+	"scale": 0.4
 }

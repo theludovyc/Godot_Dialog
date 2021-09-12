@@ -4,9 +4,9 @@ extends EventPart
 # has an event_data variable that stores the current data!!!
 
 ## node references
+onready var menu_button = $HBox/MenuButton
 onready var image_button = $HBox/ImageButton
 onready var clear_button = $HBox/ClearButton
-onready var name_label = $HBox/Name
 onready var fade_duration_label = $HBox/FadeLabel
 onready var fade_duration = $HBox/NumberBox
 

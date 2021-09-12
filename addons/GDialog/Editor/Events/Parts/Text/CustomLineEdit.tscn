@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.745098, 0.745098, 0.745098, 1 )
@@ -9,11 +11,19 @@ corner_radius_bottom_left = 4
 expand_margin_left = 5.0
 expand_margin_right = 5.0
 
-[node name="CustomLineEdit" type="LineEdit"]
-margin_right = 48.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 0, 27 )
-size_flags_vertical = 6
+[node name="CustomLineEdit" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+dataName = "text"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_right = 75.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 75, 27 )
 custom_styles/read_only = SubResource( 1 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/normal = SubResource( 1 )
@@ -24,7 +34,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_uneditable = Color( 0, 0, 0, 1 )
-expand_to_text_length = true
 caret_blink = true
 caret_blink_speed = 0.5
 __meta__ = {

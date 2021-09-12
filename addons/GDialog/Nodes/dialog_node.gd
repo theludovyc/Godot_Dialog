@@ -259,11 +259,11 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 
 			var option = {
 				'question_idx': opened_branch['question_idx'],
-				'label': parse_definitions(event['choice'], true, false),
+				'label': parse_definitions(event["text"], true, false),
 				'event_idx': event_idx,
 				'condition': event.get("condition", ""),
-				'definition': event.get("definition", ""),
-				'value': event.get("value", ""),
+				'definition': event.get("value", ""),
+				'value': event.get("text1", ""),
 			}
 			
 			dialog_script['events'][opened_branch['event_idx']]['options'].append(option)
@@ -633,7 +633,7 @@ func event_handler(event: Dictionary):
 					if !portraits_node.has_node(portrait_node.name):
 						portraits_node.add_child(portrait_node)
 
-					portrait_node.move_to_position(get_character_position(event['position']))
+					portrait_node.move_to_position(event.get("position", 0))
 					
 			_load_next_event()
 		# Character Leave event 
@@ -689,8 +689,8 @@ func event_handler(event: Dictionary):
 			
 			var condition_met = false
 			
-			if event.has("definition") and event.has("value"):
-				condition_met = _compare_definitions(GDialog.get_value(event["definition"]), event["value"], event.get("condition", "=="));
+			if event.has("value") and event.has("text"):
+				condition_met = _compare_definitions(GDialog.get_value(event["value"]), event["text"], event.get("condition", "="));
 			
 			current_question['answered'] = !condition_met
 			
@@ -706,10 +706,10 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		# Set Value event
 		GDialog.Event_Type.SetValue:
-			emit_signal("event_start", "set_value", event)
+			emit_signal("event_start", "SetValue", event)
 			
-			if event.has("definition"):
-				var value_name = event["definition"]
+			if event.has("value"):
+				var value_name = event["value"]
 				
 				if GDialog.values.has(value_name):
 					var value
@@ -720,8 +720,8 @@ func event_handler(event: Dictionary):
 						value = randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0)
 				
 						update = true
-					elif event.has("set_value"):
-						value = event["set_value"]
+					elif event.has("text"):
+						value = event["text"]
 			
 						update = true
 				
@@ -764,36 +764,30 @@ func event_handler(event: Dictionary):
 		# TIMELINE EVENTS
 		# Change Timeline event
 		GDialog.Event_Type.ChangeTimeline:
-			dialog_script = set_current_dialog(event['change_timeline'])
-			_init_dialog()
+			emit_signal("event_start", "ChangeTimeline", event)
+			var timeline_name = event.get("timeline", "")
+			
+			if !timeline_name.empty():
+				dialog_script = set_current_dialog(event["timeline"])
+				_init_dialog()
+			else:
+				_load_next_event()
 		# Change Backround event
 		GDialog.Event_Type.ChangeBackground:
-			emit_signal("event_start", "background", event)
-			var fade_time = event.get('fade_duration', 1)
-			var value = event.get('background', '')
-			var background = get_node_or_null('Background')
+			emit_signal("event_start", "ChangeBackground", event)
 			
-			if background != null:
-				background.name = 'BackgroundFadingOut'
-				background.fade_out(fade_time)
+			var file_path = event.get("file", "")
 			
-			background = Background.instance()
-			background.name = 'Background'
+			if !file_path.empty():
+				var background_node = get_node_or_null('Background')
 			
-			if value != '':
-				add_child(background)
-				background.create_tween()
-				if value.ends_with('.tscn'):
-					var bg_scene = load(event['background'])
-					bg_scene = bg_scene.instance()
-					background.modulate = Color(1,1,1,0)
-					background.fade_in(fade_time)
-					background.add_child(bg_scene)
-				else:
-					background.texture = load(value)
-					background.create_tween()
-					background.fade_in(fade_time)
-				call_deferred('resize_main') # Executing the resize main to update the background size
+				if !background_node:
+					background_node = Background.instance()
+					background_node.name = 'Background'
+					add_child(background_node)
+					move_child(background_node, 0)
+				
+				background_node.texture = load(file_path)
 
 			_load_next_event()
 		# Close Dialog event
@@ -803,10 +797,6 @@ func event_handler(event: Dictionary):
 			transition_duration = transition_duration
 			close_dialog_event(transition_duration)
 			while_dialog_animation = true
-			var background = get_node_or_null('Background')
-			if background != null:
-				background.name = 'BackgroundFadingOut'
-				background.fade_out(transition_duration)
 		# Wait seconds event
 		GDialog.Event_Type.Wait:
 			emit_signal("event_start", "wait", event)
@@ -855,11 +845,15 @@ func event_handler(event: Dictionary):
 			_load_next_event()
 		# Background Music event
 		GDialog.Event_Type.BackgroundMusic:
-			emit_signal("event_start", "background-music", event)
-			if event['background-music'] == 'play' and 'file' in event.keys() and not event['file'].empty():
-				$FX/BackgroundMusic.crossfade_to(event['file'], event.get('audio_bus', 'Master'), event.get('volume', 0), event.get('fade_length', 1))
+			emit_signal("event_start", "BackgroundMusic", event)
+			
+			var file_path = event.get("file", "")
+			
+			if !file_path.empty():
+				$FX/BackgroundMusic.crossfade_to(file_path, event.get('audio_bus', 'Master'), event.get('volume', 50)/100.0, event.get('fade', 1))
 			else:
-				$FX/BackgroundMusic.fade_out(event.get('fade_length', 1))
+				$FX/BackgroundMusic.fade_out(event.get('fade', 1))
+			
 			_load_next_event()
 		
 		# GODOT EVENTS
@@ -915,8 +909,6 @@ func reset_options():
 
 
 func _should_add_choice_button(option: Dictionary):
-	print("hello", option)
-	
 	var value_name = option['definition']
 	
 	if not value_name.empty():
@@ -1098,21 +1090,6 @@ func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 			if visually_focus:
 				portrait_node.focusout()
 	return exists
-
-
-func get_character_position(positions) -> String:
-	if positions[0]:
-		return 'left'
-	if positions[1]:
-		return 'center_left'
-	if positions[2]:
-		return 'center'
-	if positions[3]:
-		return 'center_right'
-	if positions[4]:
-		return 'right'
-	return 'left'
-
 
 func deferred_resize(current_size, result):
 	#var result = theme.get_value('box', 'size', Vector2(910, 167))

@@ -1,9 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/DefinitionPicker.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/ValuePicker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/ConditionTypePicker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/EventPart_ConditionPicker.gd" type="Script" id=4]
+
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.745098, 0.745098, 0.745098, 1 )

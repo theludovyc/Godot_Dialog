@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/CheckPicker.gd" type="Script" id=1]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckPicker" type="CheckBox" parent="."]
+margin_right = 124.0
+margin_bottom = 40.0
+text = "has condition ?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="toggled" from="CheckPicker" to="." method="_on_CheckPicker_toggled"]
