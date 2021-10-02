@@ -21,6 +21,16 @@
 			"type": 0
 		},
 		{
+			"check": true,
+			"operation": "=",
+			"type": 8,
+			"value": "Random"
+		},
+		{
+			"text": "Random = [Random]",
+			"type": 0
+		},
+		{
 			"character": "Sylvie",
 			"portrait": "sylvie_smile1",
 			"position": 3,
@@ -29,12 +39,6 @@
 		{
 			"text": "Hi, I'm Sylvie !",
 			"type": 0
-		},
-		{
-			"operation": "=",
-			"text": "1",
-			"type": 8,
-			"value": "NewValue0"
 		},
 		{
 			"text": "Do you like flowers ?",
@@ -66,6 +70,7 @@
 			"value": ""
 		},
 		{
+			"check": false,
 			"operation": "=",
 			"text": "2",
 			"type": 8,

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventBlock.gd" type="Script" id=1]
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/set-value.svg" type="Texture" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/ValuePicker.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/EventBlock/Spacer.tscn" type="PackedScene" id=9]
-
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/CheckPicker.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/NumberPicker.tscn" type="PackedScene" id=11]
 
 [node name="EventTemplate" type="HBoxContainer"]
 anchor_right = 1.0
@@ -94,7 +95,7 @@ text = "Set"
 
 [node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 66.0
-margin_right = 208.0
+margin_right = 379.0
 margin_bottom = 30.0
 
 [node name="ValuePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]
@@ -113,14 +114,54 @@ rect_min_size = Vector2( 4, 0 )
 
 [node name="CustomLineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 7 )]
 margin_left = 142.0
-margin_right = 142.0
+margin_right = 217.0
+margin_bottom = 30.0
+
+[node name="Control2" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content"]
+margin_left = 221.0
+margin_right = 222.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 1, 0 )
+
+[node name="CheckPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 10 )]
+margin_left = 226.0
+margin_right = 313.0
+margin_bottom = 30.0
+paths = [ NodePath("../CustomLineEdit"), NodePath("../NumberPicker"), NodePath("../Control"), NodePath("../Control2") ]
+
+[node name="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/CheckPicker" index="0"]
+margin_right = 87.0
+margin_bottom = 30.0
+text = "random ?"
+
+[node name="NumberPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 11 )]
+visible = false
+margin_left = 317.0
+margin_right = 498.0
+margin_bottom = 30.0
+dataName = "hight"
+
+[node name="NameLabel" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/NumberPicker" index="0"]
+margin_top = 8.0
+margin_right = 103.0
+margin_bottom = 22.0
+text = "Between 0 and :"
+
+[node name="NumberBox" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content/NumberPicker" index="1"]
+margin_left = 107.0
+margin_top = 3.0
+margin_right = 181.0
+margin_bottom = 27.0
+step = 1.0
+value = 100.0
+allow_greater = false
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 6 )]
 margin_left = 178.0
 margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 9 )]
-margin_left = 218.0
+margin_left = 389.0
 margin_right = 928.0
 margin_bottom = 30.0
 
@@ -161,3 +202,7 @@ custom_constants/margin_top = 2
 custom_constants/margin_bottom = 2
 [connection signal="visibility_changed" from="Indent" to="." method="_on_Indent_visibility_changed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Header/HelpButton" to="." method="_on_HelpButton_pressed"]
+
+[editable path="PanelContainer/MarginContainer/VBoxContainer/Header/Content/CheckPicker"]
+
+[editable path="PanelContainer/MarginContainer/VBoxContainer/Header/Content/NumberPicker"]

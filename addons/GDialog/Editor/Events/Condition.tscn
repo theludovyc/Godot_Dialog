@@ -10,8 +10,6 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Logic/ConditionTypePicker.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Text/CustomLineEdit.tscn" type="PackedScene" id=9]
 
-
-
 [node name="EventTemplate" type="HBoxContainer"]
 anchor_right = 1.0
 margin_bottom = 42.0
@@ -26,7 +24,12 @@ __meta__ = {
 type = 6
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 7 )
+event_name = ""
+header_scene = null
+body_scene = null
 expand_on_default = true
+needs_indentation = false
+help_page_path = ""
 
 [node name="Indent" type="Control" parent="."]
 visible = false
@@ -93,7 +96,7 @@ margin_bottom = 22.0
 
 [node name="Content" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Header"]
 margin_left = 52.0
-margin_right = 242.0
+margin_right = 269.0
 margin_bottom = 30.0
 
 [node name="DefinitionPicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 6 )]
@@ -112,16 +115,15 @@ rect_min_size = Vector2( 4, 0 )
 
 [node name="CustomLineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 9 )]
 margin_left = 142.0
-margin_top = 1.0
-margin_right = 190.0
-margin_bottom = 28.0
+margin_right = 217.0
+margin_bottom = 30.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]
 margin_left = 178.0
 margin_right = 242.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 4 )]
-margin_left = 252.0
+margin_left = 279.0
 margin_right = 928.0
 margin_bottom = 30.0
 
