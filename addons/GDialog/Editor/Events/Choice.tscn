@@ -105,7 +105,6 @@ margin_bottom = 30.0
 margin_left = 79.0
 margin_right = 203.0
 margin_bottom = 30.0
-dataName = "check"
 paths = [ NodePath("../ValuePicker"), NodePath("../ConditionTypePicker"), NodePath("../CustomLineEdit2") ]
 
 [node name="ValuePicker" parent="PanelContainer/MarginContainer/VBoxContainer/Header/Content" instance=ExtResource( 8 )]

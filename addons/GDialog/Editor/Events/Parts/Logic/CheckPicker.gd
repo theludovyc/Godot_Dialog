@@ -25,7 +25,9 @@ func resetNodes():
 			node.reset()
 
 func init_data(data:Dictionary):
+	checkPicker.set_block_signals(true)
 	checkPicker.pressed = data.get(dataName, false)
+	checkPicker.set_block_signals(false)
 	
 	if checkPicker.pressed:
 		resetNodes()
