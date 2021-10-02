@@ -49,21 +49,17 @@ var ignore_save = false
 ##								PUBLIC METHODS
 ## *****************************************************************************
 
-func visual_select():
-	set_event_style(selected_style)
-
-
-func visual_deselect():
-	set_event_style(event_style)
-
+func get_event_style() -> StyleBoxFlat:
+	return panel.get('custom_styles/panel')
 
 func set_event_style(style: StyleBoxFlat):
 	panel.set('custom_styles/panel', style)
 
+func visual_select():
+	set_event_style(selected_style)
 
-func get_event_style():
-	return panel.get('custom_styles/panel')
-	
+func visual_deselect():
+	set_event_style(event_style)
 
 # called by the timeline before adding it to the tree
 func load_data(data):

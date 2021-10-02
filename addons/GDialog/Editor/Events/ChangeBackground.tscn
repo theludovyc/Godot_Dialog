@@ -8,7 +8,6 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/File/FilePicker.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/change-background.svg" type="Texture" id=7]
 
-
 [node name="ChangeBackground" type="HBoxContainer"]
 anchor_right = 1.0
 margin_bottom = 42.0
@@ -102,6 +101,7 @@ custom_constants/margin_left = 5
 margin_left = 5.0
 margin_right = 123.0
 margin_bottom = 30.0
+dataName = "file"
 filetype = "*.png, *.jpg, *.jpeg, *.tga, *.svg, *.svgz, *.bmp, *.webp"
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" instance=ExtResource( 2 )]

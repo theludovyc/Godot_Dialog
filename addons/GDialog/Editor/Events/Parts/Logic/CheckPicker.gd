@@ -6,7 +6,7 @@ extends EventPart
 # var b = "text"
 export(Array, NodePath) var paths
 
-onready var checkPicker = $CheckPicker
+onready var checkPicker = $CheckBox
 
 var nodes:Array
 
@@ -17,19 +17,20 @@ func _ready():
 	for path in paths:
 		nodes.append(get_node(path))
 
-func resetNodes(var b:bool):
+func resetNodes():
 	for node in nodes:
-		node.visible = b
+		node.visible = !node.visible
 		
-		if !b:
+		if node is EventPart and !node.visible:
 			node.reset()
 
 func init_data(data:Dictionary):
 	checkPicker.pressed = data.get(dataName, false)
 	
-	resetNodes(checkPicker.pressed)
+	if checkPicker.pressed:
+		resetNodes()
 
 func _on_CheckPicker_toggled(button_pressed):
-	resetNodes(button_pressed)
+	resetNodes()
 	
 	send_data({dataName:button_pressed})

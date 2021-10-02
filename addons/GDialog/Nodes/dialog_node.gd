@@ -716,12 +716,15 @@ func event_handler(event: Dictionary):
 				
 					var update = false
 				
-					if event.get("set_random", false):
-						value = randi()%int(event.get("random_upper_limit", 100)-event.get('random_lower_limit', 0))+event.get('random_lower_limit', 0)
+					if event.get("check", false):
+						value = randi()%int(event.get("hight", 100))
 				
 						update = true
 					elif event.has("text"):
 						value = event["text"]
+						
+						if value.is_valid_foat():
+							value = float(value)
 			
 						update = true
 				
@@ -730,9 +733,7 @@ func event_handler(event: Dictionary):
 	
 						var is_number = false
 						
-						if typeof(current_value) == TYPE_REAL and value.is_valid_float():
-							value = float(value)
-							
+						if typeof(current_value) == TYPE_REAL:
 							is_number = true
 						
 						# Do nothing for -, * and / operations on string
