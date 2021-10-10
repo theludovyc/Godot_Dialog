@@ -5,11 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/change-scene.svg" type="Texture" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Scenes/ScenePicker.tscn" type="PackedScene" id=4]
 
-
-
-
 [node name="ChangeScene" instance=ExtResource( 1 )]
-type = 18
+type = 19
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 3 )
 event_name = "Change Scene"
@@ -29,10 +26,10 @@ text = "Change Scene"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 140.0
-margin_right = 178.0
+margin_right = 150.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 188.0
+margin_left = 160.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

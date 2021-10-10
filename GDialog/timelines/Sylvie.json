@@ -1,0 +1,14 @@
+{
+	"events": [
+		{
+			"character": "Sylvie",
+			"portrait": "sylvie_smile1",
+			"position": 3,
+			"type": 2
+		},
+		{
+			"text": "Hello, I am Sylvie !",
+			"type": 0
+		}
+	]
+}

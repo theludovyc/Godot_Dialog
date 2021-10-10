@@ -14,6 +14,7 @@ enum Event_Type{
 	Condition,
 	EndBranch,
 	SetValue,
+	AskValue,
 	
 	#Timeline Events
 	ChangeTimeline,

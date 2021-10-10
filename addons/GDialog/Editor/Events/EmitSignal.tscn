@@ -5,11 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/EmitSignal.tres" type="StyleBox" id=4]
 
-
-
-
 [node name="EmitSignal" instance=ExtResource( 3 )]
-type = 17
+type = 18
 event_style = ExtResource( 4 )
 event_icon = ExtResource( 1 )
 event_name = "Emit Signal"
@@ -29,10 +26,10 @@ text = "Emit Signal"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 122.0
-margin_right = 528.0
+margin_right = 132.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 538.0
+margin_left = 142.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

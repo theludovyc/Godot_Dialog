@@ -1,14 +1,8 @@
 {
 	"events": [
 		{
-			"fade": 0,
-			"file": "res://addons/GDialog/Example Assets/Music/Etirwer.ogg",
-			"type": 16,
-			"volume": 50
-		},
-		{
 			"file": "res://addons/GDialog/Example Assets/backgrounds/bg_uni.jpg",
-			"type": 10
+			"type": 11
 		},
 		{
 			"character": "Bernard",
@@ -21,23 +15,12 @@
 			"type": 0
 		},
 		{
-			"check": true,
-			"operation": "=",
-			"type": 8,
-			"value": "Random"
+			"text": "What is your name ?",
+			"type": 9,
+			"value": "Name"
 		},
 		{
-			"text": "Random = [Random]",
-			"type": 0
-		},
-		{
-			"character": "Sylvie",
-			"portrait": "sylvie_smile1",
-			"position": 3,
-			"type": 2
-		},
-		{
-			"text": "Hi, I'm Sylvie !",
+			"text": "Nice to meet you [Name]",
 			"type": 0
 		},
 		{
@@ -45,59 +28,21 @@
 			"type": 4
 		},
 		{
-			"check": true,
-			"condition": ">=",
+			"condition": "=",
 			"text": "Yes",
-			"text1": "0",
-			"type": 5,
-			"value": "NewValue0"
+			"type": 5
 		},
 		{
-			"character": "Bernard",
-			"portrait": "Bernard_Smile2",
-			"type": 1
+			"timeline": "Sylvie",
+			"type": 10
 		},
 		{
-			"text": "I like flowers too !",
-			"type": 0
-		},
-		{
-			"check": false,
 			"condition": "=",
 			"text": "No",
-			"text1": "",
-			"type": 5,
-			"value": ""
-		},
-		{
-			"check": false,
-			"operation": "=",
-			"text": "2",
-			"type": 8,
-			"value": "NewValue0"
+			"type": 5
 		},
 		{
 			"type": 7
-		},
-		{
-			"condition": "=",
-			"text": "2",
-			"type": 6,
-			"value": "NewValue0"
-		},
-		{
-			"character": "Bernard",
-			"type": 3
-		},
-		{
-			"type": 7
-		},
-		{
-			"timeline": "Timeline0",
-			"type": 9
-		},
-		{
-			"type": 11
 		}
 	]
 }

@@ -5,12 +5,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/styles/Timeline.tres" type="StyleBox" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/CallNode/CallNodePicker.tscn" type="PackedScene" id=4]
 
-
-
-
-
 [node name="CallNode" instance=ExtResource( 2 )]
-type = 19
+type = 20
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 1 )
 event_name = "Call Node"
@@ -34,12 +30,11 @@ margin_left = 113.0
 margin_right = 123.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="4"]
-visible = true
 margin_left = 133.0
 margin_right = 197.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 207.0
+margin_left = 133.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

@@ -20,7 +20,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-type = 16
+type = 17
 event_style = ExtResource( 3 )
 event_icon = ExtResource( 7 )
 event_name = "Background Music"

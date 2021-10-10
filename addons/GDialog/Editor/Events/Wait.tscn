@@ -5,9 +5,6 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/Numbers/SecondsSelector.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/GDialog/Editor/Events/Templates/EventTemplate.tscn" type="PackedScene" id=4]
 
-
-
-
 [node name="WaitSeconds" instance=ExtResource( 4 )]
 type = 12
 event_style = ExtResource( 2 )
@@ -29,10 +26,10 @@ text = "Wait Seconds"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 138.0
-margin_right = 287.0
+margin_right = 148.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 297.0
+margin_left = 158.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

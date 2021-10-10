@@ -6,11 +6,8 @@
 [ext_resource path="res://addons/GDialog/Editor/Events/Parts/ResourcePickers/Definitions/GlossaryPicker.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/GDialog/Editor/Events/Icons/set-glossary.svg" type="Texture" id=6]
 
-
-
-
 [node name="SetGlossary" instance=ExtResource( 3 )]
-type = 14
+type = 15
 event_style = ExtResource( 2 )
 event_icon = ExtResource( 6 )
 event_name = "Set Glossary"
@@ -32,15 +29,14 @@ text = "Set Glossary"
 
 [node name="Content" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="3"]
 margin_left = 131.0
-margin_right = 294.0
+margin_right = 141.0
 
 [node name="ExpandControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="4"]
-visible = true
 margin_left = 304.0
 margin_right = 368.0
 
 [node name="Spacer" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="5"]
-margin_left = 378.0
+margin_left = 151.0
 
 [node name="OptionsControl" parent="PanelContainer/MarginContainer/VBoxContainer/Header" index="7"]
 items = [ "Move Up", null, 0, false, false, 0, 0, null, "", false, "Move Down", null, 0, false, false, 1, 0, null, "", false, "", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]

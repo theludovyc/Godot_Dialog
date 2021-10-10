@@ -2,6 +2,7 @@ tool
 extends Control
 
 onready var portraits_node = $Portraits
+onready var node_TextBubble = $TextBubble
 
 var last_mouse_mode = null
 var input_next: String = 'ui_accept'
@@ -91,8 +92,8 @@ func _ready():
 	# Setting everything up for the node to be default
 	$DefinitionInfo.visible = false
 	$TextBubble.connect("text_completed", self, "_on_text_completed")
-	$TextBubble/RichTextLabel.connect('meta_hover_started', self, '_on_RichTextLabel_meta_hover_started')
-	$TextBubble/RichTextLabel.connect('meta_hover_ended', self, '_on_RichTextLabel_meta_hover_ended')
+	$TextBubble/VBoxContainer/RichTextLabel.connect('meta_hover_started', self, '_on_RichTextLabel_meta_hover_started')
+	$TextBubble/VBoxContainer/RichTextLabel.connect('meta_hover_ended', self, '_on_RichTextLabel_meta_hover_ended')
 
 	if Engine.is_editor_hint():
 		if preview:
@@ -419,6 +420,16 @@ func _input(event: InputEvent) -> void:
 			$TextBubble.skip()
 		else:
 			if waiting_for_answer == false and waiting_for_input == false and while_dialog_animation == false:
+				if node_TextBubble.isAskVisible():
+					var ask = node_TextBubble.get_ask()
+					
+					if ask.length() > 0:
+						var value_name:String = current_event.get("value", "")
+						
+						if !value_name.empty():
+							GDialog.set_value(value_name, ask)
+						
+				
 				_load_next_event()
 		if settings.has_section_key('dialog', 'propagate_input'):
 			var propagate_input: bool = settings.get_value('dialog', 'propagate_input')
@@ -584,7 +595,7 @@ func event_handler(event: Dictionary):
 		GDialog.Event_Type.Text:
 			emit_signal("event_start", "text", event)
 			
-			show_dialog()
+			node_TextBubble.show_me()
 			
 			finished = false
 				
@@ -660,7 +671,7 @@ func event_handler(event: Dictionary):
 		GDialog.Event_Type.Question:
 			emit_signal("event_start", "Question", event)
 			
-			show_dialog()
+			node_TextBubble.show_me()
 			
 			finished = false
 			
@@ -761,6 +772,15 @@ func event_handler(event: Dictionary):
 						GDialog.set_value(value_name, current_value)
 						
 				_load_next_event()
+		
+		GDialog.Event_Type.AskValue:
+			emit_signal("event_start", "AskValue", event)
+			
+			node_TextBubble.show_me(true, true)
+			
+			finished = false
+				
+			update_text(event['text'] if event.has("text") else "")
 		
 		# TIMELINE EVENTS
 		# Change Timeline event

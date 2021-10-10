@@ -4,7 +4,8 @@ extends Control
 var text_speed := 0.02 # Higher = lower speed
 var theme_text_speed = text_speed
 
-onready var text_label = $RichTextLabel
+onready var text_label = $VBoxContainer/RichTextLabel
+onready var node_ask = $VBoxContainer/LineEdit
 onready var name_label = $NameLabel
 onready var next_indicator = $NextIndicatorContainer/NextIndicator
 
@@ -194,6 +195,19 @@ func load_theme(theme: ConfigFile):
 	# Saving reference to the current theme
 	_theme = theme
 
+func show_me(show:bool = true, ask:bool = false):
+	visible = show
+	
+	node_ask.visible = ask
+	
+	if ask:
+		node_ask.grab_focus()
+
+func isAskVisible() -> bool:
+	return node_ask.visible
+	
+func get_ask() -> String:
+	return node_ask.text
 
 ## *****************************************************************************
 ##								PRIVATE METHODS
